@@ -1,0 +1,44 @@
+name: audio
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: what to run
+        type: choice
+        options: [olaf-bench]
+        default: olaf-bench
+permissions:
+  contents: write
+concurrency:
+  group: sonic-audio
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: deps
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg build-essential >/dev/null
+          pip install -q numpy librosa soundfile yt-dlp
+      - name: fetch the pipeline database
+        run: |
+          curl -sL -o sonic.db https://raw.githubusercontent.com/benmcewensignal/signal-sonic/main/sonic.db
+          python -c "import sqlite3; c=sqlite3.connect('sonic.db'); print('tracks', c.execute(\"select count(*) from tracks\").fetchone()[0], '| nts truth lines', c.execute('select count(*) from nts_tracklist where track_id is not null').fetchone()[0])"
+      - name: build olaf
+        run: python -m audio.olaf build
+      - name: olaf benchmark against NTS truth
+        if: inputs.task == 'olaf-bench'
+        env:
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+          BEATPORT_CLIENT_SECRET: ${{ secrets.BEATPORT_CLIENT_SECRET }}
+        run: python -m audio.bench --db sonic.db --out out/olaf-bench.json
+      - name: persist results
+        if: always()
+        run: |
+          git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
+          git add -A out 2>/dev/null || true
+          git diff --cached --quiet || (git commit -qm "audio: $(date -u +%FT%TZ)" && git push -q origin HEAD:main) || echo "nothing to persist"
