@@ -10,22 +10,13 @@ directly comparable.
 """
 import argparse, json, os, random, sqlite3, subprocess, tempfile, time, urllib.request
 from . import olaf
+from .beatport import _get
 
-BEATPORT = "https://api.beatport.com/v4"
-
-
-def bp_token():
-    import base64
-    cid, sec = os.environ.get("BEATPORT_CLIENT_ID"), os.environ.get("BEATPORT_CLIENT_SECRET")
-    if not (cid and sec): raise SystemExit("BEATPORT_CLIENT_ID/SECRET not set")
-    req = urllib.request.Request(f"{BEATPORT}/auth/o/token/", data=b"grant_type=client_credentials",
-                                 headers={"Authorization": "Basic " + base64.b64encode(f"{cid}:{sec}".encode()).decode()})
-    with urllib.request.urlopen(req, timeout=20) as r: return json.loads(r.read())["access_token"]
+from .beatport import get_token as bp_token, _get
 
 
 def preview(track_id, token):
-    req = urllib.request.Request(f"{BEATPORT}/catalog/tracks/{track_id.split(':')[-1]}/", headers={"Authorization": f"Bearer {token}"})
-    with urllib.request.urlopen(req, timeout=20) as r: d = json.loads(r.read())
+    d = _get(f"/catalog/tracks/{track_id.split(':')[-1]}/", token)
     return d.get("sample_url") or (d.get("preview") or {}).get("mp3", {}).get("url")
 
 

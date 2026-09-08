@@ -33,8 +33,10 @@ jobs:
       - name: olaf benchmark against NTS truth
         if: inputs.task == 'olaf-bench'
         env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
           BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
-          BEATPORT_CLIENT_SECRET: ${{ secrets.BEATPORT_CLIENT_SECRET }}
         run: python -m audio.bench --db sonic.db --out out/olaf-bench.json
       - name: persist results
         if: always()

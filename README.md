@@ -8,4 +8,4 @@ otherwise block the main pipeline's chain.
 - next: source separation (Demucs), beat tracking (madmom), stem-level features
 
 Reads the main pipeline's database from `signal-sonic`; writes results to `out/`.
-Needs repo secrets `BEATPORT_CLIENT_ID` and `BEATPORT_CLIENT_SECRET` (same values as the main repo).
+Needs repo secrets `BEATPORT_USERNAME` and `BEATPORT_PASSWORD` (the same two the main repo uses; `BEATPORT_TOKEN` and `BEATPORT_CLIENT_ID` are optional).
