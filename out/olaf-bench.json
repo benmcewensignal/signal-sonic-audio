@@ -1,0 +1,18 @@
+{
+ "generated": "2026-09-08T20:00:08Z",
+ "mode": "chronology",
+ "indexed": 1540,
+ "mixes": 0,
+ "olaf": {
+  "hits": 0,
+  "impossible": 0,
+  "impossible_share": null
+ },
+ "ours": {
+  "hits": 0,
+  "impossible": 0,
+  "impossible_share": null
+ },
+ "per_mix": [],
+ "note": "no published tracklist overlaps the corpus yet, so precision is proxied by the share of hits that are chronologically impossible; more hits at an equal or lower impossible share is a better matcher"
+}
