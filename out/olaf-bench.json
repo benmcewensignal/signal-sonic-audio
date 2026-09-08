@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-08T20:43:43Z",
+ "generated": "2026-09-08T21:37:55Z",
  "mode": "chronology",
  "indexed": 205,
  "mixes": 3,
@@ -17,6 +17,15 @@
   {
    "mix": "605-with-nicky-elisabeth-live-at-explorations/",
    "olaf_hits": 2,
+   "olaf_by_threshold": {
+    "1": 10,
+    "2": 10,
+    "4": 10,
+    "8": 2,
+    "16": 0
+   },
+   "olaf_raw_hits": 50,
+   "indexed_and_ours_found": 86,
    "olaf_impossible": 0,
    "ours_hits": 87,
    "ours_impossible": 0
@@ -24,6 +33,15 @@
   {
    "mix": "nadeep/the-anjunadeep-edition-606-with-rumtum/",
    "olaf_hits": 1,
+   "olaf_by_threshold": {
+    "1": 13,
+    "2": 13,
+    "4": 13,
+    "8": 1,
+    "16": 0
+   },
+   "olaf_raw_hits": 14,
+   "indexed_and_ours_found": 21,
    "olaf_impossible": 0,
    "ours_hits": 21,
    "ours_impossible": 0
@@ -31,6 +49,15 @@
   {
    "mix": "deep/the-anjunadeep-edition-609-with-maty-owl/",
    "olaf_hits": 4,
+   "olaf_by_threshold": {
+    "1": 32,
+    "2": 32,
+    "4": 32,
+    "8": 4,
+    "16": 0
+   },
+   "olaf_raw_hits": 50,
+   "indexed_and_ours_found": 48,
    "olaf_impossible": 0,
    "ours_hits": 48,
    "ours_impossible": 0
