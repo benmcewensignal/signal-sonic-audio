@@ -32,7 +32,15 @@ def build():
 
 
 def to_raw(audio_path):
+    """librosa cannot decode webm or m4a, which is what yt-dlp returns for most mixes:
+    transcode with ffmpeg first, as the main pipeline does."""
     import librosa
+    if os.path.splitext(audio_path)[1].lower() not in (".wav", ".flac", ".aiff", ".aif"):
+        wav = os.path.splitext(audio_path)[0] + ".olaf.wav"
+        r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", audio_path, "-ac", "1", "-ar", str(SR), wav],
+                           capture_output=True, text=True)
+        if os.path.exists(wav) and os.path.getsize(wav) > 1000: audio_path = wav
+        else: raise RuntimeError("ffmpeg: " + (r.stderr.strip().splitlines()[-1][:160] if r.stderr.strip() else "no output"))
     y, _ = librosa.load(audio_path, sr=SR, mono=True)
     fd, raw = tempfile.mkstemp(suffix=".raw"); os.close(fd)
     y.astype(np.float32).tofile(raw)
