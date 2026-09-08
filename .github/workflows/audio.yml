@@ -5,8 +5,8 @@ on:
       task:
         description: what to run
         type: choice
-        options: [olaf-bench]
-        default: olaf-bench
+        options: [olaf-bench, olaf-bench-small]
+        default: olaf-bench-small
 permissions:
   contents: write
 concurrency:
@@ -30,6 +30,15 @@ jobs:
           python -c "import sqlite3; c=sqlite3.connect('sonic.db'); print('tracks', c.execute(\"select count(*) from tracks\").fetchone()[0], '| nts truth lines', c.execute('select count(*) from nts_tracklist where track_id is not null').fetchone()[0])"
       - name: build olaf
         run: python -m audio.olaf build
+      - name: olaf benchmark (small batch, errors recorded)
+        if: inputs.task == 'olaf-bench-small'
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.bench --db sonic.db --out out/olaf-bench.json --controls 60 --mixes 3
+
       - name: olaf benchmark against NTS truth
         if: inputs.task == 'olaf-bench'
         env:

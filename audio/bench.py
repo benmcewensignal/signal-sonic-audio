@@ -29,15 +29,20 @@ def fetch(url, suffix=".mp3"):
 
 def mix_audio(mix_url):
     d = tempfile.mkdtemp()
-    subprocess.run(["yt-dlp", "-q", "-f", "bestaudio/best", "-P", d, "-o", "mix.%(ext)s", mix_url], check=True, timeout=600)
+    r = subprocess.run(["yt-dlp", "-f", "bestaudio/best", "-P", d, "-o", "mix.%(ext)s", "--no-warnings", mix_url],
+                       capture_output=True, text=True, timeout=900)
     files = [os.path.join(d, f) for f in os.listdir(d) if f.startswith("mix.")]
-    return files[0] if files else None
+    if not files:
+        tail = (r.stderr or r.stdout or "").strip().splitlines()
+        raise RuntimeError("yt-dlp: " + (tail[-1][:200] if tail else f"rc {r.returncode}, no output"))
+    return files[0]
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", default="sonic.db"); ap.add_argument("--out", default="out/olaf-bench.json")
     ap.add_argument("--controls", type=int, default=1200)
+    ap.add_argument("--mixes", type=int, default=12)
     a = ap.parse_args()
     c = sqlite3.connect(a.db); c.row_factory = sqlite3.Row
     truth = {}
@@ -52,7 +57,7 @@ def main():
         print("no NTS truth available: scoring on chronological impossibility instead", flush=True)
         rows = c.execute("""select mix_url, title, published from mixes where error is null
                             and published is not null and substr(published,1,10) >= '2024-08-01'
-                            order by scanned_at desc limit 12""").fetchall()
+                            order by scanned_at desc limit ?""", (a.mixes,)).fetchall()
         truth = {r["mix_url"]: set() for r in rows}
     import datetime as _dt
     def _d(x):
@@ -62,7 +67,7 @@ def main():
         except Exception: return None
     rel = {r["track_id"]: _d(r["released"]) for r in c.execute("select track_id, released from track_meta where released is not null")}
     pub = {r["mix_url"]: _d(r["published"]) for r in c.execute("select mix_url, published from mixes")}
-    chrono = []
+    chrono = []; errs = []
     ours = {}
     for r in c.execute("select mix_url, track_id from mix_plays"): ours.setdefault(r["mix_url"], set()).add(r["track_id"])
     truth_ids = set().union(*truth.values()) if any(truth.values()) else set()
@@ -102,7 +107,8 @@ def main():
             per.append({"mix": mix_url[-50:], "truth": len(T), "olaf_hits": len(H), "olaf_agree": len(T & H), "ours_hits": len(O), "ours_agree": len(T & O)})
             print(f"  {mix_url[-40:]}: truth {len(T)}, olaf {len(H)} ({len(T & H)} agree), ours {len(O)} ({len(T & O)} agree)", flush=True)
         except Exception as e:
-            print(f"  mix {mix_url[-40:]}: {type(e).__name__}: {str(e)[:60]}", flush=True)
+            errs.append({"mix": mix_url[-50:], "error": f"{type(e).__name__}: {str(e)[:160]}"})
+            print(f"  mix {mix_url[-40:]}: {type(e).__name__}: {str(e)[:120]}", flush=True)
     def pr(tp, fp, fn): return {"precision": round(tp / (tp + fp), 2) if tp + fp else None, "recall": round(tp / (tp + fn), 2) if tp + fn else None, "tp": tp, "fp": fp, "fn": fn}
     if mode == "chronology":
         oh=sum(x["olaf_hits"] for x in chrono); oi=sum(x["olaf_impossible"] for x in chrono)
@@ -111,14 +117,14 @@ def main():
                "mixes": len(chrono),
                "olaf": {"hits": oh, "impossible": oi, "impossible_share": round(oi/oh,3) if oh else None},
                "ours": {"hits": uh, "impossible": ui, "impossible_share": round(ui/uh,3) if uh else None},
-               "per_mix": chrono,
+               "per_mix": chrono, "errors": errs,
                "note": "no published tracklist overlaps the corpus yet, so precision is proxied by the share of hits that are chronologically impossible; more hits at an equal or lower impossible share is a better matcher"}
         os.makedirs(os.path.dirname(a.out), exist_ok=True)
         json.dump(out, open(a.out, "w"), indent=1)
         print(json.dumps({k: out[k] for k in ("indexed","mixes","olaf","ours")}, indent=1), flush=True)
         return
     out = {"generated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "indexed": indexed, "mixes": len(per),
-           "olaf": pr(tp, fp, fn), "ours": pr(o_tp, o_fp, o_fn), "per_mix": per,
+           "olaf": pr(tp, fp, fn), "ours": pr(o_tp, o_fp, o_fn), "per_mix": per, "errors": errs,
            "note": "precision: of the records a matcher heard, how many the published tracklist confirms; recall: of the tracklist records we hold, how many it found"}
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     json.dump(out, open(a.out, "w"), indent=1)
