@@ -9,3 +9,5 @@ otherwise block the main pipeline's chain.
 
 Reads the main pipeline's database from `signal-sonic`; writes results to `out/`.
 Needs repo secrets `BEATPORT_USERNAME` and `BEATPORT_PASSWORD` (the same two the main repo uses; `BEATPORT_TOKEN` and `BEATPORT_CLIENT_ID` are optional).
+
+- `audio/rhythm.py` — beat grid, danceability and broadcast loudness per record, written to `out/rhythm-*.jsonl` for the main pipeline to import
