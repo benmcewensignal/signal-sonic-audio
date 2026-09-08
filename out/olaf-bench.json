@@ -1,32 +1,41 @@
 {
- "generated": "2026-09-08T20:27:40Z",
+ "generated": "2026-09-08T20:43:43Z",
  "mode": "chronology",
- "indexed": 206,
- "mixes": 0,
+ "indexed": 205,
+ "mixes": 3,
  "olaf": {
-  "hits": 0,
+  "hits": 7,
   "impossible": 0,
-  "impossible_share": null
+  "impossible_share": 0.0
  },
  "ours": {
-  "hits": 0,
+  "hits": 156,
   "impossible": 0,
-  "impossible_share": null
+  "impossible_share": 0.0
  },
- "per_mix": [],
- "errors": [
+ "per_mix": [
   {
-   "mix": "ion-605-with-nicky-elisabeth-live-at-explorations/",
-   "error": "LibsndfileError: Error opening '/tmp/tmpyn2u3e1_/mix.webm': Format not recognised."
+   "mix": "605-with-nicky-elisabeth-live-at-explorations/",
+   "olaf_hits": 2,
+   "olaf_impossible": 0,
+   "ours_hits": 87,
+   "ours_impossible": 0
   },
   {
-   "mix": "anjunadeep/the-anjunadeep-edition-606-with-rumtum/",
-   "error": "LibsndfileError: Error opening '/tmp/tmpmved8frw/mix.webm': Format not recognised."
+   "mix": "nadeep/the-anjunadeep-edition-606-with-rumtum/",
+   "olaf_hits": 1,
+   "olaf_impossible": 0,
+   "ours_hits": 21,
+   "ours_impossible": 0
   },
   {
-   "mix": "junadeep/the-anjunadeep-edition-609-with-maty-owl/",
-   "error": "LibsndfileError: Error opening '/tmp/tmpnji92o6n/mix.webm': Format not recognised."
+   "mix": "deep/the-anjunadeep-edition-609-with-maty-owl/",
+   "olaf_hits": 4,
+   "olaf_impossible": 0,
+   "ours_hits": 48,
+   "ours_impossible": 0
   }
  ],
+ "errors": [],
  "note": "no published tracklist overlaps the corpus yet, so precision is proxied by the share of hits that are chronologically impossible; more hits at an equal or lower impossible share is a better matcher"
 }
