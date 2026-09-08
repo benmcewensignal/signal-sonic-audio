@@ -79,12 +79,13 @@ def main():
     pool = [r[0] for r in c.execute("select track_id from tracks where analyser_id='local' and track_id like 'bp:%'")]
     controls = set(random.Random(1).sample([t for t in pool if t not in truth_ids], min(a.controls, len(pool))))
     token = bp_token(); olaf.build()
+    indexed_ids = set()
     indexed = 0
     for tid in sorted(truth_ids | controls):
         try:
             url = preview(tid, token)
             if not url: continue
-            p = fetch(url); olaf.store(tid, p); os.unlink(p); indexed += 1
+            p = fetch(url); olaf.store(tid, p); os.unlink(p); indexed += 1; indexed_ids.add(tid)
         except Exception as e:
             print(f"  index {tid}: {type(e).__name__}", flush=True)
     print(f"indexed {indexed} records ({len(truth_ids)} truth + controls)", flush=True)
@@ -95,10 +96,13 @@ def main():
             if not path: continue
             hits, dur = olaf.query(path)
             H = {h["track_id"] for h in hits if h["count"] >= 8}
+            by_thr = {str(t): len({h["track_id"] for h in hits if h["count"] >= t}) for t in (1, 2, 4, 8, 16)}
             if mode == "chronology":
                 imp_o = sum(1 for t in H if rel.get(t) and pub.get(mix_url) and rel[t] > pub[mix_url])
                 imp_u = sum(1 for t in ours.get(mix_url, set()) if rel.get(t) and pub.get(mix_url) and rel[t] > pub[mix_url])
-                chrono.append({"mix": mix_url[-46:], "olaf_hits": len(H), "olaf_impossible": imp_o,
+                chrono.append({"mix": mix_url[-46:], "olaf_hits": len(H), "olaf_by_threshold": by_thr,
+                               "olaf_raw_hits": len(hits), "indexed_and_ours_found": len(ours.get(mix_url, set()) & indexed_ids),
+                               "olaf_impossible": imp_o,
                                "ours_hits": len(ours.get(mix_url, set())), "ours_impossible": imp_u})
                 print(f"  {mix_url[-38:]}: olaf {len(H)} hits ({imp_o} impossible), ours {len(ours.get(mix_url,set()))} hits ({imp_u} impossible)", flush=True)
                 continue
