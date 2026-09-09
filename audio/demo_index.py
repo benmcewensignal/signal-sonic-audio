@@ -30,15 +30,32 @@ def fetch(url):
 def pick(db, per_scene):
     c = sqlite3.connect(db); c.row_factory = sqlite3.Row
     out, seen = collections.defaultdict(list), set()
-    for r in c.execute("""select ts.scene, ts.track_id, ts.chart_rank, m.name, m.artists, m.label
-                          from track_scenes ts join track_meta m on m.track_id=ts.track_id
-                          where m.name is not null and ts.week like '____-M__'
-                          order by coalesce(ts.chart_rank, 999)"""):
+    # a demo wants records someone might actually play. Prefer, in order: charted records,
+    # records a DJ has played in a set we scanned, then anything else. Dedupe by title and
+    # artist, since the same record often appears under several ids.
+    # a demo wants records someone might play. Rank: charted first (best position across all
+    # chart weeks, which live in weekly rows not monthly ones), then records a DJ has played
+    # in a set we scanned, then the rest. Dedupe by title and artist.
+    best = {t: rk for t, rk in c.execute(
+        "select track_id, min(chart_rank) from track_scenes where chart_rank is not null group by track_id")}
+    played = {r[0] for r in c.execute("select distinct track_id from mix_plays")}
+    rows = list(c.execute("""select ts.scene, ts.track_id, m.name, m.artists, m.label from track_scenes ts
+                             join track_meta m on m.track_id=ts.track_id
+                             where m.name is not null and ts.week like '____-M__'
+                             group by ts.scene, ts.track_id"""))
+    rows.sort(key=lambda r: (0, best[r["track_id"]]) if r["track_id"] in best
+              else ((1, 0) if r["track_id"] in played else (2, 0)))
+    titles = set()
+    for r in rows:
         if len(out[r["scene"]]) >= per_scene or r["track_id"] in seen: continue
-        seen.add(r["track_id"])
+        key = (r["name"] or "").strip().lower() + "|" + (r["artists"] or "")
+        if key in titles: continue
+        seen.add(r["track_id"]); titles.add(key)
         out[r["scene"]].append({"track_id": r["track_id"], "name": r["name"],
                                 "artists": json.loads(r["artists"]) if r["artists"] else [],
-                                "label": r["label"], "scene": r["scene"]})
+                                "label": r["label"], "scene": r["scene"],
+                                "chart_best": best.get(r["track_id"]),
+                                "played_in_sets": r["track_id"] in played})
     # each record carries its own measurements and where it sits against its scene, so the
     # result can say "this is the tune, this is the scene, and this is it against the scene"
     import numpy as _np
