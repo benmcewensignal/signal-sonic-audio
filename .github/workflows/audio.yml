@@ -5,7 +5,7 @@ on:
       task:
         description: what to run
         type: choice
-        options: [rhythm, olaf-bench, olaf-bench-small]
+        options: [rhythm, demo-index, olaf-bench, olaf-bench-small]
         default: rhythm
 permissions:
   contents: write
@@ -32,6 +32,15 @@ jobs:
       - name: build olaf
         if: startsWith(inputs.task, 'olaf')
         run: python -m audio.olaf build
+
+      - name: build the recognition demo index
+        if: inputs.task == 'demo-index'
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.demo_index --db sonic.db --out out/demo-index.json --per-scene 10 --seconds 45 --budget-minutes 80
 
       - name: rhythm and loudness pass
         if: inputs.task == 'rhythm'
