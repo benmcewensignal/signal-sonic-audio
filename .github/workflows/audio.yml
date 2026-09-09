@@ -86,5 +86,7 @@ jobs:
           LEFT=$(cat /tmp/left.txt 2>/dev/null | tail -1)
           echo "records still without rhythm measurements: ${LEFT:-unknown}"
           case "$LEFT" in ''|*[!0-9]*) echo "could not count; not chaining"; exit 0;; esac
+          # do not re-arm while a demo index build is waiting: it shares this runner
+          if [ -f out/.index-wanted ]; then echo "index build has priority; not chaining"; exit 0; fi
           if [ "$LEFT" -gt 0 ]; then gh workflow run audio.yml --ref main -f task=rhythm && echo "follow-up dispatched"; fi
           exit 0
