@@ -45,7 +45,7 @@ def pick(db, per_scene):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", default="sonic.db"); ap.add_argument("--out", default="out/demo-index.json")
-    ap.add_argument("--per-scene", type=int, default=25); ap.add_argument("--per-track", type=int, default=420)
+    ap.add_argument("--per-scene", type=int, default=10); ap.add_argument("--seconds", type=float, default=45)
     ap.add_argument("--budget-minutes", type=int, default=80)
     a = ap.parse_args()
     tracks = pick(a.db, a.per_scene)
@@ -61,11 +61,10 @@ def main():
             url = preview(t["track_id"], token)
             if not url: raise ValueError("no preview")
             p = fetch(url)
-            y = FP.load_audio(p, max_seconds=90)
+            y = FP.load_audio(p, max_seconds=a.seconds)
+            # never thin the reference hashes: a query only overlaps the hashes that exist,
+            # so subsampling the index destroys matching. Control size with less audio instead.
             hs = FP.hashes(y)
-            if len(hs) > a.per_track:             # keep an even spread across the record
-                step = len(hs) / a.per_track
-                hs = [hs[int(i * step)] for i in range(a.per_track)]
             ti = len(meta)
             for h, fr in hs: idx[h].append([ti, fr])
             meta.append(t); done += 1
