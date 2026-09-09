@@ -71,16 +71,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          LEFT=$(python -c "
-          import json,os,sqlite3
-          have=set()
-          for f in os.listdir('out'):
-              if f.startswith('rhythm-'):
-                  for l in open('out/'+f):
-                      try: have.add(json.loads(l)['track_id'])
-                      except Exception: pass
-          c=sqlite3.connect('sonic.db')
-          n=sum(1 for (t,) in c.execute(\"select track_id from tracks where analyser_id='local' and track_id like 'bp:%'\") if t not in have)
-          print(n)")
-          echo "$LEFT records still without rhythm measurements"
+          set +e
+          python -m audio.remaining > /tmp/left.txt 2>/dev/null
+          LEFT=$(cat /tmp/left.txt 2>/dev/null | tail -1)
+          echo "records still without rhythm measurements: ${LEFT:-unknown}"
+          case "$LEFT" in ''|*[!0-9]*) echo "could not count; not chaining"; exit 0;; esac
           if [ "$LEFT" -gt 0 ]; then gh workflow run audio.yml --ref main -f task=rhythm && echo "follow-up dispatched"; fi
+          exit 0

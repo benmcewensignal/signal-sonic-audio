@@ -22,7 +22,7 @@ never write to the same database.
 
   python -m audio.rhythm --db sonic.db --limit 400 --budget-minutes 50
 """
-import argparse, json, os, sqlite3, tempfile, time, urllib.request
+import argparse, collections, json, os, random, sqlite3, tempfile, time, urllib.request
 from .beatport import get_token, _get
 
 SR = 44100
@@ -77,9 +77,19 @@ def main():
                 try: have.add(json.loads(line)["track_id"])
                 except Exception: pass
     c = sqlite3.connect(a.db); c.row_factory = sqlite3.Row
-    todo = [r["track_id"] for r in c.execute(
-        "select track_id from tracks where analyser_id='local' and track_id like 'bp:%' order by rowid desc")
-        if r["track_id"] not in have][: a.limit]
+    # spread the sample across scenes and months: sweeping newest-first fills up with whichever
+    # scene was backfilled last, and the whole point is to compare 2024 against now
+    pool = collections.defaultdict(list)
+    for r in c.execute("""select ts.scene, ts.week, ts.track_id from track_scenes ts
+                          join tracks t on t.track_id=ts.track_id and t.analyser_id='local'
+                          where ts.week like '____-M__' and ts.track_id like 'bp:%'"""):
+        if r["track_id"] not in have: pool[(r["scene"], r["week"])].append(r["track_id"])
+    todo, rr = [], random.Random(4)
+    keys = sorted(pool)
+    for k in keys: rr.shuffle(pool[k])
+    while len(todo) < a.limit and any(pool[k] for k in keys):
+        for k in keys:                                  # one per scene-month, round robin
+            if pool[k] and len(todo) < a.limit: todo.append(pool[k].pop())
     print(f"rhythm: {len(have)} already measured, {len(todo)} this run", flush=True)
     if not todo: return
     token = get_token(); measure = make_measurer()
