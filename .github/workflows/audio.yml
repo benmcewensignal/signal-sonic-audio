@@ -9,6 +9,7 @@ on:
         default: rhythm
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: sonic-audio
   cancel-in-progress: false
