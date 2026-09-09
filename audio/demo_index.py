@@ -39,7 +39,41 @@ def pick(db, per_scene):
         out[r["scene"]].append({"track_id": r["track_id"], "name": r["name"],
                                 "artists": json.loads(r["artists"]) if r["artists"] else [],
                                 "label": r["label"], "scene": r["scene"]})
-    return [t for v in out.values() for t in v]
+    # each record carries its own measurements and where it sits against its scene, so the
+    # result can say "this is the tune, this is the scene, and this is it against the scene"
+    import numpy as _np
+    feats = {}
+    for r in c.execute("select track_id, features, analyser_ver from tracks where analyser_id='local'"):
+        try: feats[r["track_id"]] = (json.loads(r["features"]), str(r["analyser_ver"] or "1"))
+        except Exception: pass
+    home = collections.defaultdict(list)
+    for r in c.execute("""select ts.scene, ts.track_id from track_scenes ts
+                          where ts.week like '____-M__' and ts.week <= '2025-M05'"""):
+        f = feats.get(r["track_id"])
+        if f and f[0].get("embedding"): home[r["scene"]].append((f[0]["embedding"], f[1]))
+    centre = {}
+    for sc, rows in home.items():
+        vers = collections.Counter(v for _, v in rows).most_common(1)
+        if not vers: continue
+        vv = "2" if vers[0][0].startswith("2") else "1"
+        E = [_np.array(e, float) for e, v in rows if (v.startswith("2")) == (vv == "2")]
+        if len(E) < 20: continue
+        E = [e / (_np.linalg.norm(e) or 1) for e in E]
+        centre[sc] = (_np.mean(E, axis=0), vv)
+    flat = [t for v in out.values() for t in v]
+    for t in flat:
+        f = feats.get(t["track_id"])
+        if not f: continue
+        d, ver = f
+        t["measures"] = {k: (round(float(d[k]), 3) if isinstance(d.get(k), (int, float)) else None)
+                         for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence")}
+        cen = centre.get(t["scene"])
+        if cen is not None and d.get("embedding"):
+            v = _np.array(d["embedding"], float)
+            if (ver.startswith("2")) == (cen[1] == "2") and len(v) == len(cen[0]):
+                v = v / (_np.linalg.norm(v) or 1)
+                t["dist_from_scene_2024"] = round(float(1 - v @ cen[0] / ((_np.linalg.norm(v) * _np.linalg.norm(cen[0])) or 1)), 4)
+    return flat
 
 
 def main():
