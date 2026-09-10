@@ -82,7 +82,8 @@ def main():
             if n < 50: continue
             ti = len(tracks)
             tracks.append({"track_id": tid, **row, **scene.get(tid, {}),
-                           "played_in_sets": tid in played, "canon": bool(d.get("canon"))})
+                           "played_in_sets": tid in played, "canon": bool(d.get("canon")),
+                           **({"preview": d["preview"]} if d.get("preview") else {})})
             H.append(h[:n].astype("<u4"))
             P.append((np.full(n, ti, dtype="<u4") << 16) | np.minimum(f[:n], 0xFFFF).astype("<u4"))
             n_extra += 1

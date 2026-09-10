@@ -128,6 +128,7 @@ def main():
                     Fr = np.minimum(np.array([f for _, f in hs]), 0xFFFF).astype("<u2")
                     out.write(json.dumps({"query": term, "scene": scene, "found": True,
                                           "track_id": hit["track_id"], "name": hit["name"], "artists": hit["artists"],
+                                          "preview": hit["preview"],
                                           "canon": True, "n": int(len(H)),
                                           "hashes": base64.b64encode(H.tobytes()).decode(),
                                           "frames": base64.b64encode(Fr.tobytes()).decode()}) + "\n")
