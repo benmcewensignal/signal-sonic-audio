@@ -62,7 +62,7 @@ def main():
     # additions: the targeted pass and the canon, both published as base64 blobs so the
     # gigabyte store never has to move
     import base64
-    for extra in ["fp-extra.jsonl", "fp-canon.jsonl"]:
+    for extra in ["fp-extra.jsonl", "fp-canon.jsonl", "fp-history.jsonl"]:
         path = os.path.join(os.path.dirname(a.out), extra)
         if not os.path.exists(path): continue
         n_extra = 0
