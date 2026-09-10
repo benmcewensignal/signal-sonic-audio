@@ -35,6 +35,29 @@ def indexed_already(out_dir):
     return have
 
 
+BEATPORT_GENRES = {"deep-house": 12, "tech-house": 11, "house": 5, "techno-peak-time": 6,
+ "techno-raw-deep-hypnotic": 92, "melodic-house-techno": 90, "afro-house": 89, "amapiano": 98,
+ "drum-and-bass": 1, "uk-garage-speed-garage": 86, "140-deep-dubstep-grime": 95,
+ "breaks-breakbeat-uk-bass": 9, "bass-house": 91, "trance-main-floor": 7, "psy-trance": 13,
+ "progressive-house": 15, "indie-dance": 37, "organic-house": 93, "hard-techno": 2, "uk-funky-gqom": 85}
+
+
+def beatport_top(token, limit_per_genre=100):
+    """Beatport's current Top 100 per genre: the records most likely to be played at a phone
+    today. Our own chart slices are only two weeks deep, so this is a far better base."""
+    out = []
+    for scene, gid in BEATPORT_GENRES.items():
+        try:
+            d = _get(f"/catalog/genres/{gid}/top/{limit_per_genre}/", token)
+            rows = d if isinstance(d, list) else d.get("results", [])
+            for i, t in enumerate(rows):
+                tid = "bp:" + str(t.get("id"))
+                out.append((tid, scene, i + 1))
+        except Exception as e:
+            print(f"  top 100 for {scene}: {type(e).__name__}", flush=True)
+    return out
+
+
 def wanted(meta_db, have, limit):
     c = sqlite3.connect(meta_db); c.row_factory = sqlite3.Row
     best = {t: rk for t, rk in c.execute(
@@ -52,6 +75,18 @@ def wanted(meta_db, have, limit):
     return [t for _, _, t in scored[:limit]], len(scored)
 
 
+def wanted_with_top(meta_db, have, limit, token):
+    """Beatport's live Top 100 first, then our own charted and set-played records."""
+    top = beatport_top(token)
+    picks, seen = [], set(have)
+    for tid, scene, rank in sorted(top, key=lambda x: x[2]):
+        if tid in seen: continue
+        seen.add(tid); picks.append(tid)
+    print(f"Beatport top 100 across {len(BEATPORT_GENRES)} genres: {len(top)} records, {len(picks)} not yet indexed", flush=True)
+    rest, total = wanted(meta_db, seen, max(0, limit - len(picks)))
+    return (picks + rest)[:limit], len(picks) + total
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--meta", default="sonic.db"); ap.add_argument("--out", default="out/fp-extra.jsonl")
@@ -59,10 +94,11 @@ def main():
     a = ap.parse_args()
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     have = indexed_already(os.path.dirname(a.out))
-    todo, total = wanted(a.meta, have, a.limit)
+    token0 = get_token()
+    todo, total = wanted_with_top(a.meta, have, a.limit, token0)
     print(f"{len(have)} already indexed | {total} worth adding | {len(todo)} this run", flush=True)
     if not todo: return
-    token = get_token()
+    token = token0
     t0 = time.time(); done = err = 0
     mode = "a" if os.path.exists(a.out) else "w"
     with open(a.out, mode) as out:
