@@ -5,7 +5,7 @@ on:
       task:
         description: what to run
         type: choice
-        options: [rhythm, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
+        options: [rhythm, history, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
         default: rhythm
 permissions:
   contents: write
@@ -32,6 +32,38 @@ jobs:
       - name: build olaf
         if: startsWith(inputs.task, 'olaf')
         run: python -m audio.olaf build
+
+      - name: fingerprint Beatport history
+        if: inputs.task == 'history'
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.fp_history --meta sonic.db --out out/fp-history.jsonl --from 2016-01 --per-month 8 --budget-minutes 80
+
+      - name: chain the history pass while it is adding records
+        if: always() && inputs.task == 'history'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          SZ=$(stat -c%s out/fp-history.jsonl 2>/dev/null || echo 0)
+          PREV=$(cat out/.history-size 2>/dev/null || echo 0)
+          echo "history file: $SZ bytes (was $PREV)"
+          echo "$SZ" > out/.history-size
+          if [ "$SZ" -le "$PREV" ]; then echo "no new records; not chaining"; exit 0; fi
+          gh workflow run audio.yml --ref main -f task=history && echo "follow-up dispatched"
+          exit 0
+
+      - name: fingerprint the canon
+        if: inputs.task == 'canon'
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.canon --out out/fp-canon.jsonl --budget-minutes 80
 
       - name: fingerprint the biggest records
         if: inputs.task == 'fp-top'
