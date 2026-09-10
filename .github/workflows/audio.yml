@@ -5,7 +5,7 @@ on:
       task:
         description: what to run
         type: choice
-        options: [rhythm, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
+        options: [rhythm, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
         default: rhythm
 permissions:
   contents: write
@@ -32,6 +32,15 @@ jobs:
       - name: build olaf
         if: startsWith(inputs.task, 'olaf')
         run: python -m audio.olaf build
+
+      - name: fingerprint the canon
+        if: inputs.task == 'canon'
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.canon --out out/fp-canon.jsonl --budget-minutes 80
 
       - name: fingerprint the biggest records
         if: inputs.task == 'fp-top'
