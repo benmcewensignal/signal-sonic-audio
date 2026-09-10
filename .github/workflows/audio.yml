@@ -5,7 +5,7 @@ on:
       task:
         description: what to run
         type: choice
-        options: [rhythm, demo-index, olaf-bench, olaf-bench-small]
+        options: [rhythm, full-index, demo-index, olaf-bench, olaf-bench-small]
         default: rhythm
 permissions:
   contents: write
@@ -32,6 +32,35 @@ jobs:
       - name: build olaf
         if: startsWith(inputs.task, 'olaf')
         run: python -m audio.olaf build
+
+      - name: build the full recognition index
+        if: inputs.task == 'full-index'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          echo "fetching the fingerprint store (about 1 GB)"
+          curl -sL -o fingerprints.db "$(curl -s -H "Authorization: Bearer ${{ secrets.PIPELINE_PAT || github.token }}" \
+            https://api.github.com/repos/benmcewensignal/signal-sonic/releases/tags/fp-store \
+            | python -c "import json,sys;print(json.load(sys.stdin)['assets'][0]['browser_download_url'])")"
+          ls -la fingerprints.db
+          python -c "import sqlite3;print('records in store:', sqlite3.connect('fingerprints.db').execute('select count(*) from fp_tracks').fetchone()[0])"
+          python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index
+          ls -la out/index.bin out/index.json
+          rm -f fingerprints.db
+
+      - name: publish the index as a release asset
+        if: inputs.task == 'full-index'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          gh release delete recognition-index -y 2>/dev/null
+          gh release create recognition-index out/index.bin --title "recognition index" --notes "sorted hash postings for the whole fingerprinted corpus" || \
+            gh release upload recognition-index out/index.bin --clobber
+          git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
+          git add out/index.json && git commit -qm "recognition index metadata" && git pull -q --no-rebase origin main && git push -q origin HEAD:main
+          exit 0
 
       - name: build the recognition demo index
         if: inputs.task == 'demo-index'
