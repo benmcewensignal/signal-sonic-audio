@@ -60,25 +60,29 @@ def main():
         kept += n
         if len(tracks) % 500 == 0: print(f"  {len(tracks)} records, {kept:,} postings", flush=True)
     # additions from the targeted pass, which fingerprints records the store never had
-    extra = os.path.join(os.path.dirname(a.out), "fp-extra.jsonl")
-    if os.path.exists(extra):
-        import base64
-        n_extra = 0
-        for line in open(extra):
-            try: d = json.loads(line)
-            except Exception: continue
-            tid = d["track_id"]
-            if tid not in info or any(t["track_id"] == tid for t in tracks[-2000:]): continue
-            h = np.frombuffer(base64.b64decode(d["hashes"]), dtype="<u4")
-            f = np.frombuffer(base64.b64decode(d["frames"]), dtype="<u2")
-            n = min(len(h), len(f), MAX_HASHES_PER_TRACK)
-            if n < 50: continue
-            ti = len(tracks)
-            tracks.append({"track_id": tid, **info[tid], **scene.get(tid, {}), "played_in_sets": tid in played})
-            H.append(h[:n].astype("<u4"))
-            P.append((np.full(n, ti, dtype="<u4") << 16) | np.minimum(f[:n], 0xFFFF).astype("<u4"))
-            n_extra += 1
-        print(f"merged {n_extra} records from the targeted pass", flush=True)
+    for extra in [os.path.join(os.path.dirname(a.out), f) for f in ("fp-extra.jsonl", "fp-canon.jsonl")]:
+      if os.path.exists(extra):
+          import base64
+          n_extra = 0
+          for line in open(extra):
+              try: d = json.loads(line)
+              except Exception: continue
+              tid = d["track_id"]
+              if d.get("found") is False: continue
+            meta_row = info.get(tid) or ({"name": d.get("name"), "artists": d.get("artists", []), "label": None}
+                                         if d.get("canon") else None)
+            if meta_row is None or any(t["track_id"] == tid for t in tracks[-3000:]): continue
+              h = np.frombuffer(base64.b64decode(d["hashes"]), dtype="<u4")
+              f = np.frombuffer(base64.b64decode(d["frames"]), dtype="<u2")
+              n = min(len(h), len(f), MAX_HASHES_PER_TRACK)
+              if n < 50: continue
+              ti = len(tracks)
+              tracks.append({"track_id": tid, **meta_row, **scene.get(tid, {}),
+                             "played_in_sets": tid in played, "canon": bool(d.get("canon"))})
+              H.append(h[:n].astype("<u4"))
+              P.append((np.full(n, ti, dtype="<u4") << 16) | np.minimum(f[:n], 0xFFFF).astype("<u4"))
+              n_extra += 1
+          print(f"merged {n_extra} records from the targeted pass", flush=True)
     H = np.concatenate(H); P = np.concatenate(P)
     print(f"before pruning: {len(tracks)} records, {len(H):,} postings", flush=True)
 
