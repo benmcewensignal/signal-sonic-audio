@@ -158,6 +158,8 @@ jobs:
           case "$LEFT" in ''|*[!0-9]*) echo "could not count; not chaining"; exit 0;; esac
           # the index build shares this runner and the demo needs it: until it exists,
           # rhythm does not re-arm. No marker file to forget to commit.
-          if [ ! -f out/demo-index.json ]; then echo "no demo index yet; yielding the runner"; exit 0; fi
+          # the corpus build has priority: rhythm does not re-arm while it is unfinished
+          if [ ! -f out/fp-history.jsonl ]; then echo "corpus build not started; yielding the runner"; exit 0; fi
+          if [ -f out/.corpus-running ]; then echo "corpus build in flight; yielding the runner"; exit 0; fi
           if [ "$LEFT" -gt 0 ]; then gh workflow run audio.yml --ref main -f task=rhythm && echo "follow-up dispatched"; fi
           exit 0
