@@ -72,16 +72,25 @@ def main():
             except Exception: pass
     token = get_token()
     ms = months(a.start, a.end)
-    print(f"{len(BEATPORT_GENRES)} genres x {len(ms)} months, {a.per_month} a month | {len(have)} already held", flush=True)
-    order_state = {}
+    # resume point: months already fully walked are recorded and never re-queried, so each
+    # run advances instead of re-checking what the last one did
+    state_path = os.path.join(os.path.dirname(a.out), "history-state.json")
+    state = json.load(open(state_path)) if os.path.exists(state_path) else {"done_months": [], "ordering": None}
+    done_months = set(state.get("done_months", []))
+    todo_months = [m for m in reversed(ms) if m not in done_months]
+    print(f"{len(BEATPORT_GENRES)} genres | {len(done_months)} months done, {len(todo_months)} to go, {a.per_month} a month | {len(have)} records held", flush=True)
+    order_state = {"order": state.get("ordering")} if state.get("ordering") else {}
     t0 = time.time(); done = err = skipped = 0
+    months_finished = 0
     mode = "a" if os.path.exists(a.out) else "w"
     with open(a.out, mode) as out:
         # newest months first: the most recognisable records are the recent ones
-        for month in reversed(ms):
+        for month in todo_months:
             if (time.time() - t0) / 60 > a.budget_minutes: break
+            month_complete = True
             for scene, gid in BEATPORT_GENRES.items():
-                if (time.time() - t0) / 60 > a.budget_minutes: break
+                if (time.time() - t0) / 60 > a.budget_minutes:
+                    month_complete = False; break
                 try: rows = top_for(token, gid, month, a.per_month, order_state)
                 except Exception as e:
                     err += 1; continue
@@ -118,7 +127,14 @@ def main():
                         if p:
                             try: os.unlink(p)
                             except OSError: pass
+            if month_complete:
+                done_months.add(month); months_finished += 1
+                state = {"done_months": sorted(done_months), "ordering": order_state.get("order"),
+                         "months_left": len(ms) - len(done_months),
+                         "updated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+                json.dump(state, open(state_path, "w"), indent=1)
     print(json.dumps({"added": done, "errors": err, "already_held": skipped,
+                      "months_finished_this_run": months_finished, "months_done": len(done_months), "months_left": len(ms) - len(done_months),
                       "ordering_used": order_state.get("order"),
                       "note": "ordering tells you whether this is Beatport's ranking or merely its release order"},
                      indent=1), flush=True)
