@@ -62,7 +62,9 @@ jobs:
           BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
           BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
           BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
-        run: python -m audio.rehearse --n 20 --clips 3 --out out/rehearse.json
+        run: |
+          python -m audio.rehearse --n 20 --clips 3 --seconds 15 --out out/rehearse-15.json
+          python -m audio.rehearse --n 20 --clips 3 --seconds 25 --out out/rehearse-25.json
 
       - name: borrow the analyser for the canon pass
         if: inputs.task == 'canon'
