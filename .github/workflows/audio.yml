@@ -56,7 +56,7 @@ jobs:
           exit 0
 
       - name: rehearse recognition against real records
-        if: inputs.task == 'rehearse'
+        if: inputs.task == 'rehearse' || github.event_name == 'schedule'
         env:
           BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
           BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
