@@ -5,7 +5,7 @@ on:
       task:
         description: what to run
         type: choice
-        options: [rhythm, history, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
+        options: [rehearse, rhythm, history, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
         default: rhythm
 permissions:
   contents: write
@@ -54,6 +54,15 @@ jobs:
           if [ "$LEFT" -le 0 ]; then echo "every month walked; finished"; exit 0; fi
           gh workflow run audio.yml --ref main -f task=history && echo "follow-up dispatched"
           exit 0
+
+      - name: rehearse recognition against real records
+        if: inputs.task == 'rehearse'
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.rehearse --n 20 --clips 3 --out out/rehearse.json
 
       - name: borrow the analyser for the canon pass
         if: inputs.task == 'canon'
