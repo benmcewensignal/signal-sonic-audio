@@ -142,7 +142,10 @@ def main():
                                                   "bass_weight", "vocal_presence")}
                             measures["embedding"] = [round(float(x), 5) for x in (d.get("embedding") or [])]
                         except Exception as e:
-                            print(f"    {term}: could not measure ({type(e).__name__})", flush=True)
+                            import traceback
+                            measures = {"error": f"{type(e).__name__}: {str(e)[:180]}",
+                                        "where": traceback.format_exc().strip().split(chr(10))[-3][:160]}
+                            print(f"    {term}: could not measure -> {measures['error']}", flush=True)
                     if len(hs) < 50: raise ValueError("too few fingerprints")
                     H = np.array([h for h, _ in hs], dtype="<u4")
                     Fr = np.minimum(np.array([f for _, f in hs]), 0xFFFF).astype("<u2")
