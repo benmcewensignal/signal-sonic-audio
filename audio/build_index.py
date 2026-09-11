@@ -141,6 +141,29 @@ def main():
     print(f"after pruning {len(common):,} over-common hashes: {len(H):,} postings", flush=True)
 
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
+    # A distance of 0.014 tells a reader nothing. Rank each record against its own scene, so
+    # the app can say "further out than four in five of its peers" instead of a number.
+    by_scene = collections.defaultdict(list)
+    for t in tracks:
+        if t.get("scene") and t.get("dist_from_scene_2024") is not None:
+            by_scene[t["scene"]].append(t)
+    for sc, group in by_scene.items():
+        group.sort(key=lambda x: x["dist_from_scene_2024"])
+        n = len(group)
+        for i, t in enumerate(group):
+            t["dist_rank"] = round((i + 0.5) / n, 3)      # 0 is closest to the 2024 sound
+    # and the same for each measurement, so a record can be placed ingredient by ingredient
+    for key in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence"):
+        for sc, group in by_scene.items():
+            vals = [(t["measures"].get(key), t) for t in group
+                    if t.get("measures") and isinstance(t["measures"].get(key), (int, float))]
+            if len(vals) < 20: continue
+            vals.sort(key=lambda x: x[0])
+            for i, (_, t) in enumerate(vals):
+                t.setdefault("ranks", {})[key] = round((i + 0.5) / len(vals), 3)
+    ranked = sum(1 for t in tracks if "dist_rank" in t)
+    print(f"ranked {ranked} records against their own scene", flush=True)
+
     with open(a.out + ".bin", "wb") as f:
         f.write(struct.pack("<4sII", b"SFP1", len(H), len(tracks)))
         f.write(H.tobytes()); f.write(P.tobytes())
