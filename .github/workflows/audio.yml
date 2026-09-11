@@ -55,6 +55,20 @@ jobs:
           gh workflow run audio.yml --ref main -f task=history && echo "follow-up dispatched"
           exit 0
 
+      - name: borrow the analyser for the canon pass
+        if: inputs.task == 'canon'
+        run: |
+          set -e
+          # this repository has no sonic package, so the import silently failed and 158
+          # canon records were fingerprinted and none measured. Fetch it rather than vendor
+          # a copy, so there is one analyser and it cannot drift.
+          mkdir -p sonic
+          for f in __init__.py analyser.py analyser_local.py; do
+            curl -sL -o "sonic/$f" "https://raw.githubusercontent.com/benmcewensignal/signal-sonic/main/sonic/$f" || true
+          done
+          touch sonic/__init__.py
+          python -c "from sonic.analyser_local import LocalAnalyser; print('analyser available:', LocalAnalyser().version)"
+
       - name: fingerprint the canon
         if: inputs.task == 'canon'
         env:

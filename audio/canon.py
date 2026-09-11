@@ -19,8 +19,11 @@ import numpy as np
 from . import fingerprints as FP
 try:
     from sonic.analyser_local import LocalAnalyser
-except Exception:
+except Exception as _e:
     LocalAnalyser = None
+    _ANALYSER_ERROR = repr(_e)[:120]
+else:
+    _ANALYSER_ERROR = None
 from .beatport import get_token, _get
 
 CANON = {
@@ -104,8 +107,10 @@ def main():
         for line in open(a.out):
             try: have.add(json.loads(line).get("query"))
             except Exception: pass
+    if LocalAnalyser is None:
+        print(f"WARNING: no analyser, records will be fingerprinted but not measured ({_ANALYSER_ERROR})", flush=True)
     token = get_token()
-    t0 = time.time(); found = missing = err = 0
+    t0 = time.time(); found = missing = err = measured_n = 0
     report = []
     mode = "a" if os.path.exists(a.out) else "w"
     with open(a.out, mode) as out:
@@ -148,6 +153,7 @@ def main():
                                           "hashes": base64.b64encode(H.tobytes()).decode(),
                                           "frames": base64.b64encode(Fr.tobytes()).decode()}) + "\n")
                     found += 1
+                    if measures.get("tempo"): measured_n += 1
                     if found % 20 == 0: out.flush(); print(f"  {found} fingerprinted, {missing} not on Beatport", flush=True)
                 except Exception as e:
                     err += 1
@@ -157,7 +163,7 @@ def main():
                         try: os.unlink(p)
                         except OSError: pass
     total = sum(len(v) for v in CANON.values())
-    print(json.dumps({"canon_size": total, "fingerprinted": found, "not_on_beatport": missing,
+    print(json.dumps({"canon_size": total, "fingerprinted": found, "measured": measured_n, "not_on_beatport": missing,
                       "errors": err, "hit_rate": round(found / max(1, found + missing), 2)}, indent=1), flush=True)
 
 
