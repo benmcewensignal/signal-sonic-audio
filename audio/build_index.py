@@ -119,8 +119,20 @@ def main():
             n = min(len(h), len(f), MAX_HASHES_PER_TRACK)
             if n < 50: continue
             ti = len(tracks)
+            own = {}
+            if d.get("measures"):
+                m = d["measures"]
+                keep = {k: m.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence")
+                        if isinstance(m.get(k), (int, float))}
+                if keep: own["measures"] = keep
+                cen = centre.get(d.get("scene"))
+                e = m.get("embedding")
+                if cen is not None and e and len(e) == 45:
+                    v = np.array(e, float); v = v / (np.linalg.norm(v) or 1)
+                    own["dist_from_scene_2024"] = round(1 - float(v @ cen / ((np.linalg.norm(v) * np.linalg.norm(cen)) or 1)), 4)
+                if d.get("scene"): own["scene"] = d["scene"]
             tracks.append({"track_id": tid, **row, **scene.get(tid, {}),
-                           **measured(tid, (scene.get(tid) or {}).get("scene")),
+                           **measured(tid, (scene.get(tid) or {}).get("scene")), **own,
                            "played_in_sets": tid in played, "canon": bool(d.get("canon")),
                            **({"preview": d["preview"]} if d.get("preview") else {})})
             H.append(h[:n].astype("<u4"))

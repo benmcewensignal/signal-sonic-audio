@@ -17,6 +17,10 @@ Two honest limits, both reported rather than hidden:
 import argparse, base64, json, os, tempfile, time, urllib.parse, urllib.request
 import numpy as np
 from . import fingerprints as FP
+try:
+    from sonic.analyser_local import LocalAnalyser
+except Exception:
+    LocalAnalyser = None
 from .beatport import get_token, _get
 
 CANON = {
@@ -123,13 +127,24 @@ def main():
                     with urllib.request.urlopen(req, timeout=30) as r, open(p, "wb") as f: f.write(r.read())
                     y = FP.load_audio(p, max_seconds=90)
                     hs = FP.hashes(y)
+                    measures = {}
+                    if LocalAnalyser is not None:
+                        try:
+                            fv = LocalAnalyser().analyse(p)
+                            d = fv.__dict__ if hasattr(fv, "__dict__") else {}
+                            measures = {k: (round(float(d[k]), 4) if isinstance(d.get(k), (int, float)) else None)
+                                        for k in ("tempo", "drum_density", "drum_swing",
+                                                  "bass_weight", "vocal_presence")}
+                            measures["embedding"] = [round(float(x), 5) for x in (d.get("embedding") or [])]
+                        except Exception as e:
+                            print(f"    {term}: could not measure ({type(e).__name__})", flush=True)
                     if len(hs) < 50: raise ValueError("too few fingerprints")
                     H = np.array([h for h, _ in hs], dtype="<u4")
                     Fr = np.minimum(np.array([f for _, f in hs]), 0xFFFF).astype("<u2")
                     out.write(json.dumps({"query": term, "scene": scene, "found": True,
                                           "track_id": hit["track_id"], "name": hit["name"], "artists": hit["artists"],
                                           "preview": hit["preview"],
-                                          "canon": True, "n": int(len(H)),
+                                          "canon": True, "measures": measures, "n": int(len(H)),
                                           "hashes": base64.b64encode(H.tobytes()).decode(),
                                           "frames": base64.b64encode(Fr.tobytes()).decode()}) + "\n")
                     found += 1
