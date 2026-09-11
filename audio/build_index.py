@@ -43,6 +43,42 @@ def main():
         scene.setdefault(r["track_id"], {"scene": r["scene"], "chart_best": r["rk"]})
     played = {r[0] for r in meta.execute("select distinct track_id from mix_plays")}
 
+    # what the record sounds like, and where that sits against its own scene. Without these
+    # a result can say what a record is but not how it compares, which is the half that is
+    # not Shazam. The first index carried them; the rewrite for the full corpus lost it.
+    feats = {}
+    for r in meta.execute("select track_id, features from tracks where analyser_id='local'"):
+        try: feats[r["track_id"]] = json.loads(r["features"])
+        except Exception: pass
+    home = collections.defaultdict(list)
+    for r in meta.execute("select scene, track_id from track_scenes where week like '____-M__' and week <= '2025-M05'"):
+        d = feats.get(r["track_id"])
+        e = d.get("embedding") if d else None
+        if e and len(e) == 45: home[r["scene"]].append(e)
+    centre = {}
+    for sc, es in home.items():
+        if len(es) < 20: continue
+        E = [np.array(e, float) for e in es]
+        E = [e / (np.linalg.norm(e) or 1) for e in E]
+        centre[sc] = np.mean(E, axis=0)
+    print(f"measures for {len(feats)} records, scene centres for {len(centre)} scenes", flush=True)
+
+    def measured(tid, sc):
+        """The record's own numbers, and its distance from where its scene was in 2024."""
+        d = feats.get(tid)
+        if not d: return {}
+        out = {}
+        m = {k: d.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence")}
+        if any(isinstance(v, (int, float)) for v in m.values()):
+            out["measures"] = {k: (round(float(v), 3) if isinstance(v, (int, float)) else None)
+                               for k, v in m.items()}
+        cen = centre.get(sc)
+        e = d.get("embedding")
+        if cen is not None and e and len(e) == 45:
+            v = np.array(e, float); v = v / (np.linalg.norm(v) or 1)
+            out["dist_from_scene_2024"] = round(1 - float(v @ cen / ((np.linalg.norm(v) * np.linalg.norm(cen)) or 1)), 4)
+        return out
+
     tracks, H, P = [], [], []
     kept = 0
     for i, row in enumerate(fp.execute("select track_id, n_hashes, hashes, frames from fp_tracks")):
@@ -53,7 +89,9 @@ def main():
         n = min(len(h), len(f), MAX_HASHES_PER_TRACK)
         if n < 50: continue
         ti = len(tracks)
-        d = {"track_id": tid, **info[tid], **scene.get(tid, {}), "played_in_sets": tid in played}
+        sc_info = scene.get(tid, {})
+        d = {"track_id": tid, **info[tid], **sc_info, "played_in_sets": tid in played,
+             **measured(tid, sc_info.get("scene"))}
         tracks.append(d)
         H.append(h[:n].astype("<u4"))
         P.append((np.full(n, ti, dtype="<u4") << 16) | np.minimum(f[:n], 0xFFFF).astype("<u4"))
@@ -82,6 +120,7 @@ def main():
             if n < 50: continue
             ti = len(tracks)
             tracks.append({"track_id": tid, **row, **scene.get(tid, {}),
+                           **measured(tid, (scene.get(tid) or {}).get("scene")),
                            "played_in_sets": tid in played, "canon": bool(d.get("canon")),
                            **({"preview": d["preview"]} if d.get("preview") else {})})
             H.append(h[:n].astype("<u4"))
