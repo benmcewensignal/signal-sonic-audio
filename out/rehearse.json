@@ -1,0 +1,50 @@
+{
+ "records": 20,
+ "clip_seconds": 15,
+ "by_condition": {
+  "clean": {
+   "ok": 60,
+   "of": 60,
+   "rate": 1.0
+  },
+  "quiet": {
+   "ok": 60,
+   "of": 60,
+   "rate": 1.0
+  },
+  "very quiet": {
+   "ok": 60,
+   "of": 60,
+   "rate": 1.0
+  },
+  "dull": {
+   "ok": 60,
+   "of": 60,
+   "rate": 1.0
+  },
+  "noise": {
+   "ok": 60,
+   "of": 60,
+   "rate": 1.0
+  },
+  "loud noise": {
+   "ok": 60,
+   "of": 60,
+   "rate": 1.0
+  },
+  "room": {
+   "ok": 54,
+   "of": 60,
+   "rate": 0.9
+  }
+ },
+ "median_votes": {
+  "clean": 1110,
+  "quiet": 1110,
+  "very quiet": 1110,
+  "dull": 119,
+  "noise": 1009,
+  "loud noise": 579,
+  "room": 18
+ }
+}
