@@ -18,7 +18,7 @@ published as a release asset because it is too large for a repository file.
 
   python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index
 """
-import argparse, json, os, sqlite3, struct, time
+import argparse, collections, json, os, sqlite3, struct, time
 import numpy as np
 
 MAX_TRACKS_PER_HASH = 6      # above this a hash names nothing
