@@ -202,7 +202,8 @@ def main():
                 sim[row, gi] = -2.0                       # not itself
                 near = np.argsort(-sim[row])[:4]
                 tracks[idx[gi]]["near"] = [
-                    {"name": tracks[idx[j]]["name"],
+                    {"id": tracks[idx[j]]["track_id"],
+                     "name": tracks[idx[j]]["name"],
                      "artists": (tracks[idx[j]].get("artists") or [])[:2],
                      "scene": tracks[idx[j]].get("scene"),
                      "sim": round(float(sim[row, j]), 3)} for j in near]
