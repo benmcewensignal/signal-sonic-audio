@@ -200,7 +200,7 @@ def main():
             sim = E[start:start + B] @ E.T
             for row, gi in enumerate(range(start, min(start + B, len(idx)))):
                 sim[row, gi] = -2.0                       # not itself
-                near = np.argsort(-sim[row])[:4]
+                near = np.argsort(-sim[row])[:8]
                 tracks[idx[gi]]["near"] = [
                     {"id": tracks[idx[j]]["track_id"],
                      "name": tracks[idx[j]]["name"],
