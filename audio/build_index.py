@@ -188,6 +188,12 @@ def main():
     idx = [i for i, t in enumerate(tracks) if t.get("measures") and t.get("_emb")]
     if len(idx) > 50:
         E = np.array([tracks[i]["_emb"] for i in idx], dtype=float)
+        # Centre first. Without it every record scores 0.99 against every other: the vectors
+        # all point in nearly the same direction, so cosine measures how much a record is a
+        # record rather than what kind. Subtracting the average makes the comparison about
+        # how each one differs from the middle, which is the question being asked.
+        E = E - E.mean(axis=0, keepdims=True)
+        E = E / (E.std(axis=0, keepdims=True) + 1e-9)
         E = E / (np.linalg.norm(E, axis=1, keepdims=True) + 1e-9)
         B = 512
         for start in range(0, len(idx), B):
