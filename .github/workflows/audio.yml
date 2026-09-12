@@ -122,8 +122,17 @@ jobs:
           nid = sum(1 for x in t if x.get("near") and x["near"][0].get("id"))
           wk = sum(1 for x in t if x.get("walk"))
           print(f"VERIFY: {len(t)} records, eight-neighbour {n8}, with ids {nid}, walks {wk}")
+          det = json.load(open("out/index-detail.json"))
+          n8 = sum(1 for v in det.values() if v.get("near") and len(v["near"]) >= 8)
+          wk = sum(1 for v in det.values() if v.get("walk"))
+          import os
+          print(f"VERIFY: index {os.path.getsize('out/index.json')/1e6:.1f} MB, "
+                f"detail {os.path.getsize('out/index-detail.json')/1e6:.1f} MB, "
+                f"eight-neighbour {n8}, walks {wk}")
           if n8 == 0 or wk == 0:
-              raise SystemExit("the index was written without neighbours or walks")
+              raise SystemExit("the detail file was written without neighbours or walks")
+          if os.path.getsize("out/index.json") > 9_000_000:
+              raise SystemExit("the index the api loads is too large; it must stay lean")
           PY
           ls -la out/index.bin out/index.json
           rm -f fingerprints.db
