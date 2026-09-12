@@ -11,7 +11,10 @@ permissions:
   contents: write
   actions: write
 concurrency:
-  group: sonic-audio
+  # keyed on the task: GitHub keeps only one pending run per group, so a chain that
+  # dispatches continuously evicts anything else waiting. Four index rebuilds were
+  # cancelled in the pending slot today without ever starting.
+  group: sonic-audio-${{ inputs.task }}
   cancel-in-progress: false
 jobs:
   run:
