@@ -208,6 +208,48 @@ def main():
                      "scene": tracks[idx[j]].get("scene"),
                      "sim": round(float(sim[row, j]), 3)} for j in near]
         print(f"nearest neighbours for {len(idx)} records", flush=True)
+    # Walks: from any record, the nearest record that is meaningfully higher on one named
+    # measure and as close as possible on everything else. Similarity keeps the step
+    # coherent, the measure gives it a direction. Ten ids a record, and the catalogue
+    # becomes traversable along an axis a person understands rather than along a genre.
+    AXES = ["bass_weight", "drum_density", "drum_swing", "vocal_presence", "tempo"]
+    if len(idx) > 50:
+        E = np.array([tracks[i]["_emb"] for i in idx], dtype=float)
+        E = E / (np.linalg.norm(E, axis=1, keepdims=True) + 1e-9)
+        vals = {}
+        for ax in AXES:
+            v = np.array([tracks[i]["measures"].get(ax) if isinstance(tracks[i]["measures"].get(ax), (int, float))
+                          else np.nan for i in idx], dtype=float)
+            vals[ax] = v
+        B = 256
+        for start in range(0, len(idx), B):
+            sim = E[start:start + B] @ E.T
+            for row, gi in enumerate(range(start, min(start + B, len(idx)))):
+                walk = {}
+                for ax in AXES:
+                    v = vals[ax]
+                    here = v[gi]
+                    if not np.isfinite(here):
+                        continue
+                    sd = np.nanstd(v) or 1.0
+                    step = {}
+                    for name, mask in (("up", v > here + 0.25 * sd), ("down", v < here - 0.25 * sd)):
+                        cand = np.where(mask & np.isfinite(v))[0]
+                        if cand.size == 0:
+                            continue
+                        j = cand[np.argmax(sim[row, cand])]       # most alike, in that direction
+                        step[name] = {"id": tracks[idx[j]]["track_id"],
+                                      "name": tracks[idx[j]]["name"],
+                                      "artists": (tracks[idx[j]].get("artists") or [])[:2],
+                                      "scene": tracks[idx[j]].get("scene"),
+                                      "v": round(float(v[j]), 3),
+                                      "sim": round(float(sim[row, j]), 3)}
+                    if step:
+                        walk[ax] = step
+                if walk:
+                    tracks[idx[gi]]["walk"] = walk
+        print(f"walks for {sum(1 for t in tracks if t.get('walk'))} records", flush=True)
+
     for t in tracks:
         t.pop("_emb", None)
 
