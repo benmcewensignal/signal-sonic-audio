@@ -114,6 +114,17 @@ jobs:
           ls -la fingerprints.db
           python -c "import sqlite3;print('records in store:', sqlite3.connect('fingerprints.db').execute('select count(*) from fp_tracks').fetchone()[0])"
           python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index
+          python - <<'PY'
+          import json
+          d = json.load(open("out/index.json"))
+          t = d["tracks"]
+          n8 = sum(1 for x in t if x.get("near") and len(x["near"]) >= 8)
+          nid = sum(1 for x in t if x.get("near") and x["near"][0].get("id"))
+          wk = sum(1 for x in t if x.get("walk"))
+          print(f"VERIFY: {len(t)} records, eight-neighbour {n8}, with ids {nid}, walks {wk}")
+          if n8 == 0 or wk == 0:
+              raise SystemExit("the index was written without neighbours or walks")
+          PY
           ls -la out/index.bin out/index.json
           rm -f fingerprints.db
 
