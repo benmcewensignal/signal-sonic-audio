@@ -170,8 +170,24 @@ jobs:
           git add -A out 2>/dev/null || true
           git diff --cached --quiet || (git commit -qm "audio: $(date -u +%FT%TZ)" && git pull -q --no-rebase origin main && git push -q origin HEAD:main) || echo "nothing to persist"
 
+      - name: stand down if a one-off build is waiting
+        id: yield
+        if: inputs.task == 'rhythm' || inputs.task == 'history'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          # A self-requeuing chain starves every one-off job: four index rebuilds were cut
+          # off today because rhythm re-booked the runner before they could start. If a
+          # build is queued, this run does not chain, and the runner falls free.
+          q=$(gh run list --repo ${{ github.repository }} --limit 20 --json status,displayTitle,databaseId \
+                --jq '[.[] | select(.status=="queued")] | length' 2>/dev/null)
+          echo "queued=${q:-0}" >> "$GITHUB_OUTPUT"
+          echo "one-off jobs waiting: ${q:-0}"
+          exit 0
+
       - name: chain the next run while records remain
-        if: always() && inputs.task == 'rhythm'
+        if: (always() && inputs.task == 'rhythm') && steps.yield.outputs.queued == '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
