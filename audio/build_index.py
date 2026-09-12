@@ -253,6 +253,20 @@ def main():
     for t in tracks:
         t.pop("_emb", None)
 
+    # Two files, not one. The matcher needs a name and a scene for eight thousand records;
+    # the card needs neighbours and walks for exactly one. Carrying both in the file the API
+    # loads on every cold start took it to twenty megabytes and the endpoint stopped
+    # responding, which broke recognition itself to serve a feature nobody had tapped yet.
+    rich = {}
+    for t in tracks:
+        extra = {}
+        if t.get("near"): extra["near"] = t.pop("near")
+        if t.get("walk"): extra["walk"] = t.pop("walk")
+        if extra: rich[t["track_id"]] = extra
+    with open(a.out + "-detail.json", "w") as f:
+        json.dump(rich, f, separators=(",", ":"))
+    print(f"detail for {len(rich)} records written alongside the index", flush=True)
+
     with open(a.out + ".bin", "wb") as f:
         f.write(struct.pack("<4sII", b"SFP1", len(H), len(tracks)))
         f.write(H.tobytes()); f.write(P.tobytes())
