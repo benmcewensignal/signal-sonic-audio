@@ -72,6 +72,9 @@ def main():
         if any(isinstance(v, (int, float)) for v in m.values()):
             out["measures"] = {k: (round(float(v), 3) if isinstance(v, (int, float)) else None)
                                for k, v in m.items()}
+        e_all = d.get("embedding")
+        if e_all and len(e_all) == 45:
+            out["_emb"] = [e_all[i] for i in list(range(0, 26)) + list(range(38, 45))]
         cen = centre.get(sc)
         e = d.get("embedding")
         if cen is not None and e and len(e) == 45:
@@ -125,6 +128,9 @@ def main():
                 keep = {k: m.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence")
                         if isinstance(m.get(k), (int, float))}
                 if keep: own["measures"] = keep
+                em = m.get("embedding")
+                if em and len(em) == 45:
+                    own["_emb"] = [em[i] for i in list(range(0, 26)) + list(range(38, 45))]
                 cen = centre.get(d.get("scene"))
                 e = m.get("embedding")
                 if cen is not None and e and len(e) == 45:
@@ -175,6 +181,28 @@ def main():
                 t.setdefault("ranks", {})[key] = round((i + 0.5) / len(vals), 3)
     ranked = sum(1 for t in tracks if "dist_rank" in t)
     print(f"ranked {ranked} records against their own scene", flush=True)
+
+    # What else sounds like this? Computed once here rather than shipping 8,403 embeddings
+    # to the phone. It is the question a person actually asks after "what is this", and
+    # nobody else can answer it: Shazam knows the record, not its neighbours.
+    idx = [i for i, t in enumerate(tracks) if t.get("measures") and t.get("_emb")]
+    if len(idx) > 50:
+        E = np.array([tracks[i]["_emb"] for i in idx], dtype=float)
+        E = E / (np.linalg.norm(E, axis=1, keepdims=True) + 1e-9)
+        B = 512
+        for start in range(0, len(idx), B):
+            sim = E[start:start + B] @ E.T
+            for row, gi in enumerate(range(start, min(start + B, len(idx)))):
+                sim[row, gi] = -2.0                       # not itself
+                near = np.argsort(-sim[row])[:4]
+                tracks[idx[gi]]["near"] = [
+                    {"name": tracks[idx[j]]["name"],
+                     "artists": (tracks[idx[j]].get("artists") or [])[:2],
+                     "scene": tracks[idx[j]].get("scene"),
+                     "sim": round(float(sim[row, j]), 3)} for j in near]
+        print(f"nearest neighbours for {len(idx)} records", flush=True)
+    for t in tracks:
+        t.pop("_emb", None)
 
     with open(a.out + ".bin", "wb") as f:
         f.write(struct.pack("<4sII", b"SFP1", len(H), len(tracks)))
