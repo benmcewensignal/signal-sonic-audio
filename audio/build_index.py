@@ -188,6 +188,25 @@ def main():
     ranked = sum(1 for t in tracks if "dist_rank" in t)
     print(f"ranked {ranked} records against their own scene", flush=True)
 
+    # Position on the two lines the whole site draws scenes on, so a record and its
+    # neighbours sit in the same space as the genres rather than on an arbitrary circle.
+    # The axes are the first two directions of the field, fixed here from the corpus.
+    if len(idx) > 50:
+        E = np.array([tracks[i]["_emb"] for i in idx], dtype=float)
+        mu = E.mean(0)
+        A = E - mu
+        sub = A[np.random.default_rng(1).choice(len(A), min(8000, len(A)), replace=False)]
+        _, _, Vt = np.linalg.svd(sub, full_matrices=False)
+        # orient so that driving is positive: trance must sit above dubstep
+        d1 = A @ Vt[0]
+        tr = [d1[k] for k, i in enumerate(idx) if tracks[i].get("scene") == "trance-main-floor"]
+        du = [d1[k] for k, i in enumerate(idx) if tracks[i].get("scene") == "140-deep-dubstep-grime"]
+        sgn = 1.0 if (tr and du and np.mean(tr) > np.mean(du)) else -1.0
+        d2 = A @ Vt[1]
+        for k, i in enumerate(idx):
+            tracks[i]["pos"] = {"driving": round(float(sgn * d1[k]), 4), "melodic": round(float(d2[k]), 4)}
+        print(f"positions for {len(idx)} records", flush=True)
+
     # What else sounds like this? Computed once here rather than shipping 8,403 embeddings
     # to the phone. It is the question a person actually asks after "what is this", and
     # nobody else can answer it: Shazam knows the record, not its neighbours.
@@ -215,25 +234,6 @@ def main():
                      "scene": tracks[idx[j]].get("scene"),
                      "sim": round(float(sim[row, j]), 3)} for j in near]
         print(f"nearest neighbours for {len(idx)} records", flush=True)
-    # Position on the two lines the whole site draws scenes on, so a record and its
-    # neighbours sit in the same space as the genres rather than on an arbitrary circle.
-    # The axes are the first two directions of the field, fixed here from the corpus.
-    if len(idx) > 50:
-        E = np.array([tracks[i]["_emb"] for i in idx], dtype=float)
-        mu = E.mean(0)
-        A = E - mu
-        sub = A[np.random.default_rng(1).choice(len(A), min(8000, len(A)), replace=False)]
-        _, _, Vt = np.linalg.svd(sub, full_matrices=False)
-        # orient so that driving is positive: trance must sit above dubstep
-        d1 = A @ Vt[0]
-        tr = [d1[k] for k, i in enumerate(idx) if tracks[i].get("scene") == "trance-main-floor"]
-        du = [d1[k] for k, i in enumerate(idx) if tracks[i].get("scene") == "140-deep-dubstep-grime"]
-        sgn = 1.0 if (tr and du and np.mean(tr) > np.mean(du)) else -1.0
-        d2 = A @ Vt[1]
-        for k, i in enumerate(idx):
-            tracks[i]["pos"] = {"driving": round(float(sgn * d1[k]), 4), "melodic": round(float(d2[k]), 4)}
-        print(f"positions for {len(idx)} records", flush=True)
-
     # Walks: from any record, the nearest record that is meaningfully higher on one named
     # measure and as close as possible on everything else. Similarity keeps the step
     # coherent, the measure gives it a direction. Ten ids a record, and the catalogue
