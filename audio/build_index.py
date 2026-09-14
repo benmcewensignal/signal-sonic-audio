@@ -68,7 +68,13 @@ def main():
         d = feats.get(tid)
         if not d: return {}
         out = {}
+        # bass_weight reads 1.000 for 99% of records and drum_swing clips for 15%: neither can
+        # rank anything. sub_bass and pulse_clarity replace them where the record has been
+        # measured on the current analyser; the old keys stay so older records still render.
+        ed = d.get("edm") or {}
         m = {k: d.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence")}
+        m["sub_bass"] = ed.get("sub_bass")
+        m["pulse_clarity"] = ed.get("pulse_clarity")
         if any(isinstance(v, (int, float)) for v in m.values()):
             out["measures"] = {k: (round(float(v), 3) if isinstance(v, (int, float)) else None)
                                for k, v in m.items()}
@@ -171,7 +177,7 @@ def main():
         for i, t in enumerate(group):
             t["dist_rank"] = round((i + 0.5) / n, 3)      # 0 is closest to the 2024 sound
     # and the same for each measurement, so a record can be placed ingredient by ingredient
-    for key in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence"):
+    for key in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence", "sub_bass", "pulse_clarity"):
         for sc, group in by_scene.items():
             vals = [(t["measures"].get(key), t) for t in group
                     if t.get("measures") and isinstance(t["measures"].get(key), (int, float))]
