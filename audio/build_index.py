@@ -188,6 +188,8 @@ def main():
     ranked = sum(1 for t in tracks if "dist_rank" in t)
     print(f"ranked {ranked} records against their own scene", flush=True)
 
+    idx = [i for i, t in enumerate(tracks) if t.get("measures") and t.get("_emb")]
+
     # Position on the two lines the whole site draws scenes on, so a record and its
     # neighbours sit in the same space as the genres rather than on an arbitrary circle.
     # The axes are the first two directions of the field, fixed here from the corpus.
@@ -210,7 +212,6 @@ def main():
     # What else sounds like this? Computed once here rather than shipping 8,403 embeddings
     # to the phone. It is the question a person actually asks after "what is this", and
     # nobody else can answer it: Shazam knows the record, not its neighbours.
-    idx = [i for i, t in enumerate(tracks) if t.get("measures") and t.get("_emb")]
     if len(idx) > 50:
         E = np.array([tracks[i]["_emb"] for i in idx], dtype=float)
         # Centre first. Without it every record scores 0.99 against every other: the vectors
