@@ -18,6 +18,9 @@ concurrency:
   cancel-in-progress: false
 jobs:
   run:
+    permissions:
+      contents: write
+      actions: write
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -237,11 +240,15 @@ jobs:
           python -m audio.remaining > /tmp/left.txt 2>/dev/null
           LEFT=$(cat /tmp/left.txt 2>/dev/null | tail -1)
           echo "records still without rhythm measurements: ${LEFT:-unknown}"
-          case "$LEFT" in ''|*[!0-9]*) echo "could not count; not chaining"; exit 0;; esac
+          # unknown chains, as in the deepen workflow: an idle runner overnight costs far
+          # more than one wasted pass, and this chain has stopped silently all weekend.
+          case "$LEFT" in ''|*[!0-9]*) echo "could not count; chaining anyway"; LEFT=-1;; esac
           # the index build shares this runner and the demo needs it: until it exists,
           # rhythm does not re-arm. No marker file to forget to commit.
           # the corpus build has priority: rhythm does not re-arm while it is unfinished
           if [ ! -f out/fp-history.jsonl ]; then echo "corpus build not started; yielding the runner"; exit 0; fi
           if [ -f out/.corpus-running ]; then echo "corpus build in flight; yielding the runner"; exit 0; fi
-          if [ "$LEFT" -gt 0 ]; then gh workflow run audio.yml --ref main -f task=rhythm && echo "follow-up dispatched"; fi
+          if [ "$LEFT" -gt 0 ]; then gh workflow run audio.yml --ref main -f task=rhythm \
+            && echo "next rhythm pass dispatched" \
+            || { echo "::error::dispatch failed - the rhythm chain is broken"; exit 1; }
           exit 0
