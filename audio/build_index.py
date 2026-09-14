@@ -239,7 +239,9 @@ def main():
     # measure and as close as possible on everything else. Similarity keeps the step
     # coherent, the measure gives it a direction. Ten ids a record, and the catalogue
     # becomes traversable along an axis a person understands rather than along a genre.
-    AXES = ["bass_weight", "drum_density", "drum_swing", "vocal_presence", "tempo"]
+    # walk along the measures that rank. bass_weight reads the same for ninety-nine per cent of
+    # records and drum_swing clips for a sixth: a step along either lands nowhere in particular.
+    AXES = ["sub_bass", "drum_density", "pulse_clarity", "vocal_presence"]
     if len(idx) > 50:
         E = np.array([tracks[i]["_emb"] for i in idx], dtype=float)
         E = E / (np.linalg.norm(E, axis=1, keepdims=True) + 1e-9)
