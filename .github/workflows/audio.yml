@@ -248,7 +248,16 @@ jobs:
           # the corpus build has priority: rhythm does not re-arm while it is unfinished
           if [ ! -f out/fp-history.jsonl ]; then echo "corpus build not started; yielding the runner"; exit 0; fi
           if [ -f out/.corpus-running ]; then echo "corpus build in flight; yielding the runner"; exit 0; fi
-          if [ "$LEFT" -gt 0 ]; then gh workflow run audio.yml --ref main -f task=rhythm \
-            && echo "next rhythm pass dispatched" \
-            || { echo "::error::dispatch failed - the rhythm chain is broken"; exit 1; }
+          # -1 means the count was unreadable, and that chains too: an idle runner overnight
+          # costs eight hours, a wasted pass twenty minutes.
+          if [ "$LEFT" -gt 0 ] || [ "$LEFT" -eq -1 ]; then
+            if gh workflow run audio.yml --ref main -f task=rhythm; then
+              echo "next rhythm pass dispatched"
+            else
+              echo "::error::dispatch failed - the rhythm chain is broken"
+              exit 1
+            fi
+          else
+            echo "nothing left to measure; standing down"
+          fi
           exit 0
