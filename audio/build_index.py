@@ -75,6 +75,14 @@ def main():
         m = {k: d.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence")}
         m["sub_bass"] = ed.get("sub_bass")
         m["pulse_clarity"] = ed.get("pulse_clarity")
+        # At scene level most measures collapse into one gradient; at record level nine stay
+        # distinct. The card is about a record, so it carries the record-level set: loudness,
+        # and two named groups of the unnamed dimensions.
+        m["loudness"] = d.get("loudness")
+        emb = d.get("embedding") or []
+        if len(emb) == 45:
+            m["how_played"] = float(sum(emb[40:44]) / 4.0)
+            m["harmonic_weight"] = float(sum(emb[26:38]) / 12.0)
         if any(isinstance(v, (int, float)) for v in m.values()):
             out["measures"] = {k: (round(float(v), 3) if isinstance(v, (int, float)) else None)
                                for k, v in m.items()}
@@ -177,7 +185,7 @@ def main():
         for i, t in enumerate(group):
             t["dist_rank"] = round((i + 0.5) / n, 3)      # 0 is closest to the 2024 sound
     # and the same for each measurement, so a record can be placed ingredient by ingredient
-    for key in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence", "sub_bass", "pulse_clarity"):
+    for key in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence", "sub_bass", "pulse_clarity", "loudness", "how_played", "harmonic_weight"):
         for sc, group in by_scene.items():
             vals = [(t["measures"].get(key), t) for t in group
                     if t.get("measures") and isinstance(t["measures"].get(key), (int, float))]
