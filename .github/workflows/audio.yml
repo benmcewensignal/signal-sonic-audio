@@ -251,6 +251,20 @@ jobs:
           # -1 means the count was unreadable, and that chains too: an idle runner overnight
           # costs eight hours, a wasted pass twenty minutes.
           if [ "$LEFT" -gt 0 ] || [ "$LEFT" -eq -1 ]; then
+            # Forty-eight thousand nine hundred and ninety-eight rhythm records, unchanged across six
+            # commits while this booked itself every ninety seconds. The same fault the stems chain
+            # had: a count that cannot answer, and unknown set to chain. Stop on what was produced.
+            NOW=$(cat out/rhythm-*.jsonl 2>/dev/null | wc -l)
+            PREV=$(git show HEAD~1:out/rhythm-count.txt 2>/dev/null || echo 0)
+            echo "rhythm records now ${NOW}, at the previous commit ${PREV}"
+            echo "${NOW}" > out/rhythm-count.txt
+            git add out/rhythm-count.txt >/dev/null 2>&1 || true
+            git commit -qm "rhythm count ${NOW}" >/dev/null 2>&1 || true
+            git push -q origin main >/dev/null 2>&1 || true
+            if [ "${NOW}" = "${PREV}" ]; then
+              echo "the last pass measured nothing: standing down rather than booking another"
+              exit 0
+            fi
             if gh workflow run audio.yml --ref main -f task=rhythm; then
               echo "next rhythm pass dispatched"
             else
