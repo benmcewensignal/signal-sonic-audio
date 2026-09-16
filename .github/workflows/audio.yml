@@ -1,5 +1,11 @@
 name: audio
 on:
+  # Stopping when a pass measures nothing was the right fix and left nothing to start it
+  # again: this workflow had workflow_dispatch and no schedule, so it stood down for
+  # fourteen hours while the corpus grew underneath it. Hourly, and the stop condition
+  # means a pass with no work costs one short run rather than a loop.
+  schedule:
+    - cron: "40 * * * *"
   workflow_dispatch:
     inputs:
       task:
