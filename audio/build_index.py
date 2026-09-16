@@ -72,7 +72,7 @@ def main():
         # rank anything. sub_bass and pulse_clarity replace them where the record has been
         # measured on the current analyser; the old keys stay so older records still render.
         ed = d.get("edm") or {}
-        m = {k: d.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence")}
+        m = {k: d.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence", "sub_bass", "pulse_clarity", "loudness", "how_played", "harmonic_weight")}
         m["sub_bass"] = ed.get("sub_bass")
         m["pulse_clarity"] = ed.get("pulse_clarity")
         # At scene level most measures collapse into one gradient; at record level nine stay
@@ -139,7 +139,7 @@ def main():
             own = {}
             if d.get("measures"):
                 m = d["measures"]
-                keep = {k: m.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence")
+                keep = {k: m.get(k) for k in ("tempo", "drum_density", "drum_swing", "bass_weight", "vocal_presence", "sub_bass", "pulse_clarity", "loudness", "how_played", "harmonic_weight")
                         if isinstance(m.get(k), (int, float))}
                 if keep: own["measures"] = keep
                 em = m.get("embedding")
