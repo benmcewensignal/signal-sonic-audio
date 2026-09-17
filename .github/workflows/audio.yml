@@ -5,7 +5,8 @@ on:
   # fourteen hours while the corpus grew underneath it. Hourly, and the stop condition
   # means a pass with no work costs one short run rather than a loop.
   schedule:
-    - cron: "40 * * * *"
+    - cron: "40 * * * *"    # hourly: measure whatever is unmeasured
+    - cron: "15 4 * * *"    # once a day: rehearse recognition
   workflow_dispatch:
     inputs:
       task:
@@ -87,7 +88,7 @@ jobs:
           exit 0
 
       - name: rehearse recognition against real records
-        if: inputs.task == 'rehearse' || github.event_name == 'schedule'
+        if: inputs.task == 'rehearse' || github.event.schedule == '15 4 * * *'
         env:
           BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
           BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
