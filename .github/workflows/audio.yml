@@ -172,9 +172,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set +e
-          gh release delete recognition-index -y 2>/dev/null
-          gh release create recognition-index out/index.bin --title "recognition index" --notes "sorted hash postings for the whole fingerprinted corpus" || \
-            gh release upload recognition-index out/index.bin --clobber
+          # Never delete first. Between the delete and the upload the index does not exist and
+          # every listen returns 404 — for a two hundred megabyte file that window is minutes
+          # long, so each rebuild took the page down. Create only if missing, then clobber the
+          # asset in place, which swaps it atomically.
+          gh release view recognition-index >/dev/null 2>&1 \
+            || gh release create recognition-index --title "recognition index" --notes "sorted hash postings for the whole corpus"
+          if ! gh release upload recognition-index out/index.bin --clobber; then
+            echo "::error::could not publish the index; the previous one is still in place"
+            exit 1
+          fi
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
           git add out/index.json && git commit -qm "recognition index metadata" && git pull -q --no-rebase origin main && git push -q origin HEAD:main
           exit 0
