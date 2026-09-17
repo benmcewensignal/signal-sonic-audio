@@ -249,7 +249,12 @@ def main():
     # becomes traversable along an axis a person understands rather than along a genre.
     # walk along the measures that rank. bass_weight reads the same for ninety-nine per cent of
     # records and drum_swing clips for a sixth: a step along either lands nowhere in particular.
-    AXES = ["sub_bass", "drum_density", "pulse_clarity", "vocal_presence"]
+    # The card names eight measures and the walk stepped on four. This list was written when
+    # four were all that ranked, and never grew when how played, harmonic weight, loudness
+    # and tempo were added. drum_swing and bass_weight stay out: one is a coin flip between
+    # techno and house, the other is ninety-nine per cent constant.
+    AXES = ["sub_bass", "drum_density", "pulse_clarity", "vocal_presence",
+            "how_played", "harmonic_weight", "loudness", "tempo"]
     if len(idx) > 50:
         E = np.array([tracks[i]["_emb"] for i in idx], dtype=float)
         E = E / (np.linalg.norm(E, axis=1, keepdims=True) + 1e-9)
