@@ -25,6 +25,31 @@ MAX_TRACKS_PER_HASH = 6      # above this a hash names nothing
 MAX_HASHES_PER_TRACK = 1800  # about the first minute of a record
 
 
+# The similarity is a dot product, so each dimension's contribution to it is the product of the
+# two records' values there. Summing those by family says what the two agree on: a pair that is
+# close on tone is a different kind of neighbour from a pair that is close on how the sound
+# moves, and "0.80 similar" says neither. The embedding carried here is twenty-six mel
+# coefficients, thirteen means then thirteen deviations, followed by seven contrast bands.
+_WHYNAME = {"tone": "the tone of it", "movement": "how the sound moves", "texture": "its texture"}
+
+
+def _why(a, b):
+    import numpy as _np
+    c = _np.asarray(a) * _np.asarray(b)
+    if c.size < 33:
+        return None
+    parts = {"tone": float(c[0:13].sum()),
+             "movement": float(c[13:26].sum()),
+             "texture": float(c[26:33].sum())}
+    tot = sum(v for v in parts.values() if v > 0)
+    if tot <= 0:
+        return None
+    top = max(parts, key=parts.get)
+    if parts[top] <= 0:
+        return None
+    return {"on": _WHYNAME[top], "share": round(parts[top] / tot, 2)}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", default="fingerprints.db"); ap.add_argument("--meta", default="sonic.db")
@@ -241,7 +266,8 @@ def main():
                      "pos": tracks[idx[j]].get("pos"),
                      "artists": (tracks[idx[j]].get("artists") or [])[:2],
                      "scene": tracks[idx[j]].get("scene"),
-                     "sim": round(float(sim[row, j]), 3)} for j in near]
+                     "sim": round(float(sim[row, j]), 3),
+                     "why": _why(E[gi], E[j])} for j in near]
         # Which of a record's neighbours are neighbours of each other. The page draws these as
         # the edges of the graph, and without them the picture is a star rather than a network:
         # a centre and eight spokes, with no way to see that three of the eight belong together
