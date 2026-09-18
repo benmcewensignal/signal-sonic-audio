@@ -30,7 +30,19 @@ MAX_HASHES_PER_TRACK = 1800  # about the first minute of a record
 # close on tone is a different kind of neighbour from a pair that is close on how the sound
 # moves, and "0.80 similar" says neither. The embedding carried here is twenty-six mel
 # coefficients, thirteen means then thirteen deviations, followed by seven contrast bands.
-_WHYNAME = {"tone": "the tone of it", "movement": "how the sound moves", "texture": "its texture"}
+# The names are checked against the corpus rather than chosen. Taking records extreme on one
+# family and ordinary on the others:
+#   mel means      high in raw techno, 140 and trance; low in bass house and tech house. That
+#                  spread is tonal colour, from the extreme to the middle of the road.
+#   mel deviations high in trance, amapiano and organic house, music with breakdowns and live
+#                  playing, one extreme record by Marimba De Guatemala; low in bass house and
+#                  garage, which loop. So it is how much the sound changes as it plays.
+#   contrast       high in amapiano, deep house and afro house, with Guitar, Love & Music at
+#                  the extreme; low in bass house and garage, which are dense. So it is how
+#                  clearly you can pick the parts out.
+_WHYNAME = {"tone": "the colour of the sound",
+            "movement": "how much it changes as it plays",
+            "texture": "how clearly the parts stand out"}
 
 
 def _why(a, b):
