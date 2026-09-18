@@ -242,7 +242,29 @@ def main():
                      "artists": (tracks[idx[j]].get("artists") or [])[:2],
                      "scene": tracks[idx[j]].get("scene"),
                      "sim": round(float(sim[row, j]), 3)} for j in near]
-        print(f"nearest neighbours for {len(idx)} records", flush=True)
+        # Which of a record's neighbours are neighbours of each other. The page draws these as
+        # the edges of the graph, and without them the picture is a star rather than a network:
+        # a centre and eight spokes, with no way to see that three of the eight belong together
+        # and the other five do not. The api tried to work this out at request time by looking
+        # up each neighbour in the summary index, but the neighbour lists live in the detail
+        # file, so the set it checked against was always empty and no edge ever drew.
+        own = {}
+        for gi in range(len(idx)):
+            own[tracks[idx[gi]]["track_id"]] = {n["id"] for n in tracks[idx[gi]].get("near", [])}
+        linked = 0
+        for gi in range(len(idx)):
+            nb = tracks[idx[gi]].get("near", [])
+            links = []
+            for i2 in range(len(nb)):
+                theirs = own.get(nb[i2]["id"], set())
+                for j2 in range(i2 + 1, len(nb)):
+                    if nb[j2]["id"] in theirs:
+                        links.append([i2, j2])
+            tracks[idx[gi]]["near_links"] = links
+            if links:
+                linked += 1
+        print(f"nearest neighbours for {len(idx)} records, "
+              f"{linked} of them with edges between their neighbours", flush=True)
     # Walks: from any record, the nearest record that is meaningfully higher on one named
     # measure and as close as possible on everything else. Similarity keeps the step
     # coherent, the measure gives it a direction. Ten ids a record, and the catalogue
