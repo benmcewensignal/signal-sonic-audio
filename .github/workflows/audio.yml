@@ -57,7 +57,22 @@ jobs:
                   return -1
           a, b = score("repo.db"), score("rel/sonic.db") if os.path.exists("rel/sonic.db") else -1
           print(f"repository copy has {a} recent records, the deepened release {b}")
+          # A failed release download fell through to the repository copy in silence. Those
+          # records sit at analyser version two, which predates the edm block, so the index
+          # built from them lost sub_bass and pulse_clarity and the walk lost two directions.
+          if b < 0:
+              raise SystemExit("could not read the deepened release; refusing to index from the "
+                               "repository copy, which lags it badly")
           shutil.copy("rel/sonic.db" if b > a else "repo.db", "sonic.db")
+          import sqlite3 as _s
+          _c = _s.connect("sonic.db")
+          _n = _c.execute("select count(*) from tracks").fetchone()[0]
+          _e = _c.execute("select count(*) from tracks where analyser_id='local' "
+                          "and features like '%sub_bass%'").fetchone()[0]
+          print(f"indexing from {_n} records, {_e} carrying the edm measures", flush=True)
+          if _e < _n * 0.2:
+              raise SystemExit(f"only {_e} of {_n} records carry sub_bass: the index would drop "
+                               f"two walk directions")
           print("using", "the deepened release" if b > a else "the repository copy")
           PY
           python -c "import sqlite3; c=sqlite3.connect('sonic.db'); print('tracks', c.execute(\"select count(*) from tracks\").fetchone()[0], '| nts truth lines', c.execute('select count(*) from nts_tracklist where track_id is not null').fetchone()[0])"
