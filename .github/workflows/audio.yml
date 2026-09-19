@@ -150,6 +150,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PIPELINE_PAT || github.token }}   # the deepened release lives in another repository, and the default token cannot read it: the guard that refuses to index from the lagging copy was firing on a permissions failure, not a stale release
         run: |
+          # I cannot read CI logs from where I work, so five failures in a row were diagnosed
+          # by guessing. Everything this step says goes to a file that is committed, the way
+          # the queue runner already does it.
+          exec > >(tee -a /tmp/indexlog.txt) 2>&1
+          set +e
           set -e
           echo "fetching the fingerprint store (about 1 GB)"
           curl -sL -o fingerprints.db "$(curl -s -H "Authorization: Bearer ${{ secrets.PIPELINE_PAT || github.token }}" \
@@ -197,6 +202,18 @@ jobs:
           ls -la out/index.bin out/index.json
           rm -f fingerprints.db
 
+      - name: keep the index log where it can be read
+        if: always()
+        run: |
+          set +e
+          mkdir -p out
+          tail -c 60000 /tmp/indexlog.txt > out/index-build-log.txt 2>/dev/null || echo 'no log captured' > out/index-build-log.txt
+          git config user.name 'sonic-audio-bot'; git config user.email 'sonic@earlysignal.live'
+          git add out/index-build-log.txt
+          git commit -qm 'index build log' || true
+          git pull -q --no-rebase origin main || true
+          git push -q origin HEAD:main || true
+          exit 0
       - name: publish the index as a release asset
         if: inputs.task == 'full-index'
         env:
