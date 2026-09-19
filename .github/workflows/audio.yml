@@ -157,7 +157,13 @@ jobs:
             | python -c "import json,sys;print(json.load(sys.stdin)['assets'][0]['browser_download_url'])")"
           ls -la fingerprints.db
           python -c "import sqlite3;print('records in store:', sqlite3.connect('fingerprints.db').execute('select count(*) from fp_tracks').fetchone()[0])"
-          python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index
+          # the stem measures come from the features repository, one file per shard
+          curl -sL -o stems.tar "https://api.github.com/repos/benmcewensignal/signal-sonic-features/tarball/main" \
+            -H "Authorization: Bearer ${{ secrets.PIPELINE_PAT || github.token }}" || true
+          mkdir -p stemsrc && tar -xf stems.tar -C stemsrc --strip-components=1 2>/dev/null || true
+          ls stemsrc/out/stems-*.jsonl 2>/dev/null | head -3 || echo "no stem files fetched"
+          python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index \
+            --stems-glob "stemsrc/out/stems-*.jsonl"
           python - <<'PY'
           import json
           d = json.load(open("out/index.json"))
