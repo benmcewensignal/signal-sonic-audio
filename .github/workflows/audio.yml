@@ -157,13 +157,23 @@ jobs:
             | python -c "import json,sys;print(json.load(sys.stdin)['assets'][0]['browser_download_url'])")"
           ls -la fingerprints.db
           python -c "import sqlite3;print('records in store:', sqlite3.connect('fingerprints.db').execute('select count(*) from fp_tracks').fetchone()[0])"
-          # the stem measures come from the features repository, one file per shard
+          # The stem measures come from the features repository. Every part of this is wrapped so it
+          # cannot take the index build down with it: the index building at all matters more than
+          # the per-stem neighbours, and the build has failed three times since I added this.
+          set +e
           curl -sL -o stems.tar "https://api.github.com/repos/benmcewensignal/signal-sonic-features/tarball/main" \
-            -H "Authorization: Bearer ${{ secrets.PIPELINE_PAT || github.token }}" || true
-          mkdir -p stemsrc && tar -xf stems.tar -C stemsrc --strip-components=1 2>/dev/null || true
-          ls stemsrc/out/stems-*.jsonl 2>/dev/null | head -3 || echo "no stem files fetched"
-          python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index \
-            --stems-glob "stemsrc/out/stems-*.jsonl"
+            -H "Authorization: Bearer ${{ secrets.PIPELINE_PAT || github.token }}" --max-time 120
+          mkdir -p stemsrc && tar -xf stems.tar -C stemsrc --strip-components=1 2>/dev/null
+          STEMN=$(ls stemsrc/out/stems-*.jsonl 2>/dev/null | wc -l)
+          echo "stem files fetched: ${STEMN}"
+          set -e
+          if [ "${STEMN:-0}" -gt 0 ]; then
+            python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index \
+              --stems-glob "stemsrc/out/stems-*.jsonl" || \
+            python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index
+          else
+            python -m audio.build_index --db fingerprints.db --meta sonic.db --out out/index
+          fi
           python - <<'PY'
           import json
           d = json.load(open("out/index.json"))
