@@ -148,7 +148,7 @@ jobs:
       - name: build the full recognition index
         if: inputs.task == 'full-index'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.PIPELINE_PAT || github.token }}   # the deepened release lives in another repository, and the default token cannot read it: the guard that refuses to index from the lagging copy was firing on a permissions failure, not a stale release
         run: |
           set -e
           echo "fetching the fingerprint store (about 1 GB)"
