@@ -434,6 +434,11 @@ def main():
         extra = {}
         if t.get("near"): extra["near"] = t.pop("near")
         if t.get("walk"): extra["walk"] = t.pop("walk")
+        # The per-stem neighbours are four more lists of eight per record. Left in the summary
+        # they took it from 8.6 to 29.3 MB and the size guard stopped the build, which is the
+        # guard doing exactly what the comment above it describes: this file is loaded on every
+        # cold start and recognition itself depends on it staying small.
+        if t.get("stem_near"): extra["stem_near"] = t.pop("stem_near")
         if extra: rich[t["track_id"]] = extra
     with open(a.out + "-detail.json", "w") as f:
         json.dump(rich, f, separators=(",", ":"))
