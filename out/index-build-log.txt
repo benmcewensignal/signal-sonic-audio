@@ -1,7 +1,7 @@
 fetching the fingerprint store (about 1 GB)
--rw-r--r-- 1 runner runner 1736192000 Sep 19 14:00 fingerprints.db
+-rw-r--r-- 1 runner runner 1736192000 Sep 20 05:24 fingerprints.db
 records in store: 14090
-stem files fetched: 3735
+stem files fetched: 3915
 store holds 14090 fingerprinted records
 measures for 50482 records, scene centres for 20 scenes
   500 records, 900,000 postings
