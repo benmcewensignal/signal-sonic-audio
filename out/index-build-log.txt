@@ -1,1 +1,47 @@
-no log captured
+fetching the fingerprint store (about 1 GB)
+-rw-r--r-- 1 runner runner 1211817984 Sep 22 09:23 fingerprints.db
+records in store: 9840
+stem files fetched: 5030
+store holds 9840 fingerprinted records
+measures for 51761 records, scene centres for 20 scenes
+  500 records, 899,431 postings
+  1000 records, 1,799,431 postings
+  1500 records, 2,699,431 postings
+  2000 records, 3,599,431 postings
+  2500 records, 4,499,431 postings
+  3000 records, 5,399,431 postings
+  3500 records, 6,299,133 postings
+  4000 records, 7,199,133 postings
+  4500 records, 8,099,133 postings
+  5000 records, 8,999,133 postings
+  5500 records, 9,897,562 postings
+  6000 records, 10,797,562 postings
+  6500 records, 11,697,562 postings
+  7000 records, 12,596,220 postings
+  7500 records, 13,495,984 postings
+  8000 records, 14,395,984 postings
+merged 299 records from fp-extra.jsonl
+merged 155 records from fp-canon.jsonl
+merged 319 records from fp-history.jsonl
+before pruning: 8788 records, 15,812,864 postings
+after pruning 729,411 over-common hashes: 5,469,356 postings
+ranked 8475 records against their own scene
+positions for 8475 records
+stem neighbours for drums: 7839 records
+stem neighbours for bass: 7839 records
+stem neighbours for other: 7839 records
+stem neighbours for vocals: 7839 records
+per-stem neighbours written for 31356 record-stems
+nearest neighbours for 8475 records, 8149 of them with edges between their neighbours
+walks for 8475 records
+detail for 8465 records written alongside the index
+{
+ "records": 8788,
+ "postings": 5469356,
+ "bin_mb": 43.8,
+ "meta_mb": 6.1
+}
+VERIFY: 8788 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 6.1 MB, detail 45.7 MB, eight-neighbour 8465, walks 8465
+-rw-r--r-- 1 runner runner 43754860 Sep 22 09:24 out/index.bin
+-rw-r--r-- 1 runner runner  6089409 Sep 22 09:24 out/index.json
