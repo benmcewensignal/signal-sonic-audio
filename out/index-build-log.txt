@@ -1,7 +1,8 @@
 fetching the fingerprint store (about 1 GB)
--rw-r--r-- 1 runner runner 1929342976 Sep 22 15:58 fingerprints.db
+fpstore: fetched the single-file store
+-rw-r--r-- 1 runner runner 1929342976 Sep 22 16:29 fingerprints.db
 records in store: 15592
-stem files fetched: 5174
+stem files fetched: 5210
 store holds 15592 fingerprinted records
 measures for 51761 records, scene centres for 20 scenes
   500 records, 899,431 postings
@@ -46,5 +47,5 @@ detail for 10119 records written alongside the index
 }
 VERIFY: 10445 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 7.3 MB, detail 55.0 MB, eight-neighbour 10119, walks 10119
--rw-r--r-- 1 runner runner 43049636 Sep 22 15:59 out/index.bin
--rw-r--r-- 1 runner runner  7269253 Sep 22 15:59 out/index.json
+-rw-r--r-- 1 runner runner 43049636 Sep 22 16:30 out/index.bin
+-rw-r--r-- 1 runner runner  7269253 Sep 22 16:30 out/index.json
