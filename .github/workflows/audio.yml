@@ -162,9 +162,8 @@ jobs:
           set +e
           set -e
           echo "fetching the fingerprint store (about 1 GB)"
-          curl -sL -o fingerprints.db "$(curl -s -H "Authorization: Bearer ${{ secrets.PIPELINE_PAT || github.token }}" \
-            https://api.github.com/repos/benmcewensignal/signal-sonic/releases/tags/fp-store \
-            | python -c "import json,sys;print(json.load(sys.stdin)['assets'][0]['browser_download_url'])")"
+          # the store is kept as compressed parts under GitHub's 2 GiB cap (scripts/fpstore.sh)
+          GH_TOKEN="${{ secrets.PIPELINE_PAT || github.token }}" bash scripts/fpstore.sh fetch benmcewensignal/signal-sonic fingerprints.db
           ls -la fingerprints.db
           python -c "import sqlite3;print('records in store:', sqlite3.connect('fingerprints.db').execute('select count(*) from fp_tracks').fetchone()[0])"
           # The stem measures come from the features repository. Every part of this is wrapped so it
