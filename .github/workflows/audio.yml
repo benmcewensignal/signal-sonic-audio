@@ -44,7 +44,12 @@ jobs:
           # live. Take whichever holds more records on the current analyser, because the
           # index carries their measures and a stale copy silently drops the new ones.
           curl -sL -o repo.db https://raw.githubusercontent.com/benmcewensignal/signal-sonic/main/sonic.db
-          gh release download deepened --repo benmcewensignal/signal-sonic --pattern sonic.db --dir rel --clobber 2>/dev/null || true
+          # sonic now saves this release after every queue run, swapping the file in; a single try
+          # could land in that moment and fail the run, so try three times
+          for i in 1 2 3; do
+            gh release download deepened --repo benmcewensignal/signal-sonic --pattern sonic.db --dir rel --clobber 2>/dev/null && [ -s rel/sonic.db ] && break
+            echo "fetch attempt $i missed; retrying"; sleep 20
+          done
           python - <<'PY'
           import os, shutil, sqlite3
           def score(p):
