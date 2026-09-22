@@ -1,53 +1,58 @@
 fetching the fingerprint store (about 1 GB)
-fpstore: fetched set 35790017438 (1 part(s))
--rw-r--r-- 1 runner runner 2640990208 Sep 22 22:42 fingerprints.db
-records in store: 21249
-stem files fetched: 5354
-store holds 21249 fingerprinted records
+fpstore: fetched set 35793659469 (1 part(s))
+-rw-r--r-- 1 runner runner 2875539456 Sep 22 23:18 fingerprints.db
+records in store: 23101
+stem files fetched: 5390
+store holds 23101 fingerprinted records
 measures for 51761 records, scene centres for 20 scenes
-  500 records, 899,431 postings
-  1000 records, 1,799,431 postings
-  1500 records, 2,699,431 postings
-  2000 records, 3,599,431 postings
-  2500 records, 4,499,431 postings
-  3000 records, 5,399,431 postings
-  3500 records, 6,299,133 postings
-  4000 records, 7,199,133 postings
-  4500 records, 8,099,133 postings
-  5000 records, 8,999,133 postings
-  5500 records, 9,897,562 postings
-  6000 records, 10,797,562 postings
-  6500 records, 11,697,562 postings
-  7000 records, 12,596,220 postings
-  7500 records, 13,495,984 postings
-  8000 records, 14,395,984 postings
-  8500 records, 15,295,984 postings
-  9000 records, 16,195,769 postings
-  9500 records, 17,095,769 postings
-  10000 records, 17,995,769 postings
-  10500 records, 18,895,130 postings
-merged 296 records from fp-extra.jsonl
+  500 records, 899,183 postings
+  1000 records, 1,799,183 postings
+  1500 records, 2,699,183 postings
+  2000 records, 3,599,183 postings
+  2500 records, 4,499,183 postings
+  3000 records, 5,399,183 postings
+  3500 records, 6,298,885 postings
+  4000 records, 7,198,885 postings
+  4500 records, 8,098,885 postings
+  5000 records, 8,998,885 postings
+  5500 records, 9,897,314 postings
+  6000 records, 10,797,314 postings
+  6500 records, 11,697,200 postings
+  7000 records, 12,597,200 postings
+  7500 records, 13,495,858 postings
+  8000 records, 14,395,161 postings
+  8500 records, 15,295,161 postings
+  9000 records, 16,195,161 postings
+  9500 records, 17,094,719 postings
+  10000 records, 17,994,504 postings
+  10500 records, 18,894,001 postings
+  11000 records, 19,792,579 postings
+  11500 records, 20,690,974 postings
+  12000 records, 21,590,974 postings
+  12500 records, 22,490,335 postings
+  13000 records, 23,390,335 postings
+  13500 records, 24,290,335 postings
+merged 299 records from fp-extra.jsonl
 merged 154 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
-before pruning: 11582 records, 20,841,210 postings
-after pruning 1,015,645 over-common hashes: 5,287,002 postings
-ranked 11269 records against their own scene
-positions for 11269 records
-stem neighbours for drums: 10575 records
-stem neighbours for bass: 10575 records
-stem neighbours for other: 10575 records
-stem neighbours for vocals: 10575 records
-per-stem neighbours written for 42300 record-stems
-nearest neighbours for 11269 records, 10735 of them with edges between their neighbours
-walks for 11269 records
-detail for 11251 records written alongside the index
+before pruning: 14497 records, 26,081,793 postings
+after pruning 1,255,383 over-common hashes: 4,998,669 postings
+ranked 14184 records against their own scene
+positions for 14184 records
+stem neighbours for drums: 13478 records
+stem neighbours for bass: 13478 records
+stem neighbours for other: 13478 records
+stem neighbours for vocals: 13478 records
+per-stem neighbours written for 53912 record-stems
+nearest neighbours for 14184 records, 13466 of them with edges between their neighbours
+walks for 14184 records
+detail for 14161 records written alongside the index
 {
- "records": 11582,
- "postings": 5287002,
- "bin_mb": 42.3,
- "meta_mb": 8.1
+ "records": 14497,
+ "postings": 4998669,
+ "bin_mb": 40.0,
+ "meta_mb": 10.1
 }
-VERIFY: 11582 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 8.1 MB, detail 61.3 MB, eight-neighbour 11251, walks 11251
--rw-r--r-- 1 runner runner 42296028 Sep 22 22:43 out/index.bin
--rw-r--r-- 1 runner runner  8075795 Sep 22 22:43 out/index.json
+VERIFY: 14497 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 10.1 MB, detail 77.6 MB, eight-neighbour 14161, walks 14161
+the index the api loads is too large; it must stay lean
