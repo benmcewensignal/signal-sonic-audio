@@ -1,1 +1,99 @@
-no log captured
+fetching the fingerprint store (about 1 GB)
+fpstore: fetched set 35887195500 (1 part(s))
+-rw-r--r-- 1 runner runner 3137482752 Sep 23 20:44 fingerprints.db
+records in store: 24822
+stem files fetched: 5821
+store holds 24822 fingerprinted records
+measures for 53037 records, scene centres for 20 scenes
+  500 records, 897,448 postings
+  1000 records, 1,797,448 postings
+  1500 records, 2,697,448 postings
+  2000 records, 3,597,448 postings
+  2500 records, 4,497,448 postings
+  3000 records, 5,397,448 postings
+  3500 records, 6,297,150 postings
+  4000 records, 7,197,150 postings
+  4500 records, 8,097,150 postings
+  5000 records, 8,997,150 postings
+  5500 records, 9,897,150 postings
+  6000 records, 10,795,579 postings
+  6500 records, 11,695,579 postings
+  7000 records, 12,595,465 postings
+  7500 records, 13,495,465 postings
+  8000 records, 14,394,123 postings
+  8500 records, 15,293,426 postings
+  9000 records, 16,193,426 postings
+  9500 records, 17,093,426 postings
+  10000 records, 17,993,426 postings
+  10500 records, 18,891,922 postings
+  11000 records, 19,791,707 postings
+  11500 records, 20,691,707 postings
+  12000 records, 21,591,204 postings
+  12500 records, 22,489,782 postings
+  13000 records, 23,388,826 postings
+  13500 records, 24,288,722 postings
+  14000 records, 25,188,073 postings
+  14500 records, 26,088,073 postings
+  15000 records, 26,987,434 postings
+  15500 records, 27,887,434 postings
+  16000 records, 28,786,229 postings
+  16500 records, 29,686,229 postings
+  17000 records, 30,584,607 postings
+  17500 records, 31,484,607 postings
+  18000 records, 32,384,267 postings
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/signal-sonic-audio/signal-sonic-audio/audio/build_index.py", line 460, in <module>
+    main()
+  File "/home/runner/work/signal-sonic-audio/signal-sonic-audio/audio/build_index.py", line 202, in main
+    for i, row in enumerate(fp.execute("select track_id, n_hashes, hashes, frames from fp_tracks")):
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed
+store holds 24822 fingerprinted records
+measures for 53037 records, scene centres for 20 scenes
+  500 records, 897,448 postings
+  1000 records, 1,797,448 postings
+  1500 records, 2,697,448 postings
+  2000 records, 3,597,448 postings
+  2500 records, 4,497,448 postings
+  3000 records, 5,397,448 postings
+  3500 records, 6,297,150 postings
+  4000 records, 7,197,150 postings
+  4500 records, 8,097,150 postings
+  5000 records, 8,997,150 postings
+  5500 records, 9,897,150 postings
+  6000 records, 10,795,579 postings
+  6500 records, 11,695,579 postings
+  7000 records, 12,595,465 postings
+  7500 records, 13,495,465 postings
+  8000 records, 14,394,123 postings
+  8500 records, 15,293,426 postings
+  9000 records, 16,193,426 postings
+  9500 records, 17,093,426 postings
+  10000 records, 17,993,426 postings
+  10500 records, 18,891,922 postings
+  11000 records, 19,791,707 postings
+  11500 records, 20,691,707 postings
+  12000 records, 21,591,204 postings
+  12500 records, 22,489,782 postings
+  13000 records, 23,388,826 postings
+  13500 records, 24,288,722 postings
+  14000 records, 25,188,073 postings
+  14500 records, 26,088,073 postings
+  15000 records, 26,987,434 postings
+  15500 records, 27,887,434 postings
+  16000 records, 28,786,229 postings
+  16500 records, 29,686,229 postings
+  17000 records, 30,584,607 postings
+  17500 records, 31,484,607 postings
+  18000 records, 32,384,267 postings
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/signal-sonic-audio/signal-sonic-audio/audio/build_index.py", line 460, in <module>
+    main()
+  File "/home/runner/work/signal-sonic-audio/signal-sonic-audio/audio/build_index.py", line 202, in main
+    for i, row in enumerate(fp.execute("select track_id, n_hashes, hashes, frames from fp_tracks")):
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed
