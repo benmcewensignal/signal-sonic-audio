@@ -1,1 +1,83 @@
-no log captured
+fetching the fingerprint store (about 1 GB)
+fpstore: fetched set 35814867613 (1 part(s))
+-rw-r--r-- 1 runner runner 3137482752 Sep 23 04:05 fingerprints.db
+records in store: 24822
+stem files fetched: 5498
+store holds 24822 fingerprinted records
+measures for 51761 records, scene centres for 20 scenes
+  500 records, 899,183 postings
+  1000 records, 1,799,183 postings
+  1500 records, 2,699,183 postings
+  2000 records, 3,599,183 postings
+  2500 records, 4,499,183 postings
+  3000 records, 5,399,183 postings
+  3500 records, 6,298,885 postings
+  4000 records, 7,198,885 postings
+  4500 records, 8,098,885 postings
+  5000 records, 8,998,885 postings
+  5500 records, 9,897,314 postings
+  6000 records, 10,797,314 postings
+  6500 records, 11,697,200 postings
+  7000 records, 12,597,200 postings
+  7500 records, 13,495,858 postings
+  8000 records, 14,395,161 postings
+  8500 records, 15,295,161 postings
+  9000 records, 16,195,161 postings
+  9500 records, 17,094,719 postings
+  10000 records, 17,994,504 postings
+  10500 records, 18,894,001 postings
+  11000 records, 19,792,579 postings
+  11500 records, 20,690,974 postings
+  12000 records, 21,590,974 postings
+  12500 records, 22,490,335 postings
+  13000 records, 23,390,335 postings
+  13500 records, 24,290,335 postings
+  14000 records, 25,188,537 postings
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/signal-sonic-audio/signal-sonic-audio/audio/build_index.py", line 460, in <module>
+    main()
+  File "/home/runner/work/signal-sonic-audio/signal-sonic-audio/audio/build_index.py", line 202, in main
+    for i, row in enumerate(fp.execute("select track_id, n_hashes, hashes, frames from fp_tracks")):
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed
+store holds 24822 fingerprinted records
+measures for 51761 records, scene centres for 20 scenes
+  500 records, 899,183 postings
+  1000 records, 1,799,183 postings
+  1500 records, 2,699,183 postings
+  2000 records, 3,599,183 postings
+  2500 records, 4,499,183 postings
+  3000 records, 5,399,183 postings
+  3500 records, 6,298,885 postings
+  4000 records, 7,198,885 postings
+  4500 records, 8,098,885 postings
+  5000 records, 8,998,885 postings
+  5500 records, 9,897,314 postings
+  6000 records, 10,797,314 postings
+  6500 records, 11,697,200 postings
+  7000 records, 12,597,200 postings
+  7500 records, 13,495,858 postings
+  8000 records, 14,395,161 postings
+  8500 records, 15,295,161 postings
+  9000 records, 16,195,161 postings
+  9500 records, 17,094,719 postings
+  10000 records, 17,994,504 postings
+  10500 records, 18,894,001 postings
+  11000 records, 19,792,579 postings
+  11500 records, 20,690,974 postings
+  12000 records, 21,590,974 postings
+  12500 records, 22,490,335 postings
+  13000 records, 23,390,335 postings
+  13500 records, 24,290,335 postings
+  14000 records, 25,188,537 postings
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/signal-sonic-audio/signal-sonic-audio/audio/build_index.py", line 460, in <module>
+    main()
+  File "/home/runner/work/signal-sonic-audio/signal-sonic-audio/audio/build_index.py", line 202, in main
+    for i, row in enumerate(fp.execute("select track_id, n_hashes, hashes, frames from fp_tracks")):
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.DatabaseError: database disk image is malformed
