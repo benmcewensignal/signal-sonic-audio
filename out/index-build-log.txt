@@ -1,6 +1,6 @@
 fetching the fingerprint store (about 1 GB)
-fpstore: fetched set 35928854245 (1 part(s))
--rw-r--r-- 1 runner runner 3597062144 Sep 23 23:13 fingerprints.db
+fpstore: fetched set 35929860772 (1 part(s))
+-rw-r--r-- 1 runner runner 3597062144 Sep 23 23:23 fingerprints.db
 records in store: 28349
 stem files fetched: 5857
 store holds 28349 fingerprinted records
@@ -71,5 +71,5 @@ detail for 22241 records written alongside the index
 }
 VERIFY: 22590 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 15.6 MB, detail 121.9 MB, eight-neighbour 22241, walks 22241
--rw-r--r-- 1 runner runner 34555140 Sep 23 23:14 out/index.bin
--rw-r--r-- 1 runner runner 15605874 Sep 23 23:14 out/index.json
+-rw-r--r-- 1 runner runner 34555140 Sep 23 23:25 out/index.bin
+-rw-r--r-- 1 runner runner 15605880 Sep 23 23:25 out/index.json
