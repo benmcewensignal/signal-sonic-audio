@@ -7,6 +7,7 @@ on:
   schedule:
     - cron: "40 * * * *"    # hourly: measure whatever is unmeasured
     - cron: "15 4 * * *"    # once a day: rehearse recognition
+    - cron: "45 5 * * *"    # once a day: rebuild the recognition index, since names grow daily even when the store does not
   workflow_dispatch:
     inputs:
       task:
@@ -153,7 +154,7 @@ jobs:
         run: python -m audio.fp_top --meta sonic.db --out out/fp-extra.jsonl --limit 400 --budget-minutes 80
 
       - name: build the full recognition index
-        if: inputs.task == 'full-index'
+        if: inputs.task == 'full-index' || github.event.schedule == '45 5 * * *'
         env:
           GH_TOKEN: ${{ secrets.PIPELINE_PAT || github.token }}   # the deepened release lives in another repository, and the default token cannot read it: the guard that refuses to index from the lagging copy was firing on a permissions failure, not a stale release
         run: |
@@ -221,7 +222,7 @@ jobs:
           git push -q origin HEAD:main || true
           exit 0
       - name: publish the index as a release asset
-        if: inputs.task == 'full-index'
+        if: inputs.task == 'full-index' || github.event.schedule == '45 5 * * *'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
