@@ -1,8 +1,8 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 35956896181 (2 part(s))
--rw-r--r-- 1 runner runner 5849911296 Sep 24 05:25 fingerprints.db
+-rw-r--r-- 1 runner runner 5849911296 Sep 24 05:36 fingerprints.db
 records in store: 46248
-stem files fetched: 6144
+stem files fetched: 6152
 store holds 46248 fingerprinted records
 measures for 55967 records, scene centres for 20 scenes
   500 records, 897,448 postings
@@ -91,8 +91,9 @@ detail for 34329 records written alongside the index
  "records": 34737,
  "postings": 3868662,
  "bin_mb": 30.9,
- "meta_mb": 23.5
+ "meta_mb": 13.7
 }
 VERIFY: 34737 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 23.5 MB, detail 184.7 MB, eight-neighbour 34329, walks 34329
-the index the api loads is too large; it must stay lean
+VERIFY: index 13.7 MB, detail 184.7 MB, eight-neighbour 34329, walks 34329
+-rw-r--r-- 1 runner runner 30949308 Sep 24 05:39 out/index.bin
+-rw-r--r-- 1 runner runner 13691137 Sep 24 05:39 out/index.json
