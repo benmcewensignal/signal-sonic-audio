@@ -204,9 +204,9 @@ jobs:
           if n8 == 0 or wk == 0:
               raise SystemExit("the detail file was written without neighbours or walks")
           # the api fetches the whole index on a cold start, so size is latency, not failure: 9 MB was
-          # set at 12,000 records; with 30,000 names it passed 13 MB on 23 September. Above 16 MB
+          # set at 12,000 records. Above twenty megabytes the endpoint stops responding, so the guard sits at 14 MB, and above it
           # the index needs slimming, not a bigger allowance.
-          if os.path.getsize("out/index.json") > 16_000_000:
+          if os.path.getsize("out/index.json") > 14_000_000:
               raise SystemExit("the index the api loads is too large; it must stay lean")
           PY
           ls -la out/index.bin out/index.json

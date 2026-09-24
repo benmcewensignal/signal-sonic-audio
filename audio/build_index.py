@@ -447,7 +447,14 @@ def main():
     with open(a.out + ".bin", "wb") as f:
         f.write(struct.pack("<4sII", b"SFP1", len(H), len(tracks)))
         f.write(H.tobytes()); f.write(P.tobytes())
-    json.dump({"generated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    # measures and ranks as lists with their names once (mkeys), ranks as whole percentages: the
+    # repeated names were 71% of this file, and above about twenty megabytes the API that loads it
+    # on every cold start stops responding. The API expands them back into the same objects.
+    mkeys = sorted({k for t in tracks for k in (t.get("measures") or {})} | {k for t in tracks for k in (t.get("ranks") or {})})
+    for t in tracks:
+        if isinstance(t.get("measures"), dict): t["measures"] = [t["measures"].get(k) for k in mkeys]
+        if isinstance(t.get("ranks"), dict): t["ranks"] = [None if t["ranks"].get(k) is None else int(round(t["ranks"][k] * 100)) for k in mkeys]
+    json.dump({"generated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "mkeys": mkeys,
                "tracks": tracks, "postings": int(len(H)),
                "note": "hashes and postings are two parallel little-endian uint32 arrays after a 12-byte header, sorted by hash"},
               open(a.out + ".json", "w"), separators=(",", ":"))
