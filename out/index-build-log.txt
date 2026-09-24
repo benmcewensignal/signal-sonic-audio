@@ -1,10 +1,10 @@
 fetching the fingerprint store (about 1 GB)
-fpstore: fetched set 35937684196 (2 part(s))
--rw-r--r-- 1 runner runner 4237443072 Sep 24 00:51 fingerprints.db
-records in store: 33510
+fpstore: fetched set 35940085951 (2 part(s))
+-rw-r--r-- 1 runner runner 4453584896 Sep 24 01:26 fingerprints.db
+records in store: 35175
 stem files fetched: 5929
-store holds 33510 fingerprinted records
-measures for 54531 records, scene centres for 20 scenes
+store holds 35175 fingerprinted records
+measures for 55967 records, scene centres for 20 scenes
   500 records, 897,448 postings
   1000 records, 1,797,448 postings
   1500 records, 2,697,448 postings
@@ -55,27 +55,30 @@ measures for 54531 records, scene centres for 20 scenes
   24000 records, 43,175,858 postings
   24500 records, 44,075,543 postings
   25000 records, 44,975,279 postings
-merged 307 records from fp-extra.jsonl
-merged 155 records from fp-canon.jsonl
+  25500 records, 45,874,909 postings
+  26000 records, 46,774,816 postings
+  26500 records, 47,674,816 postings
+merged 306 records from fp-extra.jsonl
+merged 154 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
-before pruning: 26041 records, 46,847,189 postings
-after pruning 1,840,047 over-common hashes: 4,147,416 postings
-ranked 24500 records against their own scene
-positions for 25728 records
-stem neighbours for drums: 23682 records
-stem neighbours for bass: 23682 records
-stem neighbours for other: 23682 records
-stem neighbours for vocals: 23682 records
-per-stem neighbours written for 94728 record-stems
-nearest neighbours for 25728 records, 24164 of them with edges between their neighbours
-walks for 25728 records
-detail for 25683 records written alongside the index
+before pruning: 27351 records, 49,205,096 postings
+after pruning 1,881,328 over-common hashes: 4,090,044 postings
+ranked 24962 records against their own scene
+positions for 27038 records
+stem neighbours for drums: 24132 records
+stem neighbours for bass: 24132 records
+stem neighbours for other: 24132 records
+stem neighbours for vocals: 24132 records
+per-stem neighbours written for 96528 record-stems
+nearest neighbours for 27038 records, 25356 of them with edges between their neighbours
+walks for 27038 records
+detail for 26989 records written alongside the index
 {
- "records": 26041,
- "postings": 4147416,
- "bin_mb": 33.2,
- "meta_mb": 18.0
+ "records": 27351,
+ "postings": 4090044,
+ "bin_mb": 32.7,
+ "meta_mb": 18.6
 }
-VERIFY: 26041 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 18.0 MB, detail 140.8 MB, eight-neighbour 25683, walks 25683
+VERIFY: 27351 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 18.6 MB, detail 146.4 MB, eight-neighbour 26989, walks 26989
 the index the api loads is too large; it must stay lean
