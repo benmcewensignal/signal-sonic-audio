@@ -1,1 +1,107 @@
-no log captured
+fetching the fingerprint store (about 1 GB)
+fpstore: fetched set 36070614246 (2 part(s))
+-rw-r--r-- 1 runner runner 6520000512 Sep 24 23:44 fingerprints.db
+records in store: 51431
+stem files fetched: 6747
+store holds 51431 fingerprinted records
+measures for 89529 records, scene centres for 20 scenes
+  500 records, 897,448 postings
+  1000 records, 1,797,448 postings
+  1500 records, 2,697,448 postings
+  2000 records, 3,597,448 postings
+  2500 records, 4,497,448 postings
+  3000 records, 5,397,448 postings
+  3500 records, 6,297,150 postings
+  4000 records, 7,197,150 postings
+  4500 records, 8,097,150 postings
+  5000 records, 8,997,150 postings
+  5500 records, 9,897,150 postings
+  6000 records, 10,795,579 postings
+  6500 records, 11,695,579 postings
+  7000 records, 12,595,465 postings
+  7500 records, 13,495,465 postings
+  8000 records, 14,394,123 postings
+  8500 records, 15,293,426 postings
+  9000 records, 16,193,426 postings
+  9500 records, 17,093,426 postings
+  10000 records, 17,993,426 postings
+  10500 records, 18,891,922 postings
+  11000 records, 19,791,707 postings
+  11500 records, 20,691,707 postings
+  12000 records, 21,591,350 postings
+  12500 records, 22,490,847 postings
+  13000 records, 23,389,425 postings
+  13500 records, 24,288,469 postings
+  14000 records, 25,188,365 postings
+  14500 records, 26,087,716 postings
+  15000 records, 26,987,716 postings
+  15500 records, 27,887,077 postings
+  16000 records, 28,787,077 postings
+  16500 records, 29,687,077 postings
+  17000 records, 30,585,872 postings
+  17500 records, 31,485,872 postings
+  18000 records, 32,384,212 postings
+  18500 records, 33,284,212 postings
+  19000 records, 34,183,459 postings
+  19500 records, 35,083,295 postings
+  20000 records, 35,983,295 postings
+  20500 records, 36,882,680 postings
+  21000 records, 37,782,621 postings
+  21500 records, 38,681,460 postings
+  22000 records, 39,581,460 postings
+  22500 records, 40,479,958 postings
+  23000 records, 41,379,470 postings
+  23500 records, 42,277,524 postings
+  24000 records, 43,175,858 postings
+  24500 records, 44,075,543 postings
+  25000 records, 44,975,279 postings
+  25500 records, 45,874,909 postings
+  26000 records, 46,774,816 postings
+  26500 records, 47,674,816 postings
+  27000 records, 48,574,723 postings
+  27500 records, 49,474,723 postings
+  28000 records, 50,374,411 postings
+  28500 records, 51,273,803 postings
+  29000 records, 52,173,604 postings
+  29500 records, 53,072,937 postings
+  30000 records, 53,972,937 postings
+  30500 records, 54,872,155 postings
+  31000 records, 55,771,476 postings
+  31500 records, 56,669,063 postings
+  32000 records, 57,567,915 postings
+  32500 records, 58,462,615 postings
+  33000 records, 59,362,062 postings
+  33500 records, 60,261,165 postings
+  34000 records, 61,160,954 postings
+  34500 records, 62,060,424 postings
+  35000 records, 62,957,702 postings
+  35500 records, 63,857,326 postings
+  36000 records, 64,757,326 postings
+  36500 records, 65,657,326 postings
+  37000 records, 66,557,326 postings
+  37500 records, 67,457,326 postings
+  38000 records, 68,357,326 postings
+merged 325 records from fp-extra.jsonl
+merged 154 records from fp-canon.jsonl
+merged 319 records from fp-history.jsonl
+before pruning: 38835 records, 69,857,206 postings
+after pruning 2,157,278 over-common hashes: 3,804,814 postings
+ranked 31957 records against their own scene
+positions for 38522 records
+stem neighbours for drums: 34635 records
+stem neighbours for bass: 34635 records
+stem neighbours for other: 34635 records
+stem neighbours for vocals: 34635 records
+per-stem neighbours written for 138540 record-stems
+nearest neighbours for 38522 records, 35855 of them with edges between their neighbours
+walks for 38522 records
+detail for 38357 records written alongside the index
+{
+ "records": 38835,
+ "postings": 3804814,
+ "bin_mb": 30.4,
+ "meta_mb": 14.9
+}
+VERIFY: 38835 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 14.9 MB, detail 208.2 MB, eight-neighbour 38357, walks 38357
+the index the api loads is too large; it must stay lean
