@@ -1,6 +1,6 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36118310723 (2 part(s))
--rw-r--r-- 1 runner runner 6921506816 Sep 25 10:07 fingerprints.db
+-rw-r--r-- 1 runner runner 6921506816 Sep 25 10:37 fingerprints.db
 records in store: 54859
 stem files fetched: 6747
 store holds 54859 fingerprinted records
