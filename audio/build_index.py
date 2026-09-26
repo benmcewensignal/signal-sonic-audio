@@ -454,7 +454,22 @@ def main():
     for t in tracks:
         if isinstance(t.get("measures"), dict): t["measures"] = [t["measures"].get(k) for k in mkeys]
         if isinstance(t.get("ranks"), dict): t["ranks"] = [None if t["ranks"].get(k) is None else int(round(t["ranks"][k] * 100)) for k in mkeys]
-    json.dump({"generated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "mkeys": mkeys,
+        # leaner still, so the index stays under the API's limit as the corpus grows (every full build
+        # failed its 14 MB guard from 25 September, at 15.6 MB, and recognition stopped learning new
+        # records): two decimals for measures and map positions, which are compared far more coarsely,
+        # whole numbers for large measures such as tempo and loudness, and no label, which nothing reads
+        if isinstance(t.get("measures"), list):
+            t["measures"] = [None if v is None else (round(v, 1) if abs(v) >= 10 else round(v, 2)) for v in t["measures"]]
+        if isinstance(t.get("pos"), dict):
+            t["pos"] = {k: (round(v, 2) if isinstance(v, (int, float)) else v) for k, v in t["pos"].items()}
+        if isinstance(t.get("dist_from_scene_2024"), (int, float)): t["dist_from_scene_2024"] = round(t["dist_from_scene_2024"], 2)
+        t.pop("label", None)
+        for k in [k for k, v in t.items() if k not in ("track_id", "measures", "ranks") and (v is None or v == 0 or v == [] or v == {} or v == "")]:
+            t.pop(k)   # empty fields are read as missing anyway
+    scenes_list = sorted({t["scene"] for t in tracks if isinstance(t.get("scene"), str)}); si_ = {x: i for i, x in enumerate(scenes_list)}
+    for t in tracks:
+        if isinstance(t.get("scene"), str): t["scene"] = si_[t["scene"]]   # one list of names; the API maps them back
+    json.dump({"generated": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "mkeys": mkeys, "scenes": scenes_list,
                "tracks": tracks, "postings": int(len(H)),
                "note": "hashes and postings are two parallel little-endian uint32 arrays after a 12-byte header, sorted by hash"},
               open(a.out + ".json", "w"), separators=(",", ":"))
