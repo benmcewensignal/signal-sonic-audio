@@ -1,10 +1,10 @@
 fetching the fingerprint store (about 1 GB)
-fpstore: fetched set 36253541088 (2 part(s))
--rw-r--r-- 1 runner runner 7825563648 Sep 26 18:53 fingerprints.db
-records in store: 62818
+fpstore: fetched set 36264687013 (2 part(s))
+-rw-r--r-- 1 runner runner 7983771648 Sep 26 19:36 fingerprints.db
+records in store: 64308
 stem files fetched: 7431
-store holds 62818 fingerprinted records
-measures for 94753 records, scene centres for 20 scenes
+store holds 64308 fingerprinted records
+measures for 122460 records, scene centres for 36 scenes
   500 records, 897,448 postings
   1000 records, 1,797,448 postings
   1500 records, 2,697,448 postings
@@ -86,28 +86,29 @@ measures for 94753 records, scene centres for 20 scenes
   39500 records, 71,053,138 postings
   40000 records, 71,952,874 postings
   40500 records, 72,852,130 postings
+  41000 records, 73,752,130 postings
 merged 325 records from fp-extra.jsonl
 merged 153 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
-before pruning: 41727 records, 75,059,210 postings
-after pruning 2,209,240 over-common hashes: 3,787,300 postings
-ranked 31977 records against their own scene
-positions for 41414 records
-stem neighbours for drums: 40215 records
-stem neighbours for bass: 40215 records
-stem neighbours for other: 40215 records
-stem neighbours for vocals: 40215 records
-per-stem neighbours written for 160860 record-stems
-nearest neighbours for 41414 records, 38912 of them with edges between their neighbours
-walks for 41414 records
-detail for 41248 records written alongside the index
+before pruning: 41830 records, 75,244,610 postings
+after pruning 2,210,935 over-common hashes: 3,787,819 postings
+ranked 32064 records against their own scene
+positions for 41517 records
+stem neighbours for drums: 40318 records
+stem neighbours for bass: 40318 records
+stem neighbours for other: 40318 records
+stem neighbours for vocals: 40318 records
+per-stem neighbours written for 161272 record-stems
+nearest neighbours for 41517 records, 39012 of them with edges between their neighbours
+walks for 41517 records
+detail for 41351 records written alongside the index
 {
- "records": 41727,
- "postings": 3787300,
+ "records": 41830,
+ "postings": 3787819,
  "bin_mb": 30.3,
  "meta_mb": 12.2
 }
-VERIFY: 41727 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 12.2 MB, detail 225.0 MB, eight-neighbour 41248, walks 41248
--rw-r--r-- 1 runner runner 30298412 Sep 26 18:57 out/index.bin
--rw-r--r-- 1 runner runner 12183293 Sep 26 18:58 out/index.json
+VERIFY: 41830 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 12.2 MB, detail 225.6 MB, eight-neighbour 41351, walks 41351
+-rw-r--r-- 1 runner runner 30302564 Sep 26 19:41 out/index.bin
+-rw-r--r-- 1 runner runner 12209790 Sep 26 19:41 out/index.json
