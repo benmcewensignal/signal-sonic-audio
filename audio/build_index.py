@@ -120,6 +120,51 @@ def stem_neighbours(tracks, idx, glob_pat, k=8):
     return written
 
 
+def part_walks(tracks, idx, glob_pat, pool=40):
+    """Walk by part: for each record and each part to keep, the record whose same part is among the
+    40 closest while a chosen other part is as different as possible ("same drums, different bass")."""
+    import glob as _g, json as _j
+    import numpy as _np
+    if not glob_pat: return 0
+    PARTS = ("drums", "bass", "other", "vocals"); S = {}
+    for f in _g.glob(glob_pat):
+        for line in open(f):
+            try: d = _j.loads(line)
+            except Exception: continue
+            st = d.get("stems")
+            if isinstance(st, dict): S[d.get("track_id")] = st
+    rows, keep = {p: [] for p in PARTS}, []
+    for gi, ti in enumerate(idx):
+        st = S.get(tracks[ti].get("track_id")) or {}
+        vs = []
+        for p in PARTS:
+            v = [(st.get(p) or {}).get(k2) for k2 in _STEMF]
+            if any(not isinstance(x, (int, float)) for x in v): break
+            vs.append(v)
+        if len(vs) < 4: continue
+        keep.append(ti)
+        for p, v in zip(PARTS, vs): rows[p].append(v)
+    if len(keep) < 200: return 0
+    Z = {}
+    for p in PARTS:
+        X = _np.asarray(rows[p], dtype=float); X = (X - X.mean(0)) / (X.std(0) + 1e-9); Z[p] = X / (_np.linalg.norm(X, axis=1, keepdims=True) + 1e-9)
+    written = 0; B = 512
+    for start in range(0, len(keep), B):
+        sims = {p: Z[p][start:start + B] @ Z[p].T for p in PARTS}
+        for r in range(sims["drums"].shape[0]):
+            a = start + r; out = {}
+            for A in PARTS:
+                sa = sims[A][r].copy(); sa[a] = -2
+                cand = _np.argpartition(-sa, pool)[:pool]
+                for Bp in PARTS:
+                    if Bp == A: continue
+                    j = int(cand[_np.argmin(sims[Bp][r][cand])])
+                    out[A + ">" + Bp] = tracks[keep[j]]["track_id"]
+            tracks[keep[a]]["part_walk"] = out; written += 1
+    print(f"walks by part written for {written} records", flush=True)
+    return written
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", default="fingerprints.db"); ap.add_argument("--meta", default="sonic.db")
@@ -367,6 +412,10 @@ def main():
                 linked += 1
         try:
             n_stem = stem_neighbours(tracks, idx, a.stems_glob)
+            try:
+                part_walks(tracks, idx, a.stems_glob)
+            except Exception as e_:
+                print("walks by part skipped:", type(e_).__name__, e_, flush=True)
             if n_stem:
                 print(f"per-stem neighbours written for {n_stem} record-stems", flush=True)
         except Exception as e:
@@ -439,6 +488,7 @@ def main():
         # guard doing exactly what the comment above it describes: this file is loaded on every
         # cold start and recognition itself depends on it staying small.
         if t.get("stem_near"): extra["stem_near"] = t.pop("stem_near")
+        if t.get("part_walk"): extra["part_walk"] = t.pop("part_walk")   # detail only: the lean index stays small
         if extra: rich[t["track_id"]] = extra
     with open(a.out + "-detail.json", "w") as f:
         json.dump(rich, f, separators=(",", ":"))
