@@ -3,3 +3,5 @@ __pycache__/
 bin/
 out/tmp/
 sonic.db
+
+out/index-detail.json

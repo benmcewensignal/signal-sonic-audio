@@ -201,6 +201,14 @@ def part_walks(tracks, idx, glob_pat, pool=40):
     return written
 
 
+def detail_shard(tid):
+    """Which of the 64 detail files holds a record: FNV-1a of its id, the same sum the api computes."""
+    h = 0x811c9dc5
+    for b in str(tid).encode("utf-8"):
+        h ^= b; h = (h * 0x01000193) & 0xffffffff
+    return h % 64
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", default="fingerprints.db"); ap.add_argument("--meta", default="sonic.db")
@@ -549,9 +557,17 @@ def main():
         if t.get("key"): extra["key"] = t.pop("key")   # detail only
         if t.get("near_key"): extra["near_key"] = t.pop("near_key")   # detail only: the lean index stays small
         if extra: rich[t["track_id"]] = extra
-    with open(a.out + "-detail.json", "w") as f:
-        json.dump(rich, f, separators=(",", ":"))
-    print(f"detail for {len(rich)} records written alongside the index", flush=True)
+    # Sixty-four small files, not one: the single file passed 100 MB, which GitHub will not store, so from
+    # 23 September no build could save it and every record recognised since had no walks or neighbours.
+    # Each record's details sit in the file its id hashes to, and the api fetches only that one.
+    import os as _os
+    _os.makedirs(_os.path.join(_os.path.dirname(a.out) or ".", "detail"), exist_ok=True)
+    shards = [dict() for _ in range(64)]
+    for tid, extra in rich.items(): shards[detail_shard(tid)][tid] = extra
+    for k, sh in enumerate(shards):
+        with open(_os.path.join(_os.path.dirname(a.out) or ".", "detail", "%02d.json" % k), "w") as f:
+            json.dump(sh, f, separators=(",", ":"))
+    print(f"detail for {len(rich)} records written alongside the index, in 64 files", flush=True)
 
     with open(a.out + ".bin", "wb") as f:
         f.write(struct.pack("<4sII", b"SFP1", len(H), len(tracks)))

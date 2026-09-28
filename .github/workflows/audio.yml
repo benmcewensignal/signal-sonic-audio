@@ -206,12 +206,14 @@ jobs:
           nid = sum(1 for x in t if x.get("near") and x["near"][0].get("id"))
           wk = sum(1 for x in t if x.get("walk"))
           print(f"VERIFY: {len(t)} records, eight-neighbour {n8}, with ids {nid}, walks {wk}")
-          det = json.load(open("out/index-detail.json"))
+          import glob as _g
+          det = {}
+          for f_ in _g.glob("out/detail/*.json"): det.update(json.load(open(f_)))
           n8 = sum(1 for v in det.values() if v.get("near") and len(v["near"]) >= 8)
           wk = sum(1 for v in det.values() if v.get("walk"))
           import os
           print(f"VERIFY: index {os.path.getsize('out/index.json')/1e6:.1f} MB, "
-                f"detail {os.path.getsize('out/index-detail.json')/1e6:.1f} MB, "
+                f"detail {sum(os.path.getsize(f_) for f_ in _g.glob('out/detail/*.json'))/1e6:.1f} MB in 64 files, "
                 f"eight-neighbour {n8}, walks {wk}")
           if n8 == 0 or wk == 0:
               raise SystemExit("the detail file was written without neighbours or walks")
@@ -253,7 +255,8 @@ jobs:
             exit 1
           fi
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
-          git add out/index.json && git commit -qm "recognition index metadata" && git pull -q --no-rebase origin main && git push -q origin HEAD:main
+          git rm -q --cached out/index-detail.json 2>/dev/null || true   # the old single file, too large to store
+          git add out/index.json out/detail && git commit -qm "recognition index metadata and details" && git pull -q --no-rebase origin main && git push -q origin HEAD:main
           exit 0
 
       - name: build the recognition demo index
