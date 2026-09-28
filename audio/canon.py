@@ -99,6 +99,7 @@ def search(term, token):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="out/fp-canon.jsonl"); ap.add_argument("--limit", type=int, default=200)
+    ap.add_argument("--list", default="", help="a further list to find: the records DJs play most that Sonic cannot yet recognise")
     ap.add_argument("--budget-minutes", type=int, default=80)
     a = ap.parse_args()
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
@@ -114,7 +115,13 @@ def main():
     report = []
     mode = "a" if os.path.exists(a.out) else "w"
     with open(a.out, mode) as out:
-        for scene, titles in CANON.items():
+        todo = dict(CANON)
+        if getattr(a, "list", ""):
+            try:
+                for q in json.load(open(a.list))["queue"]: todo.setdefault(q.get("scene") or "unknown", []).append(q["term"])
+            except Exception as e:
+                print("list not read:", type(e).__name__, e, flush=True)
+        for scene, titles in todo.items():
             for term in titles:
                 if term in have: continue
                 if (time.time() - t0) / 60 > a.budget_minutes:
