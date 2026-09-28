@@ -184,13 +184,21 @@ def part_walks(tracks, idx, glob_pat, pool=40):
     Z = {}
     for p in PARTS:
         X = _np.asarray(rows[p], dtype=float); X = (X - X.mean(0)) / (X.std(0) + 1e-9); Z[p] = X / (_np.linalg.norm(X, axis=1, keepdims=True) + 1e-9)
+    # Mixable first: a DJ can only walk to a record at a tempo they can mix (within 6 per cent, or double or half).
+    # Without this, 15 of 17 steps from a drum & bass record landed at 129 to 197 BPM. Fall back to the closest
+    # regardless of tempo only when fewer than ten mixable records share the part closely, so no record loses its walks.
+    Tm = _np.array([((tracks[ti].get("measures") or {}).get("tempo") or 0) for ti in keep], dtype=float)
     written = 0; B = 512
     for start in range(0, len(keep), B):
         sims = {p: Z[p][start:start + B] @ Z[p].T for p in PARTS}
         for r in range(sims["drums"].shape[0]):
             a = start + r; out = {}
+            T0 = Tm[a]
+            mixable = ((Tm > 0) & ((_np.abs(Tm - T0) <= 0.06 * T0) | (_np.abs(Tm * 2 - T0) <= 0.06 * T0) | (_np.abs(Tm / 2 - T0) <= 0.06 * T0))) if T0 > 0 else _np.ones(len(keep), bool)
             for A in PARTS:
                 sa = sims[A][r].copy(); sa[a] = -2
+                sm = _np.where(mixable, sa, -2.0)
+                if int((sm > 0.5).sum()) >= 10: sa = sm   # enough mixable records share this part closely
                 cand = _np.argpartition(-sa, pool)[:pool]
                 for Bp in PARTS:
                     if Bp == A: continue
