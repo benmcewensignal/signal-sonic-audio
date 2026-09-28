@@ -452,6 +452,23 @@ def main():
                 record_keys(tracks, idx, a.stems_glob)
             except Exception as e_:
                 print("keys skipped:", type(e_).__name__, e_, flush=True)
+            try:   # stay in key: the nearest sound neighbour whose key mixes harmonically (Camelot: same, one step, or relative)
+                KB = {t["track_id"]: (t.get("key") or {}).get("camelot") for t in tracks if t.get("key")}
+                def cam(c): return (int(c[:-1]), c[-1]) if c else None
+                def fits(a_, b_):
+                    if not a_ or not b_: return False
+                    (na, la), (nb, lb) = a_, b_
+                    return (na == nb) or (la == lb and (na - nb) % 12 in (1, 11))
+                nk = 0
+                for t in tracks:
+                    me = cam(KB.get(t.get("track_id")))
+                    for nb_ in (t.get("near") or []):
+                        c_ = KB.get(nb_.get("id"))
+                        if me and fits(me, cam(c_)):
+                            t["near_key"] = {"id": nb_["id"], "name": nb_.get("name"), "artists": nb_.get("artists"), "camelot": c_}; nk += 1; break
+                print(f"in-key steps written for {nk} records", flush=True)
+            except Exception as e_:
+                print("in-key steps skipped:", type(e_).__name__, e_, flush=True)
             try:
                 part_walks(tracks, idx, a.stems_glob)
             except Exception as e_:
@@ -529,7 +546,8 @@ def main():
         # cold start and recognition itself depends on it staying small.
         if t.get("stem_near"): extra["stem_near"] = t.pop("stem_near")
         if t.get("part_walk"): extra["part_walk"] = t.pop("part_walk")
-        if t.get("key"): extra["key"] = t.pop("key")   # detail only   # detail only: the lean index stays small
+        if t.get("key"): extra["key"] = t.pop("key")   # detail only
+        if t.get("near_key"): extra["near_key"] = t.pop("near_key")   # detail only: the lean index stays small
         if extra: rich[t["track_id"]] = extra
     with open(a.out + "-detail.json", "w") as f:
         json.dump(rich, f, separators=(",", ":"))
