@@ -142,7 +142,19 @@ jobs:
           BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
           BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
           BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
-        run: python -m audio.canon --out out/fp-canon.jsonl --budget-minutes 80
+        run: python -m audio.canon --out out/fp-canon.jsonl --budget-minutes 80 --limit 300 --list data/classics-queue.json
+
+      - name: chain the classics pass while the list has records left
+        if: always() && inputs.task == 'canon'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          LEFT=$(python -c "import json;q=json.load(open('data/classics-queue.json'))['queue'];done=set();[done.add(json.loads(l).get('query')) for l in open('out/fp-canon.jsonl')];print(sum(1 for x in q if x['term'] not in done))" 2>/dev/null || echo 1)
+          echo "classics left to look up: $LEFT"
+          if [ "$LEFT" -le 0 ]; then echo "every classic looked up"; exit 0; fi
+          gh workflow run audio.yml --ref main -f task=canon && echo "next classics run dispatched"
+          exit 0
 
       - name: fingerprint the biggest records
         if: inputs.task == 'fp-top'
