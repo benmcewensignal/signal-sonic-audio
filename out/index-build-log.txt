@@ -1,10 +1,10 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36276144288 (3 part(s))
--rw-r--r-- 1 runner runner 8162258944 Sep 28 17:57 fingerprints.db
+-rw-r--r-- 1 runner runner 8162258944 Sep 28 18:14 fingerprints.db
 records in store: 66138
 stem files fetched: 8036
 store holds 66138 fingerprinted records
-measures for 122893 records, scene centres for 36 scenes
+measures for 123131 records, scene centres for 36 scenes
   500 records, 897,448 postings
   1000 records, 1,797,448 postings
   1500 records, 2,697,448 postings
@@ -93,18 +93,18 @@ merged 319 records from fp-history.jsonl
 before pruning: 41830 records, 75,244,610 postings
 after pruning 2,210,935 over-common hashes: 3,787,819 postings
 ranked 32080 records against their own scene
-positions for 41517 records
+positions for 41640 records
 stem neighbours for drums: 40321 records
 stem neighbours for bass: 40321 records
 stem neighbours for other: 40321 records
 stem neighbours for vocals: 40321 records
 keys written for 40320 records
-in-key steps written for 31450 records
+in-key steps written for 31414 records
 walks by part written for 40321 records
 per-stem neighbours written for 161284 record-stems
-nearest neighbours for 41517 records, 39012 of them with edges between their neighbours
-walks for 41517 records
-detail for 41351 records written alongside the index, in 64 files
+nearest neighbours for 41640 records, 39141 of them with edges between their neighbours
+walks for 41640 records
+detail for 41474 records written alongside the index, in 64 files
 {
  "records": 41830,
  "postings": 3787819,
@@ -112,6 +112,6 @@ detail for 41351 records written alongside the index, in 64 files
  "meta_mb": 12.2
 }
 VERIFY: 41830 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 12.2 MB, detail 245.1 MB in 64 files, eight-neighbour 41351, walks 41351
--rw-r--r-- 1 runner runner 30302564 Sep 28 18:04 out/index.bin
--rw-r--r-- 1 runner runner 12211485 Sep 28 18:04 out/index.json
+VERIFY: index 12.2 MB, detail 245.5 MB in 64 files, eight-neighbour 41474, walks 41474
+-rw-r--r-- 1 runner runner 30302564 Sep 28 18:21 out/index.bin
+-rw-r--r-- 1 runner runner 12229598 Sep 28 18:21 out/index.json
