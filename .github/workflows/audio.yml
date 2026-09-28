@@ -235,7 +235,7 @@ jobs:
           git config user.name 'sonic-audio-bot'; git config user.email 'sonic@earlysignal.live'
           git add out/index-build-log.txt
           git commit -qm 'index build log' || true
-          git pull -q --no-rebase origin main || true
+          git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; git fetch -q origin main && git merge -q -s ours origin/main -m 'keep this run\'s outputs over a conflicting upstream') || true
           git push -q origin HEAD:main || true
           exit 0
       - name: publish the index as a release asset
@@ -256,7 +256,7 @@ jobs:
           fi
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
           git rm -q --cached out/index-detail.json 2>/dev/null || true   # the old single file, too large to store
-          git add out/index.json out/detail && git commit -qm "recognition index metadata and details" && git pull -q --no-rebase origin main && git push -q origin HEAD:main
+          git add out/index.json out/detail && git commit -qm "recognition index metadata and details" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; git fetch -q origin main && git merge -q -s ours origin/main -m 'keep this run\'s outputs over a conflicting upstream') && git push -q origin HEAD:main
           exit 0
 
       - name: build the recognition demo index
@@ -300,7 +300,7 @@ jobs:
         run: |
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
           git add -A out 2>/dev/null || true
-          git diff --cached --quiet || (git commit -qm "audio: $(date -u +%FT%TZ)" && git pull -q --no-rebase origin main && git push -q origin HEAD:main) || echo "nothing to persist"
+          git diff --cached --quiet || (git commit -qm "audio: $(date -u +%FT%TZ)" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; git fetch -q origin main && git merge -q -s ours origin/main -m 'keep this run\'s outputs over a conflicting upstream') && git push -q origin HEAD:main) || echo "nothing to persist"
 
       - name: stand down if a one-off build is waiting
         id: yield
