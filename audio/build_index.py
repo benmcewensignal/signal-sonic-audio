@@ -564,6 +564,17 @@ def main():
         if t.get("part_walk"): extra["part_walk"] = t.pop("part_walk")
         if t.get("key"): extra["key"] = t.pop("key")   # detail only
         if t.get("near_key"): extra["near_key"] = t.pop("near_key")   # detail only: the lean index stays small
+        # The recognition index keeps only what matching and search need (id, title, artists, scene, chart and
+        # DJ-play counts, how typical it is, a flag for a fully measured record and its tempo). Measures, ranks,
+        # map position and neighbour links go to the record's detail file, which the api merges into every record
+        # it returns: at 12 MB of a 14 MB limit, the index could not grow past about 45,000 records.
+        FULL8 = ("how_played", "vocal_presence", "drum_density", "sub_bass", "pulse_clarity", "loudness", "harmonic_weight", "tempo")
+        rk = t.get("ranks") or {}
+        if isinstance(rk, dict) and all(isinstance(rk.get(k), (int, float)) for k in FULL8): t["f"] = 1
+        ms = t.get("measures") or {}
+        if isinstance(ms, dict) and isinstance(ms.get("tempo"), (int, float)): t["tm"] = round(float(ms["tempo"]), 1)
+        for k in ("measures", "ranks", "pos", "near_links", "dist_from_scene_2024", "preview"):
+            if t.get(k) is not None: extra[k] = t.pop(k)
         if extra: rich[t["track_id"]] = extra
     # Sixty-four small files, not one: the single file passed 100 MB, which GitHub will not store, so from
     # 23 September no build could save it and every record recognised since had no walks or neighbours.
