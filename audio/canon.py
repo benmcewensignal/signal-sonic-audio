@@ -111,7 +111,7 @@ def main():
     if LocalAnalyser is None:
         print(f"WARNING: no analyser, records will be fingerprinted but not measured ({_ANALYSER_ERROR})", flush=True)
     token = get_token()
-    t0 = time.time(); found = missing = err = measured_n = 0
+    t0 = time.time(); found = missing = err = measured_n = 0; tried = 0; first_errors = []
     report = []
     mode = "a" if os.path.exists(a.out) else "w"
     with open(a.out, mode) as out:
@@ -126,6 +126,9 @@ def main():
                 if term in have: continue
                 if (time.time() - t0) / 60 > a.budget_minutes:
                     print("budget reached", flush=True); break
+                if tried >= a.limit:
+                    break
+                tried += 1
                 p = None
                 try:
                     hits = search(term, token)
@@ -168,13 +171,20 @@ def main():
                 except Exception as e:
                     err += 1
                     if err <= 4: print(f"  {term}: {type(e).__name__}: {str(e)[:60]}", flush=True)
+                    if len(first_errors) < 3: first_errors.append(f"{type(e).__name__}: {str(e)[:90]}")
                 finally:
                     if p:
                         try: os.unlink(p)
                         except OSError: pass
     total = sum(len(v) for v in CANON.values())
-    print(json.dumps({"canon_size": total, "fingerprinted": found, "measured": measured_n, "not_on_beatport": missing,
-                      "errors": err, "hit_rate": round(found / max(1, found + missing), 2)}, indent=1), flush=True)
+    summ = {"canon_size": total, "tried": tried, "fingerprinted": found, "measured": measured_n, "not_on_beatport": missing,
+            "errors": err, "hit_rate": round(found / max(1, found + missing), 2), "first_errors": first_errors}
+    print(json.dumps(summ, indent=1), flush=True)
+    # the run logs cannot be read from where the pipeline is managed, so the outcome is an annotation on the run
+    print("::notice title=canon::" + json.dumps(summ), flush=True)
+    if tried and found + missing == 0:
+        print("::error title=canon::every lookup failed, so nothing was recorded: " + "; ".join(first_errors), flush=True)
+        raise SystemExit(2)
 
 
 if __name__ == "__main__":

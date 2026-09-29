@@ -15,6 +15,10 @@ on:
         type: choice
         options: [rehearse, rhythm, history, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
         default: rhythm
+      budget:
+        description: minutes the canon pass may spend (a short one is a diagnostic)
+        required: false
+        default: "80"
 permissions:
   contents: write
   actions: write
@@ -136,25 +140,19 @@ jobs:
           python -c "from sonic.analyser_local import LocalAnalyser; print('analyser available:', LocalAnalyser().version)"
 
       - name: fingerprint the canon
+        id: canon
         if: inputs.task == 'canon'
         env:
           BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
           BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
           BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
           BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
-        run: python -m audio.canon --out out/fp-canon.jsonl --budget-minutes 80 --limit 300 --list data/classics-queue.json
-
-      - name: chain the classics pass while the list has records left
-        if: always() && inputs.task == 'canon'
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
-          set +e
-          LEFT=$(python -c "import json;q=json.load(open('data/classics-queue.json'))['queue'];done=set();[done.add(json.loads(l).get('query')) for l in open('out/fp-canon.jsonl')];print(sum(1 for x in q if x['term'] not in done))" 2>/dev/null || echo 1)
-          echo "classics left to look up: $LEFT"
-          if [ "$LEFT" -le 0 ]; then echo "every classic looked up"; exit 0; fi
-          gh workflow run audio.yml --ref main -f task=canon && echo "next classics run dispatched"
-          exit 0
+          B=$(cat out/fp-canon.jsonl 2>/dev/null | wc -l); RC=0
+          python -m audio.canon --out out/fp-canon.jsonl --budget-minutes ${{ inputs.budget || '80' }} --limit 300 --list data/classics-queue.json || RC=$?
+          A=$(cat out/fp-canon.jsonl 2>/dev/null | wc -l)
+          echo "added=$((A-B))" >> "$GITHUB_OUTPUT"; echo "::notice title=canon lines::$((A-B)) added this run"
+          exit $RC
 
       - name: fingerprint the biggest records
         if: inputs.task == 'fp-top'
@@ -296,11 +294,36 @@ jobs:
           BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
         run: python -m audio.bench --db sonic.db --out out/olaf-bench.json
       - name: persist results
+        id: persist
         if: always()
         run: |
+          # a failed push used to fall through to "nothing to persist" and the run reported success
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
           git add -A out 2>/dev/null || true
-          git diff --cached --quiet || (git commit -qm "audio: $(date -u +%FT%TZ)" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; git fetch -q origin main && git merge -q -s ours origin/main -m 'keep the outputs of this run over a conflicting upstream') && git push -q origin HEAD:main) || echo "nothing to persist"
+          if git diff --cached --quiet; then echo "nothing to persist"; exit 0; fi
+          BIG=$( (git diff --cached --name-only | while read f; do [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 95000000 ] && echo "$f"; done) || true )
+          if [ -n "$BIG" ]; then echo "::error title=persist::staged files over GitHub's 100 MB limit: $BIG"; exit 1; fi
+          git commit -qm "audio: $(date -u +%FT%TZ)"
+          if ! git pull -q --no-rebase -X ours origin main; then git merge --abort 2>/dev/null || true; git fetch -q origin main && git merge -q -s ours origin/main -m 'keep the outputs of this run over a conflicting upstream'; fi
+          for i in 1 2 3; do
+            if OUT=$(git push -q origin HEAD:main 2>&1); then echo "pushed=1" >> "$GITHUB_OUTPUT"; echo "::notice title=persist::pushed"; exit 0; fi
+            echo "push attempt $i failed: $OUT"; git pull -q --no-rebase -X ours origin main || true; sleep $((i*10))
+          done
+          echo "::error title=persist::push failed: $(echo "$OUT" | tail -2 | tr '\n' ' ' | cut -c1-300)"; exit 1
+      - name: chain the classics pass while the list has records left
+        # only after a run that added lines and got them onto main: a pass that records nothing, or a push
+        # that fails, used to dispatch the same work again, every seventy minutes, from 28 September
+        if: always() && inputs.task == 'canon' && steps.canon.outputs.added != '' && steps.canon.outputs.added != '0' && steps.persist.outputs.pushed == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          LEFT=$(python -c "import json;q=json.load(open('data/classics-queue.json'))['queue'];done=set();[done.add(json.loads(l).get('query')) for l in open('out/fp-canon.jsonl')];print(sum(1 for x in q if x['term'] not in done))" 2>/dev/null || echo 1)
+          echo "classics left to look up: $LEFT"
+          if [ "$LEFT" -le 0 ]; then echo "every classic looked up"; exit 0; fi
+          gh workflow run audio.yml --ref main -f task=canon && echo "next classics run dispatched"
+          exit 0
+
 
       - name: stand down if a one-off build is waiting
         id: yield
