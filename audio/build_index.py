@@ -320,6 +320,7 @@ def main():
     import glob as _gl
     _d = os.path.dirname(a.out)
     for path in [p_ for fam in ("fp-extra", "fp-canon", "fp-history") for p_ in sorted(_gl.glob(os.path.join(_d, fam + "*.jsonl")))]:
+        extra = os.path.basename(path)   # the rest of the loop names the file by this
         if not os.path.exists(path): continue
         n_extra = 0
         for line in open(path):
