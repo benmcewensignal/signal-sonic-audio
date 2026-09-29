@@ -104,14 +104,15 @@ def main():
     a = ap.parse_args()
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     have = set()
-    if os.path.exists(a.out):
-        for line in open(a.out):
+    import glob as _gl   # every canon file counts as done: runs now write their own file (fp-canon-<run>.jsonl)
+    for path_ in set(_gl.glob(os.path.join(os.path.dirname(a.out) or ".", "fp-canon*.jsonl")) + ([a.out] if os.path.exists(a.out) else [])):
+        for line in open(path_):
             try: have.add(json.loads(line).get("query"))
             except Exception: pass
     if LocalAnalyser is None:
         print(f"WARNING: no analyser, records will be fingerprinted but not measured ({_ANALYSER_ERROR})", flush=True)
     token = get_token()
-    t0 = time.time(); found = missing = err = measured_n = 0; tried = 0; first_errors = []
+    t0 = time.time(); found = missing = err = measured_n = 0; tried = 0; first_errors = []; first_measure_error = []
     report = []
     mode = "a" if os.path.exists(a.out) else "w"
     with open(a.out, mode) as out:
@@ -156,6 +157,7 @@ def main():
                             measures = {"error": f"{type(e).__name__}: {str(e)[:180]}",
                                         "where": traceback.format_exc().strip().split(chr(10))[-3][:160]}
                             print(f"    {term}: could not measure -> {measures['error']}", flush=True)
+                            if not first_measure_error: first_measure_error.append(measures["error"])
                     if len(hs) < 50: raise ValueError("too few fingerprints")
                     H = np.array([h for h, _ in hs], dtype="<u4")
                     Fr = np.minimum(np.array([f for _, f in hs]), 0xFFFF).astype("<u2")
@@ -178,7 +180,8 @@ def main():
                         except OSError: pass
     total = sum(len(v) for v in CANON.values())
     summ = {"canon_size": total, "tried": tried, "fingerprinted": found, "measured": measured_n, "not_on_beatport": missing,
-            "errors": err, "hit_rate": round(found / max(1, found + missing), 2), "first_errors": first_errors}
+            "errors": err, "hit_rate": round(found / max(1, found + missing), 2), "first_errors": first_errors,
+            "analyser": ("not available: " + _ANALYSER_ERROR) if _ANALYSER_ERROR else "available", "first_measure_error": first_measure_error[:1]}
     print(json.dumps(summ, indent=1), flush=True)
     # the run logs cannot be read from where the pipeline is managed, so the outcome is an annotation on the run
     print("::notice title=canon::" + json.dumps(summ), flush=True)

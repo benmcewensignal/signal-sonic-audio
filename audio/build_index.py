@@ -315,8 +315,11 @@ def main():
     # additions: the targeted pass and the canon, both published as base64 blobs so the
     # gigabyte store never has to move
     import base64
-    for extra in ["fp-extra.jsonl", "fp-canon.jsonl", "fp-history.jsonl"]:
-        path = os.path.join(os.path.dirname(a.out), extra)
+    # each family may be split across files (fp-canon-<run>.jsonl beside fp-canon.jsonl): GitHub refuses any file over
+    # 100 MB, and one canon run of 2,000 records appended about 300 MB, so its push failed every time from 28 September
+    import glob as _gl
+    _d = os.path.dirname(a.out)
+    for path in [p_ for fam in ("fp-extra", "fp-canon", "fp-history") for p_ in sorted(_gl.glob(os.path.join(_d, fam + "*.jsonl")))]:
         if not os.path.exists(path): continue
         n_extra = 0
         for line in open(path):

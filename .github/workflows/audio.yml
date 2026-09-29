@@ -148,9 +148,10 @@ jobs:
           BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
           BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
         run: |
-          B=$(cat out/fp-canon.jsonl 2>/dev/null | wc -l); RC=0
-          python -m audio.canon --out out/fp-canon.jsonl --budget-minutes ${{ inputs.budget || '80' }} --limit 300 --list data/classics-queue.json || RC=$?
-          A=$(cat out/fp-canon.jsonl 2>/dev/null | wc -l)
+          # each run writes its own file: one file for every run passed GitHub's 100 MB limit and every push failed
+          B=$(cat out/fp-canon*.jsonl 2>/dev/null | wc -l); RC=0
+          python -m audio.canon --out out/fp-canon-$(date -u +%Y%m%d-%H%M).jsonl --budget-minutes ${{ inputs.budget || '80' }} --limit 300 --list data/classics-queue.json || RC=$?
+          A=$(cat out/fp-canon*.jsonl 2>/dev/null | wc -l)
           echo "added=$((A-B))" >> "$GITHUB_OUTPUT"; echo "::notice title=canon lines::$((A-B)) added this run"
           exit $RC
 
@@ -318,7 +319,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set +e
-          LEFT=$(python -c "import json;q=json.load(open('data/classics-queue.json'))['queue'];done=set();[done.add(json.loads(l).get('query')) for l in open('out/fp-canon.jsonl')];print(sum(1 for x in q if x['term'] not in done))" 2>/dev/null || echo 1)
+          LEFT=$(python -c "import json;q=json.load(open('data/classics-queue.json'))['queue'];import glob;done=set();[done.add(json.loads(l).get('query')) for f in glob.glob('out/fp-canon*.jsonl') for l in open(f)];print(sum(1 for x in q if x['term'] not in done))" 2>/dev/null || echo 1)
           echo "classics left to look up: $LEFT"
           if [ "$LEFT" -le 0 ]; then echo "every classic looked up"; exit 0; fi
           gh workflow run audio.yml --ref main -f task=canon && echo "next classics run dispatched"
