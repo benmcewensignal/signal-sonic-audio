@@ -133,9 +133,16 @@ jobs:
           # canon records were fingerprinted and none measured. Fetch it rather than vendor
           # a copy, so there is one analyser and it cannot drift.
           mkdir -p sonic
-          for f in __init__.py analyser.py analyser_local.py; do
-            curl -sL -o "sonic/$f" "https://raw.githubusercontent.com/benmcewensignal/signal-sonic/main/sonic/$f" || true
-          done
+          # the analyser imports modules lazily (groove, swing, tempo_resolved, edm_features), so copy the whole
+          # package rather than a hand-kept list: three files left every canon record unmeasured on 29 September
+          mkdir -p sonic
+          if git clone -q --depth 1 --filter=blob:none --sparse https://github.com/benmcewensignal/signal-sonic.git /tmp/ss && git -C /tmp/ss sparse-checkout set sonic; then
+            cp /tmp/ss/sonic/*.py sonic/
+          else
+            for f in __init__.py analyser.py analyser_local.py groove.py swing.py tempo_resolved.py edm_features.py; do
+              curl -sL -o "sonic/$f" "https://raw.githubusercontent.com/benmcewensignal/signal-sonic/main/sonic/$f" || true
+            done
+          fi
           touch sonic/__init__.py
           python -c "from sonic.analyser_local import LocalAnalyser; print('analyser available:', LocalAnalyser().version)"
 
@@ -321,7 +328,9 @@ jobs:
           set +e
           LEFT=$(python -c "import json;q=json.load(open('data/classics-queue.json'))['queue'];import glob;done=set();[done.add(json.loads(l).get('query')) for f in glob.glob('out/fp-canon*.jsonl') for l in open(f)];print(sum(1 for x in q if x['term'] not in done))" 2>/dev/null || echo 1)
           echo "classics left to look up: $LEFT"
-          if [ "$LEFT" -le 0 ]; then echo "every classic looked up"; exit 0; fi
+          # a few lookups fail for good (a preview that 404s) and write nothing, so ten or fewer left counts as done;
+          # then the live recognition index is rebuilt, since it is what makes the classics recognisable on the site
+          if [ "$LEFT" -le 10 ]; then echo "every classic looked up"; gh workflow run audio.yml --ref main -f task=full-index && echo "recognition index rebuild dispatched"; exit 0; fi
           gh workflow run audio.yml --ref main -f task=canon && echo "next classics run dispatched"
           exit 0
 
