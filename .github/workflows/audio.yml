@@ -55,6 +55,9 @@ jobs:
           # can land in a swap more often: five tries, spaced further apart
           for i in 1 2 3 4 5; do
             gh release download deepened --repo benmcewensignal/signal-sonic --pattern sonic.db --dir rel --clobber 2>/dev/null && [ -s rel/sonic.db ] && break
+            # a save that uploaded but failed to rename leaves only sonic.db.<run>: take the newest such copy
+            N=$(gh api repos/benmcewensignal/signal-sonic/releases/tags/deepened --jq '[.assets[] | select(.name|startswith("sonic.db."))] | sort_by(.updated_at) | last | .name' 2>/dev/null)
+            if [ -n "$N" ] && [ "$N" != "null" ] && gh release download deepened --repo benmcewensignal/signal-sonic --pattern "$N" --dir rel --clobber 2>/dev/null; then mv "rel/$N" rel/sonic.db && echo "::warning title=database::used $N (the name sonic.db was missing)" && break; fi
             echo "fetch attempt $i missed; retrying"; sleep $((i*20))
           done
           python - <<'PY'
