@@ -32,7 +32,11 @@ PV = _get("/data/previews.json").get("u", {}); DI = _get("/data/dj-index.json");
 pool = [(t, (names_[k] if k < len(names_) else "")) for k, t in enumerate(DI["ids"]) if t in PV and t not in canon_ids]
 pick.shuffle(pool)
 canon_titles.discard("")
-recent = [{"track_id": t, "preview": PV[t]} for t, nm in pool if not nm or _re.sub(r"[^a-z0-9]+", " ", str(nm).lower()).strip() not in canon_titles][:20]
+recent = [{"track_id": t, "preview": PV[t]} for t, nm in pool if not nm or _re.sub(r"[^a-z0-9]+", " ", str(nm).lower()).strip() not in canon_titles][:40]
+# records Sonic has never fingerprinted: charted, with a preview, outside the DJ index and the classics (any name for one of these is a false match)
+CT = json.load(urllib.request.urlopen(urllib.request.Request("https://raw.githubusercontent.com/benmcewensignal/signal-sonic/main/data/chart-tracks.json", headers={"User-Agent": "sonic-dense-e2e"}), timeout=180))
+dj_ids = set(DI["ids"]); outs = [t for t, v in CT.items() if v and len(v) > 4 and v[4] and t not in dj_ids and t not in canon_ids]; pick.shuffle(outs)
+outside = [{"track_id": t, "preview": CT[t][4]} for t in outs[:40]]
 print(f"outside records: {len(recent)}", flush=True)
 cq = {}
 for f in glob.glob("out/fp-canon*.jsonl"):
@@ -49,21 +53,29 @@ def ask(d):
     hs = [[int(h), int(f)] for h, f in FP.hashes(clip)]
     req = urllib.request.Request(SITE + "/api/listen", data=json.dumps({"hashes": hs[:20000]}).encode(), headers={"Content-Type": "application/json", "User-Agent": "sonic-dense-e2e"})
     return json.load(urllib.request.urlopen(req, timeout=60))
-res = {"classics": [], "recent": []}
-for kind, L_ in (("classics", classics), ("recent", recent)):
+import time as _t
+print("waiting six minutes so the recognition service is asleep before the first clip", flush=True); _t.sleep(360)
+res = {"classics": [], "recent": [], "outside": []}
+for kind, L_ in (("classics", classics), ("recent", recent), ("outside", outside)):
     for d in L_:
+        t0_ = _t.time()
         try: r = ask(d)
-        except Exception as e: res[kind].append({"id": d["track_id"], "error": type(e).__name__}); continue
+        except Exception as e: res[kind].append({"id": d["track_id"], "error": type(e).__name__, "seconds": round(_t.time() - t0_, 1)}); continue
+        secs_ = round(_t.time() - t0_, 1)
         tr_ = r.get("track") or {}; tid = tr_.get("track_id")
         def _g(name, arts):   # the service's grouping: first artist's first word and the title before any bracket or feat.
             import re as _r
             n_ = lambda x: _r.sub(r"\bu\b", "you", _r.sub(r"[^a-z0-9]+", " ", str(x or "").replace("'", "").lower())).strip()
             return (n_((arts or [""])[0]).split(" ")[0] if arts else "") + "|" + n_(_r.split(r"\s*[\(\[]|\s+feat\.?\s+|\s+ft\.?\s+", str(name or ""), 1)[0])
         same = tid == d["track_id"] or (cq.get(tid) and cq.get(tid) == cq.get(d["track_id"])) or (tid and _g(tr_.get("name"), tr_.get("artists")) == _g(d.get("name"), d.get("artists")))
-        res[kind].append({"id": d["track_id"], "found": bool(r.get("found")), "right": bool(r.get("found") and same), "wrong": bool(r.get("found") and not same), "via": r.get("via"), "dense": r.get("dense"), "local_hits": r.get("hashes_in_index"), "sent": r.get("hashes_sent"), "answer": [tid, tr_.get("name"), (tr_.get("artists") or [None])[0]] if r.get("found") else None, "asked": [d.get("name"), (d.get("artists") or [None])[0]]})
+        res[kind].append({"id": d["track_id"], "found": bool(r.get("found")), "right": bool(r.get("found") and same), "wrong": bool(r.get("found") and not same), "via": r.get("via"), "dense": r.get("dense"), "local_hits": r.get("hashes_in_index"), "sent": r.get("hashes_sent"), "answer": [tid, tr_.get("name"), (tr_.get("artists") or [None])[0]] if r.get("found") else None, "asked": [d.get("name"), (d.get("artists") or [None])[0]], "seconds": secs_})
 def rate(L_, k): return f"{sum(1 for x in L_ if x.get(k))} of {len(L_)}"
-summ = {"classics_right": rate(res["classics"], "right"), "classics_via_dense": f"{sum(1 for x in res['classics'] if x.get('via') == 'classics')} of {len(res['classics'])}",
-        "classics_wrong": rate(res["classics"], "wrong"), "recent_right": rate(res["recent"], "right"), "recent_wrong": rate(res["recent"], "wrong"),
+allsec = [x.get("seconds") for k in res for x in res[k] if x.get("seconds") is not None]
+timeouts = sum(1 for k in res for x in res[k] if isinstance(x.get("dense"), dict) and "timeout" in str(x["dense"].get("error") or ""))
+summ = {"outside_wrong": rate(res["outside"], "wrong"), "outside_found": rate(res["outside"], "found"), "first_request_seconds": (res["classics"][0].get("seconds") if res["classics"] else None),
+        "median_seconds": (sorted(allsec)[len(allsec) // 2] if allsec else None), "slowest_seconds": (max(allsec) if allsec else None), "dense_timeouts": timeouts,
+        "classics_right": rate(res["classics"], "right"), "classics_via_dense": f"{sum(1 for x in res['classics'] if x.get('via') == 'classics')} of {len(res['classics'])}",
+        "classics_wrong": rate(res["classics"], "wrong"), "catalogue_right": rate(res["recent"], "right"), "catalogue_wrong": rate(res["recent"], "wrong"),
         "errors": sum(1 for k in res for x in res[k] if x.get("error"))}
 json.dump({"site": SITE, "summary": summ, "results": res}, open("data/dense-e2e.json", "w"), indent=1)
 print("::notice title=dense e2e::" + json.dumps(summ))
