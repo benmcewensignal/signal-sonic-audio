@@ -265,7 +265,7 @@ jobs:
           fi
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
           git rm -q --cached out/index-detail.json 2>/dev/null || true   # the old single file, too large to store
-          git add out/index.json out/detail && git commit -qm "recognition index metadata and details" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; git fetch -q origin main && git merge -q -s ours origin/main -m 'keep the outputs of this run over a conflicting upstream') && git push -q origin HEAD:main
+          git add out/index.json out/detail && git commit -qm "recognition index metadata and details" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; CH=$(git diff --name-only HEAD~1 HEAD); mkdir -p "$RUNNER_TEMP/mine"; for f in $CH; do [ -f "$f" ] && mkdir -p "$RUNNER_TEMP/mine/$(dirname "$f")" && cp -a "$f" "$RUNNER_TEMP/mine/$f"; done; git fetch -q origin main && git reset -q --hard origin/main && for f in $CH; do [ -f "$RUNNER_TEMP/mine/$f" ] && mkdir -p "$(dirname "$f")" && cp -a "$RUNNER_TEMP/mine/$f" "$f"; done && git add $CH 2>/dev/null; git commit -qm 'this run'"'"'s outputs over the latest upstream (only the files it changed)' || true) ; git push -q origin HEAD:main
           exit 0
 
       - name: build the recognition demo index
@@ -315,7 +315,9 @@ jobs:
           BIG=$( (git diff --cached --name-only | while read f; do [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 95000000 ] && echo "$f"; done) || true )
           if [ -n "$BIG" ]; then echo "::error title=persist::staged files over GitHub's 100 MB limit: $BIG"; exit 1; fi
           git commit -qm "audio: $(date -u +%FT%TZ)"
-          if ! git pull -q --no-rebase -X ours origin main; then git merge --abort 2>/dev/null || true; git fetch -q origin main && git merge -q -s ours origin/main -m 'keep the outputs of this run over a conflicting upstream'; fi
+          # on a conflict, keep only the files this run changed over the latest upstream: the "ours" merge strategy that stood
+          # here kept this run's whole tree and deleted everything added upstream meanwhile (a test, its workflow, its result)
+          if ! git pull -q --no-rebase -X ours origin main; then git merge --abort 2>/dev/null || true; CH=$(git diff --name-only HEAD~1 HEAD); mkdir -p "$RUNNER_TEMP/mine"; for f in $CH; do [ -f "$f" ] && mkdir -p "$RUNNER_TEMP/mine/$(dirname "$f")" && cp -a "$f" "$RUNNER_TEMP/mine/$f"; done; git fetch -q origin main && git reset -q --hard origin/main && for f in $CH; do [ -f "$RUNNER_TEMP/mine/$f" ] && mkdir -p "$(dirname "$f")" && cp -a "$RUNNER_TEMP/mine/$f" "$f"; done && git add $CH 2>/dev/null; git commit -qm 'this run'"'"'s outputs over the latest upstream (only the files it changed)' || true; fi
           for i in 1 2 3; do
             if OUT=$(git push -q origin HEAD:main 2>&1); then echo "pushed=1" >> "$GITHUB_OUTPUT"; echo "::notice title=persist::pushed"; exit 0; fi
             echo "push attempt $i failed: $OUT"; git pull -q --no-rebase -X ours origin main || true; sleep $((i*10))

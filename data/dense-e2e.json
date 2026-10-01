@@ -1,0 +1,533 @@
+{
+ "site": "https://www.earlysignal.live",
+ "summary": {
+  "classics_right": "1 of 40",
+  "classics_via_dense": "1 of 40",
+  "classics_wrong": "0 of 40",
+  "recent_right": "0 of 0",
+  "recent_wrong": "0 of 0",
+  "errors": 0
+ },
+ "results": {
+  "classics": [
+   {
+    "id": "bp:26769085",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5540,
+    "sent": 6072
+   },
+   {
+    "id": "bp:10696320",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 142,
+    "sent": 6046
+   },
+   {
+    "id": "bp:15575284",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 141,
+    "sent": 6315
+   },
+   {
+    "id": "bp:10360134",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 156,
+    "sent": 6208
+   },
+   {
+    "id": "bp:22357559",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 134,
+    "sent": 6537
+   },
+   {
+    "id": "bp:5944583",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 159,
+    "sent": 6320
+   },
+   {
+    "id": "bp:29282427",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 170,
+    "sent": 6245
+   },
+   {
+    "id": "bp:28425416",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 167,
+    "sent": 6018
+   },
+   {
+    "id": "bp:1051600",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 103,
+    "sent": 6460
+   },
+   {
+    "id": "bp:17028106",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 113,
+    "sent": 6071
+   },
+   {
+    "id": "bp:30441487",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 202,
+    "sent": 6324
+   },
+   {
+    "id": "bp:11993552",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 165,
+    "sent": 6066
+   },
+   {
+    "id": "bp:19810505",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 146,
+    "sent": 6320
+   },
+   {
+    "id": "bp:28328144",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 152,
+    "sent": 6158
+   },
+   {
+    "id": "bp:22704646",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 147,
+    "sent": 6179
+   },
+   {
+    "id": "bp:30561186",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 126,
+    "sent": 6080
+   },
+   {
+    "id": "bp:7988167",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 131,
+    "sent": 6349
+   },
+   {
+    "id": "bp:11377689",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 141,
+    "sent": 6335
+   },
+   {
+    "id": "bp:22385102",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 142,
+    "sent": 6134
+   },
+   {
+    "id": "bp:1072360",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 193,
+    "sent": 6078
+   },
+   {
+    "id": "bp:5478504",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 195,
+    "sent": 5814
+   },
+   {
+    "id": "bp:5811786",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 173,
+    "sent": 6528
+   },
+   {
+    "id": "bp:11978187",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 131,
+    "sent": 6120
+   },
+   {
+    "id": "bp:6005678",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 140,
+    "sent": 6215
+   },
+   {
+    "id": "bp:1826801",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 183,
+    "sent": 6533
+   },
+   {
+    "id": "bp:5496565",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 134,
+    "sent": 6324
+   },
+   {
+    "id": "bp:24369821",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 193,
+    "sent": 5962
+   },
+   {
+    "id": "bp:22077409",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 166,
+    "sent": 6264
+   },
+   {
+    "id": "bp:22212621",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 144,
+    "sent": 6134
+   },
+   {
+    "id": "bp:18643019",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 142,
+    "sent": 6737
+   },
+   {
+    "id": "bp:15564524",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 127,
+    "sent": 6108
+   },
+   {
+    "id": "bp:506205",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 165,
+    "sent": 6169
+   },
+   {
+    "id": "bp:17896435",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 132,
+    "sent": 6408
+   },
+   {
+    "id": "bp:19867550",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 124,
+    "sent": 6302
+   },
+   {
+    "id": "bp:14673327",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 143,
+    "sent": 6136
+   },
+   {
+    "id": "bp:10755624",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 185,
+    "sent": 6406
+   },
+   {
+    "id": "bp:6335677",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 109,
+    "sent": 6463
+   },
+   {
+    "id": "bp:7071763",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 141,
+    "sent": 6207
+   },
+   {
+    "id": "bp:23435584",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 181,
+    "sent": 6410
+   },
+   {
+    "id": "bp:6087827",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "error": "RuntimeError: there are open files preventing the operation: path classics/H.npy is open"
+    },
+    "local_hits": 169,
+    "sent": 6210
+   }
+  ],
+  "recent": []
+ }
+}
