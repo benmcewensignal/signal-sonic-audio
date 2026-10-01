@@ -94,6 +94,14 @@ def _fits(term, hit):
     title = q - arts
     return not title or len(title & name) >= max(1, (len(title) + 1) // 2)
 
+def _same_recording(hit):
+    """versions worth fingerprinting for recognising a classic: the same recording at another length or point (original,
+    extended, radio edit, remaster, dub), not an acapella or another artist's remix, which are different recordings"""
+    nm = str(hit.get("name") or "").lower()
+    if any(w in nm for w in ("acapella", "a cappella", "acappella")): return False
+    if "remix" in nm and not any(w in nm for w in ("original", "remaster")): return False
+    return True
+
 def search(term, token, per_page=20):
     q = urllib.parse.quote(term)
     d = _get(f"/catalog/search/?q={q}&type=tracks&per_page={per_page}", token)
@@ -152,7 +160,7 @@ def main():
                 tried += 1
                 p = None
                 try:
-                    hits = [h for h in search(term, token) if h.get("preview") and _fits(term, h)][:a.versions]
+                    hits = [h for h in search(term, token) if h.get("preview") and _fits(term, h) and _same_recording(h)][:a.versions]
                     if not hits:
                         missing += 1; report.append({"query": term, "scene": scene, "found": False})
                         out.write(json.dumps({"query": term, "scene": scene, "found": False, "pass": "v2"}) + "\n")

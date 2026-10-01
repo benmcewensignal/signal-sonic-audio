@@ -33,11 +33,13 @@ def main():
         for i in keep:
             hs = full[i]
             if kind == "first": sub = hs[:1800]
-            elif kind == "spread": sub = [hs[j] for j in np.unique(np.linspace(0, len(hs) - 1, min(1800, len(hs))).astype(int))]
+            elif kind.startswith("spread"):
+                m_ = int(kind[6:] or 1800); sub = [hs[j] for j in np.unique(np.linspace(0, len(hs) - 1, min(m_, len(hs))).astype(int))]
             else: sub = hs
             for h, fr in sub: ref.setdefault(h, []).append((i, fr))
         return ref
-    REF = {k: variant(k) for k in ("first", "spread", "all")}
+    VAR = [v_ for v_ in os.environ.get("VARIANTS", "first,spread,all").split(",") if v_]
+    REF = {k: variant(k) for k in VAR}
     KINDS = ("clean", "room", "noise"); score = {v: {k: {"early": [0, 0], "late": [0, 0]} for k in KINDS} for v in REF}
     for i in keep:
         y = Y[i]; L = int(FP.SR * a.seconds)
@@ -56,7 +58,7 @@ def main():
                     s = score[v][kind][where]; s[0] += ok; s[1] += 1
     out = {"note": __doc__.split("  python")[0].strip(), "records": len(keep), "preview_seconds_median": round(float(np.median([len(Y[i]) / FP.SR for i in keep])), 1),
            "fingerprints_per_record_median": int(np.median([len(full[i]) for i in keep])), "score": score}
-    json.dump(out, open("data/window-test.json", "w"), indent=1)
+    json.dump(out, open(os.environ.get("OUT", "data/window-test.json"), "w"), indent=1)
     summ = {v: {k: f"early {score[v][k]['early'][0]}/{score[v][k]['early'][1]}, late {score[v][k]['late'][0]}/{score[v][k]['late'][1]}" for k in KINDS} for v in REF}
     print("::notice title=window test::" + json.dumps({"records": len(keep), "per_record": out["fingerprints_per_record_median"], "score": summ}))
 
