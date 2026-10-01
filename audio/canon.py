@@ -82,9 +82,21 @@ CANON = {
 }
 
 
-def search(term, token):
+import re as _re, unicodedata as _ud, zlib as _zlib
+def _toks(s):
+    s = _ud.normalize("NFKD", str(s or "")).encode("ascii", "ignore").decode().lower()
+    return [w for w in _re.sub(r"[^a-z0-9]+", " ", s).split() if len(w) >= 3 and w not in ("feat", "the", "and", "original", "mix", "remix", "edit", "extended", "radio", "version", "remastered", "remaster", "club", "vocal", "dub")]
+def _fits(term, hit):
+    """the hit is this record: an artist of the hit appears in the query, and the query's title words appear in the hit's name.
+    (A first search hit was taken as found before: "Kassian - Metro" came back as another artist's "Metro".)"""
+    q = set(_toks(term)); arts = set(w for a_ in hit.get("artists") or [] for w in _toks(a_)); name = set(_toks(hit.get("name")))
+    if not (arts & q): return False
+    title = q - arts
+    return not title or len(title & name) >= max(1, (len(title) + 1) // 2)
+
+def search(term, token, per_page=20):
     q = urllib.parse.quote(term)
-    d = _get(f"/catalog/search/?q={q}&type=tracks&per_page=5", token)
+    d = _get(f"/catalog/search/?q={q}&type=tracks&per_page={per_page}", token)
     rows = (d.get("tracks") or d.get("results") or []) if isinstance(d, dict) else []
     out = []
     for t in rows:
@@ -92,7 +104,8 @@ def search(term, token):
         name = t.get("name") or ""
         arts = [a.get("name") for a in (t.get("artists") or []) if a.get("name")]
         url = t.get("sample_url") or ((t.get("preview") or {}).get("mp3") or {}).get("url")
-        out.append({"track_id": tid, "name": name, "artists": arts, "preview": url})
+        out.append({"track_id": tid, "name": (name + (" (" + t.get("mix_name") + ")" if t.get("mix_name") else "")).strip(), "artists": arts, "preview": url,
+                    "sample_start_ms": t.get("sample_start_ms"), "sample_end_ms": t.get("sample_end_ms"), "length_ms": t.get("length_ms")})
     return out
 
 
@@ -101,13 +114,18 @@ def main():
     ap.add_argument("--out", default="out/fp-canon.jsonl"); ap.add_argument("--limit", type=int, default=200)
     ap.add_argument("--list", default="", help="a further list to find: the records DJs play most that Sonic cannot yet recognise")
     ap.add_argument("--budget-minutes", type=int, default=80)
+    ap.add_argument("--shard", type=int, default=0); ap.add_argument("--of", type=int, default=1)
+    ap.add_argument("--versions", type=int, default=4, help="every version Beatport holds of a classic, up to this many: each preview sits at a different point")
     a = ap.parse_args()
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
-    have = set()
+    have = set(); have_ids = set()
     import glob as _gl   # every canon file counts as done: runs now write their own file (fp-canon-<run>.jsonl)
     for path_ in set(_gl.glob(os.path.join(os.path.dirname(a.out) or ".", "fp-canon*.jsonl")) + ([a.out] if os.path.exists(a.out) else [])):
         for line in open(path_):
-            try: have.add(json.loads(line).get("query"))
+            try:
+                r_ = json.loads(line)
+                if r_.get("pass") == "v2": have.add(r_.get("query"))   # the first pass took unchecked first hits: every query is searched again once
+                if r_.get("track_id"): have_ids.add(r_["track_id"])
             except Exception: pass
     if LocalAnalyser is None:
         print(f"WARNING: no analyser, records will be fingerprinted but not measured ({_ANALYSER_ERROR})", flush=True)
@@ -118,13 +136,15 @@ def main():
     with open(a.out, mode) as out:
         todo = dict(CANON)
         if getattr(a, "list", ""):
-            try:
-                for q in json.load(open(a.list))["queue"]: todo.setdefault(q.get("scene") or "unknown", []).append(q["term"])
-            except Exception as e:
-                print("list not read:", type(e).__name__, e, flush=True)
+            for lp_ in [x for x in a.list.split(",") if x]:
+                try:
+                    for q in json.load(open(lp_))["queue"]: todo.setdefault(q.get("scene") or "unknown", []).append(q["term"])
+                except Exception as e:
+                    print("list not read:", lp_, type(e).__name__, e, flush=True)
         for scene, titles in todo.items():
             for term in titles:
                 if term in have: continue
+                if a.of > 1 and _zlib.crc32(term.encode()) % a.of != a.shard: continue
                 if (time.time() - t0) / 60 > a.budget_minutes:
                     print("budget reached", flush=True); break
                 if tried >= a.limit:
@@ -132,44 +152,47 @@ def main():
                 tried += 1
                 p = None
                 try:
-                    hits = search(term, token)
-                    hit = next((h for h in hits if h.get("preview")), None)
-                    if not hit:
+                    hits = [h for h in search(term, token) if h.get("preview") and _fits(term, h)][:a.versions]
+                    if not hits:
                         missing += 1; report.append({"query": term, "scene": scene, "found": False})
-                        out.write(json.dumps({"query": term, "scene": scene, "found": False}) + "\n")
+                        out.write(json.dumps({"query": term, "scene": scene, "found": False, "pass": "v2"}) + "\n")
                         continue
-                    fd, p = tempfile.mkstemp(suffix=".mp3"); os.close(fd)
-                    req = urllib.request.Request(hit["preview"], headers={"User-Agent": "signal-sonic-audio/canon"})
-                    with urllib.request.urlopen(req, timeout=30) as r, open(p, "wb") as f: f.write(r.read())
-                    y = FP.load_audio(p, max_seconds=90)
-                    hs = FP.hashes(y)
-                    measures = {}
-                    if LocalAnalyser is not None:
-                        try:
-                            fv = LocalAnalyser().analyse(p)
-                            d = fv.__dict__ if hasattr(fv, "__dict__") else {}
-                            measures = {k: (round(float(d[k]), 4) if isinstance(d.get(k), (int, float)) else None)
-                                        for k in ("tempo", "drum_density", "drum_swing",
-                                                  "bass_weight", "vocal_presence")}
-                            measures["embedding"] = [round(float(x), 5) for x in (d.get("embedding") or [])]
-                        except Exception as e:
-                            import traceback
-                            measures = {"error": f"{type(e).__name__}: {str(e)[:180]}",
-                                        "where": traceback.format_exc().strip().split(chr(10))[-3][:160]}
-                            print(f"    {term}: could not measure -> {measures['error']}", flush=True)
-                            if not first_measure_error: first_measure_error.append(measures["error"])
-                    if len(hs) < 50: raise ValueError("too few fingerprints")
-                    H = np.array([h for h, _ in hs], dtype="<u4")
-                    Fr = np.minimum(np.array([f for _, f in hs]), 0xFFFF).astype("<u2")
-                    out.write(json.dumps({"query": term, "scene": scene, "found": True,
-                                          "track_id": hit["track_id"], "name": hit["name"], "artists": hit["artists"],
-                                          "preview": hit["preview"],
-                                          "canon": True, "measures": measures, "n": int(len(H)),
-                                          "hashes": base64.b64encode(H.tobytes()).decode(),
-                                          "frames": base64.b64encode(Fr.tobytes()).decode()}) + "\n")
-                    found += 1
-                    if measures.get("tempo"): measured_n += 1
-                    if found % 20 == 0: out.flush(); print(f"  {found} fingerprinted, {missing} not on Beatport", flush=True)
+                    for hit in hits:
+                      if hit["track_id"] in have_ids: continue
+                      have_ids.add(hit["track_id"])
+                      fd, p = tempfile.mkstemp(suffix=".mp3"); os.close(fd)
+                      req = urllib.request.Request(hit["preview"], headers={"User-Agent": "signal-sonic-audio/canon"})
+                      with urllib.request.urlopen(req, timeout=30) as r, open(p, "wb") as f: f.write(r.read())
+                      y = FP.load_audio(p, max_seconds=150)   # the whole preview (it was the first 90 seconds)
+                      hs = FP.hashes(y)
+                      measures = {}
+                      if LocalAnalyser is not None:
+                          try:
+                              fv = LocalAnalyser().analyse(p)
+                              d = fv.__dict__ if hasattr(fv, "__dict__") else {}
+                              measures = {k: (round(float(d[k]), 4) if isinstance(d.get(k), (int, float)) else None)
+                                          for k in ("tempo", "drum_density", "drum_swing",
+                                                    "bass_weight", "vocal_presence")}
+                              measures["embedding"] = [round(float(x), 5) for x in (d.get("embedding") or [])]
+                          except Exception as e:
+                              import traceback
+                              measures = {"error": f"{type(e).__name__}: {str(e)[:180]}",
+                                          "where": traceback.format_exc().strip().split(chr(10))[-3][:160]}
+                              print(f"    {term}: could not measure -> {measures['error']}", flush=True)
+                              if not first_measure_error: first_measure_error.append(measures["error"])
+                      if len(hs) < 50: raise ValueError("too few fingerprints")
+                      H = np.array([h for h, _ in hs], dtype="<u4")
+                      Fr = np.minimum(np.array([f for _, f in hs]), 0xFFFF).astype("<u2")
+                      out.write(json.dumps({"query": term, "scene": scene, "found": True,
+                                            "track_id": hit["track_id"], "name": hit["name"], "artists": hit["artists"],
+                                            "preview": hit["preview"],
+                                            "canon": True, "pass": "v2", "sample_start_ms": hit.get("sample_start_ms"), "sample_end_ms": hit.get("sample_end_ms"), "length_ms": hit.get("length_ms"),
+                                          "measures": measures, "n": int(len(H)),
+                                            "hashes": base64.b64encode(H.tobytes()).decode(),
+                                            "frames": base64.b64encode(Fr.tobytes()).decode()}) + "\n")
+                      found += 1
+                      if measures.get("tempo"): measured_n += 1
+                      if found % 20 == 0: out.flush(); print(f"  {found} fingerprinted, {missing} not on Beatport", flush=True)
                 except Exception as e:
                     err += 1
                     if err <= 4: print(f"  {term}: {type(e).__name__}: {str(e)[:60]}", flush=True)

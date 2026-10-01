@@ -1,0 +1,49 @@
+name: canon shards
+# every shard fingerprints classics at once: the seminal list and the records DJs play most, each checked by artist,
+# every version Beatport holds (up to three, each preview at a different point), the whole preview; then the index rebuilds
+on: { workflow_dispatch: {} }
+permissions: { contents: write, actions: write }
+concurrency: { group: sonic-canon-shards, cancel-in-progress: false }
+jobs:
+  shard:
+    strategy: { fail-fast: false, matrix: { k: [0, 1, 2, 3, 4, 5] } }
+    runs-on: ubuntu-24.04
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null && pip install -q numpy librosa soundfile
+      - name: fingerprint this shard's classics
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.canon --out "out/fp-canon-v2-$(date -u +%Y%m%d-%H%M)-s${{ matrix.k }}.jsonl" --budget-minutes 90 --limit 120 --versions 3 --shard ${{ matrix.k }} --of 6 --list data/seminal.json,data/classics-queue.json || true
+      - name: keep it
+        run: |
+          git config user.name "sonic-bot"; git config user.email "sonic@earlysignal.live"
+          git add out/fp-canon-v2-*.jsonl 2>/dev/null || true
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -qm "canon v2 shard ${{ matrix.k }}: $(date -u +%FT%TZ)"
+          for i in 1 2 3 4 5 6; do git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0; sleep $((i*15)); done
+          echo "::error title=canon shard::push failed"; exit 1
+  next:
+    needs: shard
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - name: rebuild the index, and go again while classics remain
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh workflow run audio.yml --ref main -f task=full-index && echo "index rebuild dispatched"
+          LEFT=$(python3 -c "
+          import json, glob
+          done = {json.loads(l).get('query') for f in glob.glob('out/fp-canon*.jsonl') for l in open(f) if '\"pass\": \"v2\"' in l}
+          todo = [q['term'] for p in ('data/seminal.json', 'data/classics-queue.json') for q in json.load(open(p))['queue']]
+          print(sum(1 for t in todo if t not in done))")
+          echo "::notice title=canon v2::${LEFT} classics still to look up"
+          if [ "${LEFT:-0}" -gt 0 ]; then gh workflow run canon-shards.yml --ref main && echo "next wave dispatched"; fi
