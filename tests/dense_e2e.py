@@ -16,7 +16,23 @@ def load(pattern, n):
             except Exception: continue
             if d.get("found") is not False and d.get("preview") and d.get("track_id") and d["track_id"] not in seen: seen.add(d["track_id"]); out.append(d)
     pick.shuffle(out); return out[:n]
-classics = load("out/fp-canon-v2-*.jsonl", 40); recent = []
+classics = load("out/fp-canon-v2-*.jsonl", 40)
+# records that are not classics: from the site's DJ index, with previews, outside the classics set and sharing no title with a classic
+import re as _re
+canon_ids, canon_titles = set(), set()
+for f in glob.glob("out/fp-canon*.jsonl"):
+    for line in open(f):
+        try:
+            d_ = json.loads(line)
+            if d_.get("track_id"): canon_ids.add(d_["track_id"])
+            canon_titles.add(_re.sub(r"[^a-z0-9]+", " ", str(d_.get("name") or "").lower()).split(" (")[0].strip())
+        except Exception: pass
+def _get(path): return json.load(urllib.request.urlopen(urllib.request.Request(SITE + path, headers={"User-Agent": "sonic-dense-e2e"}), timeout=120))
+PV = _get("/data/previews.json").get("u", {}); DI = _get("/data/dj-index.json"); DN = _get("/data/dj-names.json"); names_ = DN.get("n") or []
+pool = [(t, (names_[k] if k < len(names_) else "")) for k, t in enumerate(DI["ids"]) if t in PV and t not in canon_ids]
+pick.shuffle(pool)
+recent = [{"track_id": t, "preview": PV[t]} for t, nm in pool if _re.sub(r"[^a-z0-9]+", " ", str(nm or "").lower()).strip() not in canon_titles][:20]
+print(f"outside records: {len(recent)}", flush=True)
 cq = {}
 for f in glob.glob("out/fp-canon*.jsonl"):
     for line in open(f):
