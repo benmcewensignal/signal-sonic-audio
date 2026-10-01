@@ -11,8 +11,10 @@ jobs:
         with: { python-version: "3.12" }
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null && pip install -q numpy librosa soundfile
       - run: python -m tests.dense_e2e
-      - name: keep the result
+      - name: keep the result (its own branch, overwritten each run, so it never races the shard jobs)
+        if: always()
         run: |
-          git config user.name "sonic-bot"; git config user.email "sonic@earlysignal.live"; git add data/dense-e2e.json
-          git commit -qm "dense e2e: $(date -u +%FT%TZ)" || exit 0
-          for i in 1 2 3 4; do git pull -q --rebase origin main && git push -q origin HEAD:main && exit 0; sleep $((i*15)); done
+          cd "$RUNNER_TEMP" && mkdir -p res && cd res && git init -q && git checkout -q -b dense-e2e-results
+          cp "$GITHUB_WORKSPACE/data/dense-e2e.json" . 2>/dev/null || echo '{"error":"no result"}' > dense-e2e.json
+          git config user.name "sonic-bot"; git config user.email "sonic@earlysignal.live"; git add dense-e2e.json && git commit -qm "dense e2e $(date -u +%FT%TZ)"
+          git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dense-e2e-results:dense-e2e-results
