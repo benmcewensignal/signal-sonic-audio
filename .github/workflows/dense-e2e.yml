@@ -10,11 +10,13 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null && pip install -q numpy librosa soundfile
-      - run: python -m tests.dense_e2e
+      - name: the test
+        run: set -o pipefail; rm -f data/dense-e2e.json; python -m tests.dense_e2e 2>&1 | tee "$RUNNER_TEMP/e2e.log" || true
       - name: keep the result (its own branch, overwritten each run, so it never races the shard jobs)
         if: always()
         run: |
           cd "$RUNNER_TEMP" && mkdir -p res && cd res && git init -q && git checkout -q -b dense-e2e-results
           cp "$GITHUB_WORKSPACE/data/dense-e2e.json" . 2>/dev/null || echo '{"error":"no result"}' > dense-e2e.json
-          git config user.name "sonic-bot"; git config user.email "sonic@earlysignal.live"; git add dense-e2e.json && git commit -qm "dense e2e $(date -u +%FT%TZ)"
+          cp "$RUNNER_TEMP/e2e.log" . 2>/dev/null || echo "no log" > e2e.log
+          git config user.name "sonic-bot"; git config user.email "sonic@earlysignal.live"; git add dense-e2e.json e2e.log && git commit -qm "dense e2e $(date -u +%FT%TZ)"
           git push -q -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" dense-e2e-results:dense-e2e-results

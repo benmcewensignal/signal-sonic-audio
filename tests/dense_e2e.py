@@ -17,16 +17,23 @@ def load(pattern, n):
             if d.get("found") is not False and d.get("preview") and d.get("track_id") and d["track_id"] not in seen: seen.add(d["track_id"]); out.append(d)
     pick.shuffle(out); return out[:n]
 classics = load("out/fp-canon-v2-*.jsonl", 40)
-# records that are not classics, from the site's own preview list, sharing no title with any classic: an answer naming another record is a false match
+# records that are not classics: from the site's DJ index, with previews, outside the classics set and sharing no title with a classic
 import re as _re
-canon_titles = set()
+canon_ids, canon_titles = set(), set()
 for f in glob.glob("out/fp-canon*.jsonl"):
     for line in open(f):
-        try: canon_titles.add(_re.sub(r"[^a-z0-9]+", " ", str(json.loads(line).get("name") or "").lower()).split(" (")[0].strip())
+        try:
+            d_ = json.loads(line)
+            if d_.get("track_id"): canon_ids.add(d_["track_id"])
+            canon_titles.add(_re.sub(r"[^a-z0-9]+", " ", str(d_.get("name") or "").lower()).split(" (")[0].strip())
         except Exception: pass
-PV = json.load(urllib.request.urlopen(urllib.request.Request(SITE + "/data/previews.json", headers={"User-Agent": "sonic-dense-e2e"}))).get("u", {})
-NM = json.load(urllib.request.urlopen(urllib.request.Request(SITE + "/api/listen?names=" + ",".join(list(PV)[:40]), headers={"User-Agent": "sonic-dense-e2e"}))).get("names", {})
-recent = [{"track_id": t, "preview": PV[t]} for t in list(PV)[:40] if t in NM and _re.sub(r"[^a-z0-9]+", " ", str(NM[t].get("name") or "").lower()).strip() not in canon_titles][:20]
+def _get(path): return json.load(urllib.request.urlopen(urllib.request.Request(SITE + path, headers={"User-Agent": "sonic-dense-e2e"}), timeout=120))
+PV = _get("/data/previews.json").get("u", {}); DI = _get("/data/dj-index.json"); DN = _get("/data/dj-names.json"); names_ = DN.get("t") or DN.get("n") or []
+pool = [(t, (names_[k] if k < len(names_) else "")) for k, t in enumerate(DI["ids"]) if t in PV and t not in canon_ids]
+pick.shuffle(pool)
+canon_titles.discard("")
+recent = [{"track_id": t, "preview": PV[t]} for t, nm in pool if not nm or _re.sub(r"[^a-z0-9]+", " ", str(nm).lower()).strip() not in canon_titles][:20]
+print(f"outside records: {len(recent)}", flush=True)
 cq = {}
 for f in glob.glob("out/fp-canon*.jsonl"):
     for line in open(f):
