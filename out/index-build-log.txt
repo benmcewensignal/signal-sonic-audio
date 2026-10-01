@@ -1,8 +1,8 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36607060351 (3 part(s))
--rw-r--r-- 1 runner runner 8355819520 Oct  1 18:47 fingerprints.db
+-rw-r--r-- 1 runner runner 8355819520 Oct  1 19:10 fingerprints.db
 records in store: 67949
-stem files fetched: 8500
+stem files fetched: 8530
 store holds 67949 fingerprinted records
 measures for 134521 records, scene centres for 36 scenes
   500 records, 897,448 postings
@@ -339,6 +339,12 @@ merged 0 records from fp-canon-v2-20261001-1822-s5.jsonl
 merged 0 records from fp-canon-v2-20261001-1824-s0.jsonl
 merged 0 records from fp-canon-v2-20261001-1824-s2.jsonl
 merged 0 records from fp-canon-v2-20261001-1838-s4.jsonl
+merged 0 records from fp-canon-v2-20261001-1845-s1.jsonl
+merged 0 records from fp-canon-v2-20261001-1845-s2.jsonl
+merged 0 records from fp-canon-v2-20261001-1845-s3.jsonl
+merged 0 records from fp-canon-v2-20261001-1845-s5.jsonl
+merged 0 records from fp-canon-v2-20261001-1903-s0.jsonl
+merged 0 records from fp-canon-v2-20261001-1905-s4.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46110 records, 82,941,344 postings
@@ -350,7 +356,7 @@ stem neighbours for bass: 43454 records
 stem neighbours for other: 43454 records
 stem neighbours for vocals: 43454 records
 keys written for 43452 records
-in-key steps written for 34228 records
+in-key steps written for 34231 records
 walks by part written for 43454 records
 per-stem neighbours written for 173816 record-stems
 nearest neighbours for 43861 records, 41327 of them with edges between their neighbours
@@ -364,5 +370,5 @@ detail for 45592 records written alongside the index, in 64 files
 }
 VERIFY: 46110 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.5 MB in 64 files, eight-neighbour 43347, walks 43347
--rw-r--r-- 1 runner runner 29829164 Oct  1 18:55 out/index.bin
--rw-r--r-- 1 runner runner  5641327 Oct  1 18:55 out/index.json
+-rw-r--r-- 1 runner runner 29829164 Oct  1 19:15 out/index.bin
+-rw-r--r-- 1 runner runner  5641327 Oct  1 19:15 out/index.json
