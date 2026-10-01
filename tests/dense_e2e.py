@@ -16,7 +16,17 @@ def load(pattern, n):
             except Exception: continue
             if d.get("found") is not False and d.get("preview") and d.get("track_id") and d["track_id"] not in seen: seen.add(d["track_id"]); out.append(d)
     pick.shuffle(out); return out[:n]
-classics = load("out/fp-canon-v2-*.jsonl", 40); recent = []
+classics = load("out/fp-canon-v2-*.jsonl", 40)
+# records that are not classics, from the site's own preview list, sharing no title with any classic: an answer naming another record is a false match
+import re as _re
+canon_titles = set()
+for f in glob.glob("out/fp-canon*.jsonl"):
+    for line in open(f):
+        try: canon_titles.add(_re.sub(r"[^a-z0-9]+", " ", str(json.loads(line).get("name") or "").lower()).split(" (")[0].strip())
+        except Exception: pass
+PV = json.load(urllib.request.urlopen(urllib.request.Request(SITE + "/data/previews.json", headers={"User-Agent": "sonic-dense-e2e"}))).get("u", {})
+NM = json.load(urllib.request.urlopen(urllib.request.Request(SITE + "/api/listen?names=" + ",".join(list(PV)[:40]), headers={"User-Agent": "sonic-dense-e2e"}))).get("names", {})
+recent = [{"track_id": t, "preview": PV[t]} for t in list(PV)[:40] if t in NM and _re.sub(r"[^a-z0-9]+", " ", str(NM[t].get("name") or "").lower()).strip() not in canon_titles][:20]
 cq = {}
 for f in glob.glob("out/fp-canon*.jsonl"):
     for line in open(f):
