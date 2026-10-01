@@ -1,0 +1,3 @@
+outside records: 40
+waiting six minutes so the recognition service is asleep before the first clip
+::notice title=dense e2e::{"outside_wrong": "1 of 40", "outside_found": "1 of 40", "first_request_seconds": 20.3, "median_seconds": 2.1, "slowest_seconds": 20.3, "dense_timeouts": 0, "classics_right": "26 of 40", "classics_via_dense": "26 of 40", "classics_wrong": "0 of 40", "catalogue_right": "9 of 40", "catalogue_wrong": "0 of 40", "errors": 0}

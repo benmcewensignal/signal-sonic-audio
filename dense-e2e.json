@@ -1,0 +1,2751 @@
+{
+ "site": "https://www.earlysignal.live",
+ "summary": {
+  "outside_wrong": "1 of 40",
+  "outside_found": "1 of 40",
+  "first_request_seconds": 20.3,
+  "median_seconds": 2.1,
+  "slowest_seconds": 20.3,
+  "dense_timeouts": 0,
+  "classics_right": "26 of 40",
+  "classics_via_dense": "26 of 40",
+  "classics_wrong": "0 of 40",
+  "catalogue_right": "9 of 40",
+  "catalogue_wrong": "0 of 40",
+  "errors": 0
+ },
+ "results": {
+  "classics": [
+   {
+    "id": "bp:30455239",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5874,
+    "sent": 6464,
+    "answer": [
+     "bp:30455239",
+     "One (Radio Edit)",
+     "Swedish House Mafia"
+    ],
+    "asked": [
+     "One (Radio Edit)",
+     "Swedish House Mafia"
+    ],
+    "seconds": 20.3
+   },
+   {
+    "id": "bp:9240695",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 20,
+     "runner_up": 9,
+     "next_best": 20,
+     "hashes_in_index": 5454,
+     "records": 71467,
+     "name": "Phylyps Trak"
+    },
+    "local_hits": 134,
+    "sent": 6076,
+    "answer": null,
+    "asked": [
+     "Song of Life (BodyJack Mix)",
+     "Leftfield"
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:5764546",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 55,
+     "runner_up": 27,
+     "next_best": 32,
+     "hashes_in_index": 5688,
+     "records": 71467,
+     "name": "Go (Original Mix)"
+    },
+    "local_hits": 140,
+    "sent": 6230,
+    "answer": null,
+    "asked": [
+     "Go (Original Mix)",
+     "Moby"
+    ],
+    "seconds": 2.3
+   },
+   {
+    "id": "bp:4043393",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "why": "too many postings"
+    },
+    "local_hits": 112,
+    "sent": 6967,
+    "answer": null,
+    "asked": [
+     "Real Life (Original Mix)",
+     "Jeff Mills"
+    ],
+    "seconds": 0.9
+   },
+   {
+    "id": "bp:29648647",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5874,
+    "sent": 6798,
+    "answer": [
+     "bp:29648647",
+     "TCL (Extended Mix)",
+     "Estiva"
+    ],
+    "asked": [
+     "TCL (Extended Mix)",
+     "Estiva"
+    ],
+    "seconds": 2.8
+   },
+   {
+    "id": "bp:11237340",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5468,
+    "sent": 6125,
+    "answer": [
+     "bp:10553158",
+     "Burn feat. Hero Baldwin",
+     "Super8 & Tab"
+    ],
+    "asked": [
+     "Burn feat. Hero Baldwin (Extended Mix)",
+     "Super8 & Tab"
+    ],
+    "seconds": 2.8
+   },
+   {
+    "id": "bp:131874",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 10,
+     "next_best": 22,
+     "hashes_in_index": 5553,
+     "records": 71467,
+     "name": "Drone"
+    },
+    "local_hits": 168,
+    "sent": 6102,
+    "answer": null,
+    "asked": [
+     "1998 (Binarys Finality Mix)",
+     "Binary Finary"
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:5377445",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5653,
+    "sent": 6270,
+    "answer": [
+     "bp:5377445",
+     "You'll Never Find Another Love Like Mine (Original Mix)",
+     "Lou Rawls"
+    ],
+    "asked": [
+     "You'll Never Find Another Love Like Mine (Original Mix)",
+     "Lou Rawls"
+    ],
+    "seconds": 2.5
+   },
+   {
+    "id": "bp:28860946",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5501,
+    "sent": 6267,
+    "answer": [
+     "bp:19174265",
+     "Work Out",
+     "Donae'O"
+    ],
+    "asked": [
+     "Work Out (Original Mix)",
+     "Donae'O"
+    ],
+    "seconds": 2.5
+   },
+   {
+    "id": "bp:4901748",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5265,
+    "sent": 6035,
+    "answer": [
+     "bp:4901748",
+     "Da Pressure (Original Mix)",
+     "Samma Lone"
+    ],
+    "asked": [
+     "Da Pressure (Original Mix)",
+     "Samma Lone"
+    ],
+    "seconds": 2.6
+   },
+   {
+    "id": "bp:5685801",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 20,
+     "runner_up": 5,
+     "next_best": 17,
+     "hashes_in_index": 5469,
+     "records": 71467,
+     "name": "Magneze"
+    },
+    "local_hits": 157,
+    "sent": 6295,
+    "answer": null,
+    "asked": [
+     "Circling (Original Mix)",
+     "Appleblim"
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:12166223",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 32,
+     "runner_up": 10,
+     "next_best": 23,
+     "hashes_in_index": 5477,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 142,
+    "sent": 6276,
+    "answer": null,
+    "asked": [
+     "Along Came Polly (Original Mix)",
+     "Rebuke"
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:8417726",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 23,
+     "runner_up": 3,
+     "next_best": 20,
+     "hashes_in_index": 5785,
+     "records": 71467,
+     "name": "Guilt"
+    },
+    "local_hits": 139,
+    "sent": 6378,
+    "answer": null,
+    "asked": [
+     "Fuego (Original Mix)",
+     "Oliver Huntemann"
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:12886853",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5328,
+    "sent": 6108,
+    "answer": [
+     "bp:12886853",
+     "Finally feat. Julie Mc Knight (Original Mix)",
+     "Kings Of Tomorrow"
+    ],
+    "asked": [
+     "Finally feat. Julie Mc Knight (Original Mix)",
+     "Kings Of Tomorrow"
+    ],
+    "seconds": 2.5
+   },
+   {
+    "id": "bp:15757106",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5834,
+    "sent": 6326,
+    "answer": [
+     "bp:15757106",
+     "Levels",
+     "Avicii"
+    ],
+    "asked": [
+     "Levels (Original Version)",
+     "Avicii"
+    ],
+    "seconds": 2.4
+   },
+   {
+    "id": "bp:12211423",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5632,
+    "sent": 6134,
+    "answer": [
+     "bp:12211423",
+     "Karma (Original Mix)",
+     "Autistic Guy"
+    ],
+    "asked": [
+     "Karma (Original Mix)",
+     "Autistic Guy"
+    ],
+    "seconds": 2.3
+   },
+   {
+    "id": "bp:6306689",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 24,
+     "runner_up": 3,
+     "next_best": 16,
+     "hashes_in_index": 5473,
+     "records": 71467,
+     "name": "Without It (Remastered)"
+    },
+    "local_hits": 124,
+    "sent": 6178,
+    "answer": null,
+    "asked": [
+     "Treasure Seeking (feat. Dexter and Virginia) (Original Mix)",
+     "Steffi"
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:10137580",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 25,
+     "runner_up": 8,
+     "next_best": 23,
+     "hashes_in_index": 5534,
+     "records": 71467,
+     "name": "King Of My Castle"
+    },
+    "local_hits": 139,
+    "sent": 6188,
+    "answer": null,
+    "asked": [
+     "Cyclone (Original Mix)",
+     "Man-To-Man"
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:20898585",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5437,
+    "sent": 6248,
+    "answer": [
+     "bp:20898585",
+     "Timeless (Original Mix)",
+     "The Weeknd"
+    ],
+    "asked": [
+     "Timeless (Original Mix)",
+     "The Weeknd"
+    ],
+    "seconds": 2.4
+   },
+   {
+    "id": "bp:846998",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5843,
+    "sent": 6396,
+    "answer": [
+     "bp:846998",
+     "Deeply Disturbed (Original Mix)",
+     "Infected Mushroom"
+    ],
+    "asked": [
+     "Deeply Disturbed (Original Mix)",
+     "Infected Mushroom"
+    ],
+    "seconds": 2.4
+   },
+   {
+    "id": "bp:22781989",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5680,
+    "sent": 6213,
+    "answer": [
+     "bp:22781989",
+     "Flammable (Original Mix)",
+     "Mark Sherry"
+    ],
+    "asked": [
+     "Flammable (Original Mix)",
+     "Mark Sherry"
+    ],
+    "seconds": 2.3
+   },
+   {
+    "id": "bp:17896998",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5448,
+    "sent": 6457,
+    "answer": [
+     "bp:17896998",
+     "What You Know (Original Mix)",
+     "Seth Vogt"
+    ],
+    "asked": [
+     "What You Know (Original Mix)",
+     "Seth Vogt"
+    ],
+    "seconds": 2.5
+   },
+   {
+    "id": "bp:4862139",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 5,
+     "next_best": 20,
+     "hashes_in_index": 5361,
+     "records": 71467,
+     "name": "Real Life (Original Mix)"
+    },
+    "local_hits": 116,
+    "sent": 6009,
+    "answer": null,
+    "asked": [
+     "Battle feat. Lain (Original Mix)",
+     "Wookie"
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:16098923",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 29,
+     "runner_up": 11,
+     "next_best": 26,
+     "hashes_in_index": 5328,
+     "records": 71467,
+     "name": "Jump"
+    },
+    "local_hits": 152,
+    "sent": 5914,
+    "answer": null,
+    "asked": [
+     "Acid Tracks (Original Mix)",
+     "Phuture"
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:19449575",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 6066,
+    "sent": 6596,
+    "answer": [
+     "bp:19449575",
+     "TV DREAMS (Original Mix)",
+     "NOTION"
+    ],
+    "asked": [
+     "TV DREAMS (Original Mix)",
+     "NOTION"
+    ],
+    "seconds": 2.3
+   },
+   {
+    "id": "bp:26900471",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5394,
+    "sent": 6250,
+    "answer": [
+     "bp:26900471",
+     "Winny (Original Mix)",
+     "Winny"
+    ],
+    "asked": [
+     "Winny (Original Mix)",
+     "Winny"
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:27390374",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5507,
+    "sent": 6117,
+    "answer": [
+     "bp:27390374",
+     "War Pigs (Original Mix)",
+     "Black Sabbath"
+    ],
+    "asked": [
+     "War Pigs (Original Mix)",
+     "Black Sabbath"
+    ],
+    "seconds": 2.3
+   },
+   {
+    "id": "bp:20094144",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5747,
+    "sent": 6352,
+    "answer": [
+     "bp:20094144",
+     "Mr Maverick (Original Mix)",
+     "Calibre"
+    ],
+    "asked": [
+     "Mr Maverick (Original Mix)",
+     "Calibre"
+    ],
+    "seconds": 2.7
+   },
+   {
+    "id": "bp:17394497",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 9,
+     "next_best": 21,
+     "hashes_in_index": 5590,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 134,
+    "sent": 6164,
+    "answer": null,
+    "asked": [
+     "Gimme That Bounce (Original Mix)",
+     "Mau P"
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:18888512",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 6031,
+    "sent": 6606,
+    "answer": [
+     "bp:18888512",
+     "Lost Love (Solarstone Club Edit)",
+     "Proteus"
+    ],
+    "asked": [
+     "Lost Love (Solarstone Club Edit)",
+     "Proteus"
+    ],
+    "seconds": 2.5
+   },
+   {
+    "id": "bp:5169278",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5402,
+    "sent": 5978,
+    "answer": [
+     "bp:5169278",
+     "Groove Is in the Heart (Original Mix)",
+     "Deee-Lite"
+    ],
+    "asked": [
+     "Groove Is in the Heart (Original Mix)",
+     "Deee-Lite"
+    ],
+    "seconds": 2.4
+   },
+   {
+    "id": "bp:19605157",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5438,
+    "sent": 5954,
+    "answer": [
+     "bp:19605157",
+     "Platinum (Prizm Mix Rework)",
+     "Calvins Smith"
+    ],
+    "asked": [
+     "Platinum (Prizm Mix Rework)",
+     "Calvins Smith"
+    ],
+    "seconds": 2.7
+   },
+   {
+    "id": "bp:8349438",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5424,
+    "sent": 5880,
+    "answer": [
+     "bp:1717383",
+     "Praise You (Original Mix)",
+     "Fatboy Slim"
+    ],
+    "asked": [
+     "Praise You (Original Mix)",
+     "Fatboy Slim"
+    ],
+    "seconds": 2.6
+   },
+   {
+    "id": "bp:6904751",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5659,
+    "sent": 6260,
+    "answer": [
+     "bp:6904751",
+     "God Is a DJ (Original Mix)",
+     "Faithless"
+    ],
+    "asked": [
+     "God Is a DJ (Original Mix)",
+     "Faithless"
+    ],
+    "seconds": 2.4
+   },
+   {
+    "id": "bp:21251004",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5287,
+    "sent": 6201,
+    "answer": [
+     "bp:21251004",
+     "Tamba (Original Mix)",
+     "Stil & Bense"
+    ],
+    "asked": [
+     "Tamba (Original Mix)",
+     "Stil & Bense"
+    ],
+    "seconds": 2.5
+   },
+   {
+    "id": "bp:1709468",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5758,
+    "sent": 6209,
+    "answer": [
+     "bp:1709468",
+     "I Remember (Original Mix)",
+     "Kaskade"
+    ],
+    "asked": [
+     "I Remember (Original Mix)",
+     "Kaskade"
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:16681095",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 89,
+     "runner_up": 61,
+     "next_best": 28,
+     "hashes_in_index": 5796,
+     "records": 71467,
+     "name": "Paradise (Radio Edit)"
+    },
+    "local_hits": 92,
+    "sent": 6770,
+    "answer": null,
+    "asked": [
+     "Paradise (Original mix)",
+     "Georges Torborg"
+    ],
+    "seconds": 2.3
+   },
+   {
+    "id": "bp:17818707",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5710,
+    "sent": 6429,
+    "answer": [
+     "bp:17818707",
+     "Temple (Original Mix)",
+     "Len Faki"
+    ],
+    "asked": [
+     "Temple (Original Mix)",
+     "Len Faki"
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:20574342",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 25,
+     "runner_up": 7,
+     "next_best": 24,
+     "hashes_in_index": 5703,
+     "records": 71467,
+     "name": "Real Life (Original Mix)"
+    },
+    "local_hits": 147,
+    "sent": 6267,
+    "answer": null,
+    "asked": [
+     "Your Love (2025 Remaster)",
+     "Frankie Knuckles"
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:24372686",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5522,
+    "sent": 6213,
+    "answer": [
+     "bp:24372686",
+     "Release The Pressure (VIP Mix)",
+     "Calvin Harris"
+    ],
+    "asked": [
+     "Release The Pressure (VIP Mix)",
+     "Calvin Harris"
+    ],
+    "seconds": 2.3
+   }
+  ],
+  "recent": [
+   {
+    "id": "bp:28440018",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5686,
+    "sent": 6224,
+    "answer": [
+     "bp:28440018",
+     "Under the Moonlight",
+     "Patrick Medina"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.4
+   },
+   {
+    "id": "bp:20360579",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 24,
+     "runner_up": 8,
+     "next_best": 20,
+     "hashes_in_index": 5477,
+     "records": 71467,
+     "name": "Fiesta Reloaded (Original Mix)"
+    },
+    "local_hits": 114,
+    "sent": 6384,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:21062230",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 16,
+     "runner_up": 5,
+     "next_best": 16,
+     "hashes_in_index": 5621,
+     "records": 71467,
+     "name": "Crypt (Original Mix)"
+    },
+    "local_hits": 148,
+    "sent": 6095,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:28339007",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 27,
+     "runner_up": 8,
+     "next_best": 27,
+     "hashes_in_index": 5672,
+     "records": 71467,
+     "name": "Sidewinder (Album Version)"
+    },
+    "local_hits": 141,
+    "sent": 6317,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:19474450",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 33,
+     "runner_up": 11,
+     "next_best": 28,
+     "hashes_in_index": 5446,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 137,
+    "sent": 6096,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:28912219",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5517,
+    "sent": 6390,
+    "answer": [
+     "bp:28912219",
+     "JUICE",
+     "BLVCK PUMV"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 3.0
+   },
+   {
+    "id": "bp:22355811",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 8,
+     "next_best": 18,
+     "hashes_in_index": 5611,
+     "records": 71467,
+     "name": "Want More"
+    },
+    "local_hits": 113,
+    "sent": 6493,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:21256150",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 2,
+     "next_best": 21,
+     "hashes_in_index": 5541,
+     "records": 71467,
+     "name": "zero"
+    },
+    "local_hits": 163,
+    "sent": 6176,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:23251696",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 104,
+     "runner_up": 42,
+     "next_best": 35,
+     "hashes_in_index": 5735,
+     "records": 71467,
+     "name": "Magdans"
+    },
+    "local_hits": 139,
+    "sent": 6367,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:24287357",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 9,
+     "next_best": 21,
+     "hashes_in_index": 5689,
+     "records": 71467,
+     "name": "CCamp"
+    },
+    "local_hits": 147,
+    "sent": 6184,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:14951904",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 25,
+     "runner_up": 8,
+     "next_best": 21,
+     "hashes_in_index": 5394,
+     "records": 71467,
+     "name": "Airwave (Giuseppe Ottaviani Extended Remix)"
+    },
+    "local_hits": 169,
+    "sent": 6064,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:22742487",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 4,
+     "next_best": 20,
+     "hashes_in_index": 5692,
+     "records": 71467,
+     "name": "Real Life (Original Mix)"
+    },
+    "local_hits": 189,
+    "sent": 6224,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.3
+   },
+   {
+    "id": "bp:20490576",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 37,
+     "runner_up": 13,
+     "next_best": 19,
+     "hashes_in_index": 5754,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 176,
+    "sent": 6312,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:24445499",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5778,
+    "sent": 6302,
+    "answer": [
+     "bp:24445499",
+     "ISILIMA (feat. Vusi Keys)",
+     "De Rose"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:29379196",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5537,
+    "sent": 6033,
+    "answer": [
+     "bp:29379196",
+     "Catrats",
+     "Smashroom"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:29092288",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5797,
+    "sent": 6369,
+    "answer": [
+     "bp:29092288",
+     "Teach Me To Pray (Special Version EDM Remix)",
+     "Kat The Modern Day Psalmist"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:29265993",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 30,
+     "runner_up": 7,
+     "next_best": 27,
+     "hashes_in_index": 5527,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 133,
+    "sent": 6123,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:19955634",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 28,
+     "runner_up": 10,
+     "next_best": 27,
+     "hashes_in_index": 5624,
+     "records": 71467,
+     "name": "This Is What It Feels Like (Extended Mix)"
+    },
+    "local_hits": 167,
+    "sent": 6288,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:23051658",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 6,
+     "next_best": 19,
+     "hashes_in_index": 5251,
+     "records": 71467,
+     "name": "Joya (Instrumental mix)"
+    },
+    "local_hits": 168,
+    "sent": 6020,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:22762286",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5836,
+    "sent": 6335,
+    "answer": [
+     "bp:22762286",
+     "Black Death",
+     "MC Boogieman"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.5
+   },
+   {
+    "id": "bp:16679938",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 7,
+     "next_best": 18,
+     "hashes_in_index": 5769,
+     "records": 71467,
+     "name": "Era Of Her (Original Mix)"
+    },
+    "local_hits": 142,
+    "sent": 6260,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:20073021",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 23,
+     "runner_up": 6,
+     "next_best": 21,
+     "hashes_in_index": 5694,
+     "records": 71467,
+     "name": "Airflow (Original Mix)"
+    },
+    "local_hits": 195,
+    "sent": 6209,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:19065310",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 35,
+     "runner_up": 12,
+     "next_best": 27,
+     "hashes_in_index": 5426,
+     "records": 71467,
+     "name": "Real Ruff"
+    },
+    "local_hits": 149,
+    "sent": 6279,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:24384649",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 41,
+     "runner_up": 7,
+     "next_best": 35,
+     "hashes_in_index": 6019,
+     "records": 71467,
+     "name": "Ethereal (Original Mix)"
+    },
+    "local_hits": 133,
+    "sent": 6502,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:28363706",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 17,
+     "runner_up": 6,
+     "next_best": 16,
+     "hashes_in_index": 5344,
+     "records": 71467,
+     "name": "Era Of Her (Original Mix)"
+    },
+    "local_hits": 199,
+    "sent": 6199,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:22031355",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 27,
+     "runner_up": 9,
+     "next_best": 26,
+     "hashes_in_index": 5394,
+     "records": 71467,
+     "name": "Berghain (Remix)"
+    },
+    "local_hits": 144,
+    "sent": 5978,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:28899146",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 41,
+     "runner_up": 17,
+     "next_best": 40,
+     "hashes_in_index": 5741,
+     "records": 71467,
+     "name": "CCamp"
+    },
+    "local_hits": 117,
+    "sent": 6313,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:8571521",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 33,
+     "runner_up": 12,
+     "next_best": 31,
+     "hashes_in_index": 5526,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 129,
+    "sent": 6087,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:16688758",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5845,
+    "sent": 6454,
+    "answer": [
+     "bp:16688758",
+     "Going Back",
+     "Ace Ventura"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.4
+   },
+   {
+    "id": "bp:20270289",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5634,
+    "sent": 6404,
+    "answer": [
+     "bp:20270289",
+     "Kidney Punch",
+     "Chuck duzZ"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.9
+   },
+   {
+    "id": "bp:21635768",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 32,
+     "runner_up": 7,
+     "next_best": 28,
+     "hashes_in_index": 5824,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 102,
+    "sent": 6619,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:20967792",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 3,
+     "next_best": 19,
+     "hashes_in_index": 5455,
+     "records": 71467,
+     "name": "Changes Of Life"
+    },
+    "local_hits": 153,
+    "sent": 6375,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:27183429",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 41,
+     "runner_up": 16,
+     "next_best": 40,
+     "hashes_in_index": 5830,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 142,
+    "sent": 6493,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:29499785",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 18,
+     "runner_up": 6,
+     "next_best": 17,
+     "hashes_in_index": 5349,
+     "records": 71467,
+     "name": "Wisdom to the Wise (Red 2) (A. Mochi Re-Edit)"
+    },
+    "local_hits": 149,
+    "sent": 6109,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:22982620",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 7,
+     "next_best": 19,
+     "hashes_in_index": 5103,
+     "records": 71467,
+     "name": "Formation"
+    },
+    "local_hits": 140,
+    "sent": 6180,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:28379119",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 28,
+     "runner_up": 12,
+     "next_best": 26,
+     "hashes_in_index": 5490,
+     "records": 71467,
+     "name": "CCamp"
+    },
+    "local_hits": 153,
+    "sent": 6032,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.6
+   },
+   {
+    "id": "bp:10140580",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 9,
+     "next_best": 19,
+     "hashes_in_index": 5874,
+     "records": 71467,
+     "name": "River In Me  (Mixed)"
+    },
+    "local_hits": 171,
+    "sent": 6342,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:23941512",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 8,
+     "next_best": 21,
+     "hashes_in_index": 5520,
+     "records": 71467,
+     "name": "Pull Over (Second Remix - Remastered 2021)"
+    },
+    "local_hits": 119,
+    "sent": 6212,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:26798291",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5555,
+    "sent": 6224,
+    "answer": [
+     "bp:26798291",
+     "Circuit Venom (Short)",
+     "Jim Funk"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:28754382",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 20,
+     "runner_up": 7,
+     "next_best": 18,
+     "hashes_in_index": 5347,
+     "records": 71467,
+     "name": "Spicy"
+    },
+    "local_hits": 86,
+    "sent": 6363,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   }
+  ],
+  "outside": [
+   {
+    "id": "bp:18802162",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 6,
+     "next_best": 21,
+     "hashes_in_index": 5828,
+     "records": 71467,
+     "name": "Drugs From Amsterdam (Reinier Zonneveld Remix)"
+    },
+    "local_hits": 140,
+    "sent": 6261,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:13303491",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 17,
+     "runner_up": 6,
+     "next_best": 17,
+     "hashes_in_index": 5255,
+     "records": 71467,
+     "name": "Step by Step (Original Mix)"
+    },
+    "local_hits": 117,
+    "sent": 6158,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:22346494",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 5,
+     "next_best": 17,
+     "hashes_in_index": 5644,
+     "records": 71467,
+     "name": "Cheetah"
+    },
+    "local_hits": 187,
+    "sent": 6147,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:4206880",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 17,
+     "runner_up": 7,
+     "next_best": 15,
+     "hashes_in_index": 5430,
+     "records": 71467,
+     "name": "Reflex"
+    },
+    "local_hits": 161,
+    "sent": 5934,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.7
+   },
+   {
+    "id": "bp:5169279",
+    "found": true,
+    "right": false,
+    "wrong": true,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5533,
+    "sent": 6093,
+    "answer": [
+     "bp:5169278",
+     "Groove Is in the Heart (Original Mix)",
+     "Deee-Lite"
+    ],
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:30188133",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 4,
+     "next_best": 20,
+     "hashes_in_index": 5251,
+     "records": 71467,
+     "name": "Sidewinder (Album Version)"
+    },
+    "local_hits": 132,
+    "sent": 6104,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:28423538",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 18,
+     "runner_up": 3,
+     "next_best": 18,
+     "hashes_in_index": 5234,
+     "records": 71467,
+     "name": "Real Ruff"
+    },
+    "local_hits": 170,
+    "sent": 6228,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:24383553",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 26,
+     "runner_up": 9,
+     "next_best": 25,
+     "hashes_in_index": 5921,
+     "records": 71467,
+     "name": "Seasons (Original Mix)"
+    },
+    "local_hits": 116,
+    "sent": 6453,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:29666076",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 17,
+     "runner_up": 5,
+     "next_best": 17,
+     "hashes_in_index": 5454,
+     "records": 71467,
+     "name": "Wizards Of The Sonic (Mark Sherry Remix)"
+    },
+    "local_hits": 165,
+    "sent": 6180,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.6
+   },
+   {
+    "id": "bp:30516334",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 43,
+     "runner_up": 16,
+     "next_best": 31,
+     "hashes_in_index": 5527,
+     "records": 71467,
+     "name": "Triple It (Original Mix)"
+    },
+    "local_hits": 149,
+    "sent": 6184,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:21528644",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 7,
+     "next_best": 20,
+     "hashes_in_index": 5371,
+     "records": 71467,
+     "name": "Alive"
+    },
+    "local_hits": 137,
+    "sent": 6297,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:20488702",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 32,
+     "runner_up": 12,
+     "next_best": 23,
+     "hashes_in_index": 5833,
+     "records": 71467,
+     "name": "Rain (Extended Mix)"
+    },
+    "local_hits": 169,
+    "sent": 6294,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:23052907",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 26,
+     "runner_up": 9,
+     "next_best": 24,
+     "hashes_in_index": 5440,
+     "records": 71467,
+     "name": "Krimson"
+    },
+    "local_hits": 114,
+    "sent": 6167,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:24207674",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 5,
+     "next_best": 21,
+     "hashes_in_index": 5505,
+     "records": 71467,
+     "name": "Tokyo Night Train (Original mix)"
+    },
+    "local_hits": 129,
+    "sent": 6316,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:21061897",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 27,
+     "runner_up": 10,
+     "next_best": 18,
+     "hashes_in_index": 5796,
+     "records": 71467,
+     "name": "What's Going On"
+    },
+    "local_hits": 155,
+    "sent": 6247,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:13548047",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 4,
+     "next_best": 17,
+     "hashes_in_index": 5736,
+     "records": 71467,
+     "name": "Pretty Green Eyes "
+    },
+    "local_hits": 153,
+    "sent": 6168,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:18088917",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 30,
+     "runner_up": 11,
+     "next_best": 21,
+     "hashes_in_index": 5628,
+     "records": 71467,
+     "name": "Broken Heart (Original Mix)"
+    },
+    "local_hits": 139,
+    "sent": 6209,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:30254346",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 8,
+     "next_best": 19,
+     "hashes_in_index": 5484,
+     "records": 71467,
+     "name": "Regulate"
+    },
+    "local_hits": 125,
+    "sent": 6102,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:14385797",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 33,
+     "runner_up": 8,
+     "next_best": 28,
+     "hashes_in_index": 5785,
+     "records": 71467,
+     "name": "1998"
+    },
+    "local_hits": 152,
+    "sent": 6537,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:1676005",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 16,
+     "runner_up": 6,
+     "next_best": 15,
+     "hashes_in_index": 5586,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 152,
+    "sent": 6282,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:13450657",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 8,
+     "next_best": 20,
+     "hashes_in_index": 5646,
+     "records": 71467,
+     "name": "Northern Lights"
+    },
+    "local_hits": 136,
+    "sent": 6378,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:20149963",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 32,
+     "runner_up": 11,
+     "next_best": 26,
+     "hashes_in_index": 5518,
+     "records": 71467,
+     "name": "Upfront"
+    },
+    "local_hits": 129,
+    "sent": 6300,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:20595186",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 5,
+     "next_best": 20,
+     "hashes_in_index": 5463,
+     "records": 71467,
+     "name": "Berlin 2000 (Original Mix)"
+    },
+    "local_hits": 107,
+    "sent": 6402,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:20088655",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 39,
+     "runner_up": 11,
+     "next_best": 34,
+     "hashes_in_index": 5534,
+     "records": 71467,
+     "name": "Nice + Slow"
+    },
+    "local_hits": 145,
+    "sent": 6200,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:19957643",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "why": "too many postings"
+    },
+    "local_hits": 128,
+    "sent": 6736,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.0
+   },
+   {
+    "id": "bp:23859305",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 29,
+     "runner_up": 9,
+     "next_best": 26,
+     "hashes_in_index": 5741,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 161,
+    "sent": 6357,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:29267142",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 28,
+     "runner_up": 12,
+     "next_best": 25,
+     "hashes_in_index": 5612,
+     "records": 71467,
+     "name": "Hydrogen"
+    },
+    "local_hits": 155,
+    "sent": 6300,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:20275912",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 27,
+     "runner_up": 9,
+     "next_best": 26,
+     "hashes_in_index": 5594,
+     "records": 71467,
+     "name": "Frenesi"
+    },
+    "local_hits": 151,
+    "sent": 6301,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.1
+   },
+   {
+    "id": "bp:23652037",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 16,
+     "runner_up": 4,
+     "next_best": 16,
+     "hashes_in_index": 5904,
+     "records": 71467,
+     "name": "Eris"
+    },
+    "local_hits": 162,
+    "sent": 6330,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:23768187",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 20,
+     "runner_up": 7,
+     "next_best": 17,
+     "hashes_in_index": 5425,
+     "records": 71467,
+     "name": null
+    },
+    "local_hits": 168,
+    "sent": 6083,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.7
+   },
+   {
+    "id": "bp:29399303",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 7,
+     "next_best": 18,
+     "hashes_in_index": 5772,
+     "records": 71467,
+     "name": "Feel It (Original Mix)"
+    },
+    "local_hits": 155,
+    "sent": 6262,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:29648066",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 6,
+     "next_best": 21,
+     "hashes_in_index": 5522,
+     "records": 71467,
+     "name": "Opus (Four Tet Remix)"
+    },
+    "local_hits": 146,
+    "sent": 6157,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:22353001",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 6,
+     "next_best": 19,
+     "hashes_in_index": 5500,
+     "records": 71467,
+     "name": "Export"
+    },
+    "local_hits": 147,
+    "sent": 6246,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.0
+   },
+   {
+    "id": "bp:20768535",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 24,
+     "runner_up": 4,
+     "next_best": 22,
+     "hashes_in_index": 5571,
+     "records": 71467,
+     "name": "Real Life (Original Mix)"
+    },
+    "local_hits": 159,
+    "sent": 6166,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:20655741",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 20,
+     "runner_up": 6,
+     "next_best": 19,
+     "hashes_in_index": 5428,
+     "records": 71467,
+     "name": "Adagio for Strings"
+    },
+    "local_hits": 165,
+    "sent": 6179,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:21629345",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 8,
+     "next_best": 19,
+     "hashes_in_index": 5208,
+     "records": 71467,
+     "name": "Paradise (Radio Edit)"
+    },
+    "local_hits": 144,
+    "sent": 6151,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 2.2
+   },
+   {
+    "id": "bp:20543028",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 21,
+     "runner_up": 8,
+     "next_best": 18,
+     "hashes_in_index": 5315,
+     "records": 71467,
+     "name": "School"
+    },
+    "local_hits": 150,
+    "sent": 6228,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:20758753",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 8,
+     "next_best": 20,
+     "hashes_in_index": 5492,
+     "records": 71467,
+     "name": "Awakened"
+    },
+    "local_hits": 121,
+    "sent": 6145,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.8
+   },
+   {
+    "id": "bp:6031037",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 18,
+     "runner_up": 7,
+     "next_best": 18,
+     "hashes_in_index": 5582,
+     "records": 71467,
+     "name": "Hydrogen"
+    },
+    "local_hits": 133,
+    "sent": 6139,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   },
+   {
+    "id": "bp:14546716",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 22,
+     "runner_up": 6,
+     "next_best": 20,
+     "hashes_in_index": 5610,
+     "records": 71467,
+     "name": "A Star Within A Star (Mark Sherry's Trance Energy Intro Mix)"
+    },
+    "local_hits": 157,
+    "sent": 6140,
+    "answer": null,
+    "asked": [
+     null,
+     null
+    ],
+    "seconds": 1.9
+   }
+  ]
+ }
+}
