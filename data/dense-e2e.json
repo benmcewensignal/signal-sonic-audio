@@ -1,0 +1,296 @@
+{
+ "site": "https://www.earlysignal.live",
+ "summary": {
+  "classics_right": "0 of 40",
+  "classics_via_dense": "0 of 40",
+  "classics_wrong": "0 of 40",
+  "recent_right": "0 of 0",
+  "recent_wrong": "0 of 0",
+  "errors": 0
+ },
+ "results": {
+  "classics": [
+   {
+    "id": "bp:5196115",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:28831985",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:17381018",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:22385102",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:30428605",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:329047",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:329048",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:23211384",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:5367500",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:29585550",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:4783189",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:1161491",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:17977455",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:13807663",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:6926884",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:1707166",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:26466390",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:16135810",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:18750347",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:23348086",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:4874075",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:3886214",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:29353684",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:26751968",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:13677547",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:20804123",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:4782466",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:12247393",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:13146992",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:7881452",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:7646698",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:19384391",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:6918655",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:23590321",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:20454105",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:20157180",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:18485357",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:21942240",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:29211536",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   },
+   {
+    "id": "bp:8537216",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null
+   }
+  ],
+  "recent": []
+ }
+}
