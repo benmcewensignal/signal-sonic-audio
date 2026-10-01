@@ -1,6 +1,6 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36607060351 (3 part(s))
--rw-r--r-- 1 runner runner 8355819520 Oct  1 09:27 fingerprints.db
+-rw-r--r-- 1 runner runner 8355819520 Oct  1 09:57 fingerprints.db
 records in store: 67949
 stem files fetched: 8500
 store holds 67949 fingerprinted records
@@ -142,10 +142,22 @@ merged 0 records from fp-canon-v2-20261001-0918-s2.jsonl
 merged 0 records from fp-canon-v2-20261001-0918-s3.jsonl
 merged 0 records from fp-canon-v2-20261001-0918-s4.jsonl
 merged 0 records from fp-canon-v2-20261001-0918-s5.jsonl
+merged 0 records from fp-canon-v2-20261001-0937-s0.jsonl
+merged 0 records from fp-canon-v2-20261001-0937-s1.jsonl
+merged 0 records from fp-canon-v2-20261001-0937-s2.jsonl
+merged 0 records from fp-canon-v2-20261001-0937-s3.jsonl
+merged 0 records from fp-canon-v2-20261001-0937-s4.jsonl
+merged 0 records from fp-canon-v2-20261001-0937-s5.jsonl
+merged 1 records from fp-canon-v2-20261001-0945-s0.jsonl
+merged 0 records from fp-canon-v2-20261001-0945-s1.jsonl
+merged 0 records from fp-canon-v2-20261001-0945-s2.jsonl
+merged 0 records from fp-canon-v2-20261001-0945-s3.jsonl
+merged 0 records from fp-canon-v2-20261001-0945-s4.jsonl
+merged 0 records from fp-canon-v2-20261001-0945-s5.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
-before pruning: 46108 records, 82,937,744 postings
-after pruning 2,275,120 over-common hashes: 3,728,659 postings
+before pruning: 46109 records, 82,939,544 postings
+after pruning 2,275,139 over-common hashes: 3,728,667 postings
 ranked 40917 records against their own scene
 positions for 43861 records
 stem neighbours for drums: 43454 records
@@ -158,14 +170,14 @@ walks by part written for 43454 records
 per-stem neighbours written for 173816 record-stems
 nearest neighbours for 43861 records, 41327 of them with edges between their neighbours
 walks for 43861 records
-detail for 45590 records written alongside the index, in 64 files
+detail for 45591 records written alongside the index, in 64 files
 {
- "records": 46108,
- "postings": 3728659,
+ "records": 46109,
+ "postings": 3728667,
  "bin_mb": 29.8,
  "meta_mb": 5.6
 }
-VERIFY: 46108 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: 46109 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.5 MB in 64 files, eight-neighbour 43347, walks 43347
--rw-r--r-- 1 runner runner 29829284 Oct  1 09:35 out/index.bin
--rw-r--r-- 1 runner runner  5641125 Oct  1 09:35 out/index.json
+-rw-r--r-- 1 runner runner 29829348 Oct  1 10:04 out/index.bin
+-rw-r--r-- 1 runner runner  5641226 Oct  1 10:04 out/index.json
