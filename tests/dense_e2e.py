@@ -16,7 +16,7 @@ def load(pattern, n):
             except Exception: continue
             if d.get("found") is not False and d.get("preview") and d.get("track_id") and d["track_id"] not in seen: seen.add(d["track_id"]); out.append(d)
     pick.shuffle(out); return out[:n]
-classics = load("out/fp-canon-v2-*.jsonl", 40); recent = load("out/fp-extra*.jsonl", 20)
+classics = load("out/fp-canon-v2-*.jsonl", 40); recent = []
 cq = {}
 for f in glob.glob("out/fp-canon*.jsonl"):
     for line in open(f):
@@ -38,7 +38,7 @@ for kind, L_ in (("classics", classics), ("recent", recent)):
         try: r = ask(d)
         except Exception as e: res[kind].append({"id": d["track_id"], "error": type(e).__name__}); continue
         tid = (r.get("track") or {}).get("track_id"); same = tid == d["track_id"] or (cq.get(tid) and cq.get(tid) == cq.get(d["track_id"]))
-        res[kind].append({"id": d["track_id"], "found": bool(r.get("found")), "right": bool(r.get("found") and same), "wrong": bool(r.get("found") and not same), "via": r.get("via")})
+        res[kind].append({"id": d["track_id"], "found": bool(r.get("found")), "right": bool(r.get("found") and same), "wrong": bool(r.get("found") and not same), "via": r.get("via"), "dense": r.get("dense"), "local_hits": r.get("hashes_in_index"), "sent": r.get("hashes_sent")})
 def rate(L_, k): return f"{sum(1 for x in L_ if x.get(k))} of {len(L_)}"
 summ = {"classics_right": rate(res["classics"], "right"), "classics_via_dense": f"{sum(1 for x in res['classics'] if x.get('via') == 'classics')} of {len(res['classics'])}",
         "classics_wrong": rate(res["classics"], "wrong"), "recent_right": rate(res["recent"], "right"), "recent_wrong": rate(res["recent"], "wrong"),
