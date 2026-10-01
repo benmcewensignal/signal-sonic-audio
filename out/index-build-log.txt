@@ -1,6 +1,6 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36607060351 (3 part(s))
--rw-r--r-- 1 runner runner 8355819520 Oct  1 08:24 fingerprints.db
+-rw-r--r-- 1 runner runner 8355819520 Oct  1 08:49 fingerprints.db
 records in store: 67949
 stem files fetched: 8500
 store holds 67949 fingerprinted records
@@ -100,30 +100,42 @@ merged 134 records from fp-canon-v2-20261001-0814-s1.jsonl
 merged 121 records from fp-canon-v2-20261001-0814-s3.jsonl
 merged 157 records from fp-canon-v2-20261001-0814-s4.jsonl
 merged 134 records from fp-canon-v2-20261001-0815-s2.jsonl
-merged 442 records from fp-canon.jsonl
-merged 318 records from fp-history.jsonl
-before pruning: 44609 records, 80,242,194 postings
-after pruning 2,254,539 over-common hashes: 3,749,645 postings
-ranked 40784 records against their own scene
-positions for 43632 records
-stem neighbours for drums: 43257 records
-stem neighbours for bass: 43257 records
-stem neighbours for other: 43257 records
-stem neighbours for vocals: 43257 records
-keys written for 43255 records
-in-key steps written for 34061 records
-walks by part written for 43257 records
-per-stem neighbours written for 173028 record-stems
-nearest neighbours for 43632 records, 41085 of them with edges between their neighbours
-walks for 43632 records
-detail for 44214 records written alongside the index, in 64 files
+merged 100 records from fp-canon-v2-20261001-0821-s1.jsonl
+merged 88 records from fp-canon-v2-20261001-0821-s2.jsonl
+merged 100 records from fp-canon-v2-20261001-0821-s3.jsonl
+merged 95 records from fp-canon-v2-20261001-0822-s0.jsonl
+merged 87 records from fp-canon-v2-20261001-0826-s5.jsonl
+merged 97 records from fp-canon-v2-20261001-0827-s4.jsonl
+merged 49 records from fp-canon-v2-20261001-0833-s0.jsonl
+merged 61 records from fp-canon-v2-20261001-0833-s1.jsonl
+merged 59 records from fp-canon-v2-20261001-0833-s2.jsonl
+merged 66 records from fp-canon-v2-20261001-0833-s4.jsonl
+merged 51 records from fp-canon-v2-20261001-0833-s5.jsonl
+merged 72 records from fp-canon-v2-20261001-0834-s3.jsonl
+merged 522 records from fp-canon.jsonl
+merged 319 records from fp-history.jsonl
+before pruning: 45615 records, 82,052,994 postings
+after pruning 2,268,394 over-common hashes: 3,733,147 postings
+ranked 40904 records against their own scene
+positions for 43817 records
+stem neighbours for drums: 43418 records
+stem neighbours for bass: 43418 records
+stem neighbours for other: 43418 records
+stem neighbours for vocals: 43418 records
+keys written for 43416 records
+in-key steps written for 34203 records
+walks by part written for 43418 records
+per-stem neighbours written for 173672 record-stems
+nearest neighbours for 43817 records, 41267 of them with edges between their neighbours
+walks for 43817 records
+detail for 45111 records written alongside the index, in 64 files
 {
- "records": 44609,
- "postings": 3749645,
- "bin_mb": 30.0,
- "meta_mb": 5.5
+ "records": 45615,
+ "postings": 3733147,
+ "bin_mb": 29.9,
+ "meta_mb": 5.6
 }
-VERIFY: 44609 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 5.5 MB, detail 281.8 MB in 64 files, eight-neighbour 43241, walks 43241
--rw-r--r-- 1 runner runner 29997172 Oct  1 08:33 out/index.bin
--rw-r--r-- 1 runner runner  5475570 Oct  1 08:33 out/index.json
+VERIFY: 45615 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 5.6 MB, detail 282.3 MB in 64 files, eight-neighbour 43317, walks 43317
+-rw-r--r-- 1 runner runner 29865188 Oct  1 08:57 out/index.bin
+-rw-r--r-- 1 runner runner  5587314 Oct  1 08:57 out/index.json
