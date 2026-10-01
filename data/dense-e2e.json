@@ -1,8 +1,8 @@
 {
  "site": "https://www.earlysignal.live",
  "summary": {
-  "classics_right": "18 of 40",
-  "classics_via_dense": "18 of 40",
+  "classics_right": "22 of 40",
+  "classics_via_dense": "22 of 40",
   "classics_wrong": "0 of 40",
   "recent_right": "0 of 0",
   "recent_wrong": "0 of 0",
@@ -11,398 +11,295 @@
  "results": {
   "classics": [
    {
-    "id": "bp:16431891",
+    "id": "bp:19059988",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5775,
+    "sent": 6303
+   },
+   {
+    "id": "bp:14038533",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "error": "fetch: The operation was aborted due to timeout"
-    },
-    "local_hits": 151,
-    "sent": 6160
-   },
-   {
-    "id": "bp:20444239",
-    "found": true,
-    "right": true,
-    "wrong": false,
-    "via": "classics",
-    "dense": null,
-    "local_hits": 5613,
-    "sent": 6123
-   },
-   {
-    "id": "bp:21611552",
-    "found": true,
-    "right": true,
-    "wrong": false,
-    "via": "classics",
-    "dense": null,
-    "local_hits": 5935,
-    "sent": 6350
-   },
-   {
-    "id": "bp:18691003",
-    "found": true,
-    "right": true,
-    "wrong": false,
-    "via": "classics",
-    "dense": null,
-    "local_hits": 5658,
-    "sent": 6180
-   },
-   {
-    "id": "bp:1130271",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 27,
-     "runner_up": 27,
-     "next_best": 26,
-     "hashes_in_index": 5974,
+     "votes": 37,
+     "runner_up": 12,
+     "next_best": 35,
+     "hashes_in_index": 5857,
      "records": 3445,
-     "name": "Push Up"
+     "name": "Bounce"
     },
-    "local_hits": 106,
-    "sent": 6450
+    "local_hits": 139,
+    "sent": 6369
    },
    {
-    "id": "bp:5704",
+    "id": "bp:16978497",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "votes": 68,
-     "runner_up": 25,
-     "next_best": 63,
-     "hashes_in_index": 5559,
+     "votes": 33,
+     "runner_up": 11,
+     "next_best": 27,
+     "hashes_in_index": 5811,
      "records": 3445,
-     "name": "U Don't Know Me feat. Duane Harden"
+     "name": "Ethereal"
+    },
+    "local_hits": 132,
+    "sent": 6223
+   },
+   {
+    "id": "bp:4043393",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 6505,
+    "sent": 7056
+   },
+   {
+    "id": "bp:506205",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 51,
+     "runner_up": 22,
+     "next_best": 36,
+     "hashes_in_index": 6095,
+     "records": 3445,
+     "name": "Night (Radio Edit)"
+    },
+    "local_hits": 118,
+    "sent": 6560
+   },
+   {
+    "id": "bp:6918655",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 51,
+     "runner_up": 15,
+     "next_best": 35,
+     "hashes_in_index": 5561,
+     "records": 3445,
+     "name": "We Come 1 (Dave Clarke Remix)"
     },
     "local_hits": 167,
-    "sent": 6140
+    "sent": 6150
    },
    {
-    "id": "bp:10137580",
+    "id": "bp:16574325",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "votes": 17,
-     "runner_up": 14,
-     "next_best": 16,
-     "hashes_in_index": 5658,
-     "records": 3445,
-     "name": "Seatle (Original Mix)"
-    },
-    "local_hits": 152,
-    "sent": 6157
-   },
-   {
-    "id": "bp:26374716",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 19,
-     "runner_up": 17,
-     "next_best": 18,
-     "hashes_in_index": 5796,
-     "records": 3445,
-     "name": "TAKATA (Original Mix)"
-    },
-    "local_hits": 151,
-    "sent": 6339
-   },
-   {
-    "id": "bp:23027606",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 21,
-     "runner_up": 17,
-     "next_best": 20,
-     "hashes_in_index": 5831,
-     "records": 3445,
-     "name": "Plastic Dreams"
-    },
-    "local_hits": 111,
-    "sent": 6319
-   },
-   {
-    "id": "bp:28396777",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 21,
-     "runner_up": 18,
-     "next_best": 14,
-     "hashes_in_index": 5647,
-     "records": 3445,
-     "name": "Blurred Vision  (Original Mix)"
-    },
-    "local_hits": 135,
-    "sent": 6096
-   },
-   {
-    "id": "bp:20168261",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 12,
-     "runner_up": 8,
-     "next_best": 12,
-     "hashes_in_index": 5792,
-     "records": 3445,
-     "name": "Metro"
-    },
-    "local_hits": 151,
-    "sent": 6379
-   },
-   {
-    "id": "bp:18222120",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 12,
-     "runner_up": 9,
-     "next_best": 11,
-     "hashes_in_index": 5867,
-     "records": 3445,
-     "name": "Dimension (Original Mix)"
-    },
-    "local_hits": 137,
-    "sent": 6356
-   },
-   {
-    "id": "bp:675063",
-    "found": true,
-    "right": true,
-    "wrong": false,
-    "via": "classics",
-    "dense": null,
-    "local_hits": 5612,
-    "sent": 6167
-   },
-   {
-    "id": "bp:4629406",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 54,
-     "runner_up": 36,
-     "next_best": 15,
-     "hashes_in_index": 5682,
-     "records": 3445,
-     "name": "At the River (Original Mix)"
-    },
-    "local_hits": 142,
-    "sent": 6204
-   },
-   {
-    "id": "bp:15122739",
-    "found": true,
-    "right": true,
-    "wrong": false,
-    "via": "classics",
-    "dense": null,
-    "local_hits": 5618,
-    "sent": 6142
-   },
-   {
-    "id": "bp:21756591",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 12,
-     "runner_up": 6,
-     "next_best": 11,
-     "hashes_in_index": 5657,
-     "records": 3445,
-     "name": "Jump"
-    },
-    "local_hits": 135,
-    "sent": 6106
-   },
-   {
-    "id": "bp:20747631",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 31,
-     "runner_up": 28,
+     "votes": 24,
+     "runner_up": 11,
      "next_best": 23,
-     "hashes_in_index": 5648,
+     "hashes_in_index": 5664,
      "records": 3445,
-     "name": "Party Non Stop"
+     "name": "Night Hunter"
     },
-    "local_hits": 128,
-    "sent": 6224
+    "local_hits": 156,
+    "sent": 6174
    },
    {
-    "id": "bp:27201666",
+    "id": "bp:20547864",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5723,
-    "sent": 6203
+    "local_hits": 6178,
+    "sent": 6698
    },
    {
-    "id": "bp:15564524",
+    "id": "bp:19157274",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "votes": 21,
-     "runner_up": 16,
-     "next_best": 12,
-     "hashes_in_index": 5658,
+     "votes": 30,
+     "runner_up": 13,
+     "next_best": 28,
+     "hashes_in_index": 5713,
      "records": 3445,
-     "name": "Vicious (Original Mix)"
+     "name": "My Place (ADR Remix)"
     },
-    "local_hits": 140,
+    "local_hits": 113,
+    "sent": 6206
+   },
+   {
+    "id": "bp:4901748",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5795,
     "sent": 6260
    },
    {
-    "id": "bp:13151099",
+    "id": "bp:5685801",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5752,
-    "sent": 6310
+    "local_hits": 5743,
+    "sent": 6294
    },
    {
-    "id": "bp:24518650",
+    "id": "bp:11274663",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "votes": 21,
-     "runner_up": 9,
-     "next_best": 16,
-     "hashes_in_index": 5334,
+     "votes": 53,
+     "runner_up": 18,
+     "next_best": 38,
+     "hashes_in_index": 5902,
      "records": 3445,
-     "name": "Octomore  (Original Mix)"
+     "name": "Along Came Polly"
     },
-    "local_hits": 175,
-    "sent": 5844
+    "local_hits": 141,
+    "sent": 6376
    },
    {
-    "id": "bp:10116573",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 42,
-     "runner_up": 39,
-     "next_best": 17,
-     "hashes_in_index": 5883,
-     "records": 3445,
-     "name": "Love Me Or Leave Me (Oliver $ Remix)"
-    },
-    "local_hits": 135,
-    "sent": 6457
-   },
-   {
-    "id": "bp:9741859",
+    "id": "bp:8417726",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5386,
-    "sent": 5996
+    "local_hits": 5895,
+    "sent": 6467
    },
    {
-    "id": "bp:6719442",
+    "id": "bp:20058738",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "votes": 16,
+     "votes": 36,
      "runner_up": 13,
-     "next_best": 15,
-     "hashes_in_index": 5645,
+     "next_best": 35,
+     "hashes_in_index": 5761,
      "records": 3445,
-     "name": "Embrace"
+     "name": "That's The Way Love Is (Extended Mix)"
     },
-    "local_hits": 132,
-    "sent": 6129
+    "local_hits": 130,
+    "sent": 6292
    },
    {
-    "id": "bp:19504488",
+    "id": "bp:4328884",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5695,
-    "sent": 6288
+    "local_hits": 6017,
+    "sent": 6527
    },
    {
-    "id": "bp:3252869",
+    "id": "bp:7595597",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "votes": 84,
-     "runner_up": 66,
-     "next_best": 23,
-     "hashes_in_index": 6010,
+     "votes": 44,
+     "runner_up": 16,
+     "next_best": 41,
+     "hashes_in_index": 5764,
      "records": 3445,
-     "name": "Cold Drink (Original Mix)"
+     "name": "Element"
     },
-    "local_hits": 142,
-    "sent": 6500
+    "local_hits": 113,
+    "sent": 6219
    },
    {
-    "id": "bp:19446170",
+    "id": "bp:3146439",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 70,
+     "runner_up": 25,
+     "next_best": 35,
+     "hashes_in_index": 5634,
+     "records": 3445,
+     "name": "Look What Your Love Has Done To Me (Perc VIP Mix)"
+    },
+    "local_hits": 102,
+    "sent": 6215
+   },
+   {
+    "id": "bp:18188189",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 90,
+     "runner_up": 33,
+     "next_best": 74,
+     "hashes_in_index": 6286,
+     "records": 3445,
+     "name": "Look What Your Love Has Done To Me"
+    },
+    "local_hits": 144,
+    "sent": 6733
+   },
+   {
+    "id": "bp:20898585",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5597,
+    "sent": 6171
+   },
+   {
+    "id": "bp:674312",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5671,
+    "sent": 6234
+   },
+   {
+    "id": "bp:3303857",
     "found": false,
     "right": false,
     "wrong": false,
@@ -410,47 +307,75 @@
     "dense": {
      "found": false,
      "votes": 26,
-     "runner_up": 22,
-     "next_best": 20,
-     "hashes_in_index": 5677,
+     "runner_up": 8,
+     "next_best": 22,
+     "hashes_in_index": 5374,
      "records": 3445,
-     "name": "We Are Alive (Original Mix)"
+     "name": "Pullover"
     },
-    "local_hits": 141,
-    "sent": 6228
+    "local_hits": 179,
+    "sent": 5883
    },
    {
-    "id": "bp:6335677",
+    "id": "bp:17896998",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5876,
-    "sent": 6385
+    "local_hits": 5728,
+    "sent": 6290
    },
    {
-    "id": "bp:9803322",
+    "id": "bp:4862139",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5713,
-    "sent": 6164
+    "local_hits": 5349,
+    "sent": 5931
    },
    {
-    "id": "bp:15748401",
+    "id": "bp:16098923",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 6126,
-    "sent": 6615
+    "local_hits": 5518,
+    "sent": 6009
    },
    {
-    "id": "bp:18742108",
+    "id": "bp:14673327",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5886,
+    "sent": 6478
+   },
+   {
+    "id": "bp:13945138",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 40,
+     "runner_up": 15,
+     "next_best": 39,
+     "hashes_in_index": 5713,
+     "records": 3445,
+     "name": "Conjure Dreams (Original Mix)"
+    },
+    "local_hits": 156,
+    "sent": 6198
+   },
+   {
+    "id": "bp:20977859",
     "found": false,
     "right": false,
     "wrong": false,
@@ -458,128 +383,176 @@
     "dense": {
      "found": false,
      "votes": 32,
-     "runner_up": 21,
-     "next_best": 20,
-     "hashes_in_index": 5560,
+     "runner_up": 10,
+     "next_best": 31,
+     "hashes_in_index": 5630,
      "records": 3445,
-     "name": "Somebody (2024) Extended Mix [feat. Kimbra, Sante Sansone] (Original Mix)"
-    },
-    "local_hits": 147,
-    "sent": 6065
-   },
-   {
-    "id": "bp:23207825",
-    "found": false,
-    "right": false,
-    "wrong": false,
-    "via": null,
-    "dense": {
-     "found": false,
-     "votes": 26,
-     "runner_up": 11,
-     "next_best": 19,
-     "hashes_in_index": 5439,
-     "records": 3445,
-     "name": "Loca (Original Mix)"
+     "name": "River In Me  (Mixed)"
     },
     "local_hits": 150,
-    "sent": 5953
+    "sent": 6176
    },
    {
-    "id": "bp:11150953",
+    "id": "bp:7739697",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5704,
+    "sent": 6238
+   },
+   {
+    "id": "bp:25481700",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "votes": 35,
-     "runner_up": 29,
-     "next_best": 29,
-     "hashes_in_index": 5556,
+     "votes": 30,
+     "runner_up": 11,
+     "next_best": 27,
+     "hashes_in_index": 5781,
      "records": 3445,
-     "name": "Listen To This (Original Mix)"
+     "name": "Make Me"
     },
-    "local_hits": 155,
-    "sent": 6037
+    "local_hits": 154,
+    "sent": 6271
    },
    {
-    "id": "bp:24374696",
+    "id": "bp:18888512",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5660,
-    "sent": 6181
+    "local_hits": 5784,
+    "sent": 6259
    },
    {
-    "id": "bp:26005984",
+    "id": "bp:5169278",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5572,
-    "sent": 6093
+    "local_hits": 5498,
+    "sent": 6013
    },
    {
-    "id": "bp:3306821",
+    "id": "bp:19605157",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5774,
-    "sent": 6220
+    "local_hits": 5365,
+    "sent": 5867
    },
    {
-    "id": "bp:19323215",
-    "found": true,
-    "right": true,
-    "wrong": false,
-    "via": "classics",
-    "dense": null,
-    "local_hits": 5899,
-    "sent": 6490
-   },
-   {
-    "id": "bp:21618465",
+    "id": "bp:8349438",
     "found": false,
     "right": false,
     "wrong": false,
     "via": null,
     "dense": {
      "found": false,
-     "votes": 12,
-     "runner_up": 6,
-     "next_best": 9,
-     "hashes_in_index": 5364,
+     "votes": 84,
+     "runner_up": 38,
+     "next_best": 22,
+     "hashes_in_index": 5709,
      "records": 3445,
-     "name": "Time Is A Circle "
+     "name": "Praise you (Original Mix)"
     },
-    "local_hits": 168,
-    "sent": 5870
+    "local_hits": 160,
+    "sent": 6190
    },
    {
-    "id": "bp:14957156",
+    "id": "bp:866093",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5719,
-    "sent": 6202
+    "local_hits": 5836,
+    "sent": 6334
    },
    {
-    "id": "bp:19689769",
+    "id": "bp:21251004",
     "found": true,
     "right": true,
     "wrong": false,
     "via": "classics",
     "dense": null,
-    "local_hits": 5666,
-    "sent": 6178
+    "local_hits": 5597,
+    "sent": 6117
+   },
+   {
+    "id": "bp:15716319",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5853,
+    "sent": 6313
+   },
+   {
+    "id": "bp:18211243",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 71,
+     "runner_up": 23,
+     "next_best": 67,
+     "hashes_in_index": 5722,
+     "records": 3445,
+     "name": "Fiesta Reloaded"
+    },
+    "local_hits": 87,
+    "sent": 6300
+   },
+   {
+    "id": "bp:30082016",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5647,
+    "sent": 6169
+   },
+   {
+    "id": "bp:20574342",
+    "found": true,
+    "right": true,
+    "wrong": false,
+    "via": "classics",
+    "dense": null,
+    "local_hits": 5944,
+    "sent": 6417
+   },
+   {
+    "id": "bp:20990733",
+    "found": false,
+    "right": false,
+    "wrong": false,
+    "via": null,
+    "dense": {
+     "found": false,
+     "votes": 19,
+     "runner_up": 8,
+     "next_best": 18,
+     "hashes_in_index": 5643,
+     "records": 3445,
+     "name": "Finally feat. Julie McKnight (Dario D'Attis Extended Remix)"
+    },
+    "local_hits": 204,
+    "sent": 6162
    }
   ],
   "recent": []
