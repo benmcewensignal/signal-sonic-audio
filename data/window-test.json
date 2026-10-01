@@ -1,0 +1,104 @@
+{
+ "note": "Which part of a record can Sonic recognise? The index keeps the first 1,800 fingerprints of each record (\"about the\nfirst minute\" of its two-minute preview), so a clip from anywhere else in the preview has nothing to match. Here three\nversions of an index are built from the same classics: the first 1,800 (as now), 1,800 spread evenly across the whole\npreview (same size), and every fingerprint. Then 25-second clips from random points anywhere in the preview, played\nclean, through a room and through noise, are matched with the rehearsal's rule. Writes data/window-test.json.",
+ "records": 120,
+ "preview_seconds_median": 120.0,
+ "fingerprints_per_record_median": 22949,
+ "score": {
+  "first": {
+   "clean": {
+    "early": [
+     181,
+     231
+    ],
+    "late": [
+     86,
+     129
+    ]
+   },
+   "room": {
+    "early": [
+     37,
+     231
+    ],
+    "late": [
+     19,
+     129
+    ]
+   },
+   "noise": {
+    "early": [
+     183,
+     231
+    ],
+    "late": [
+     85,
+     129
+    ]
+   }
+  },
+  "spread": {
+   "clean": {
+    "early": [
+     231,
+     231
+    ],
+    "late": [
+     129,
+     129
+    ]
+   },
+   "room": {
+    "early": [
+     18,
+     231
+    ],
+    "late": [
+     16,
+     129
+    ]
+   },
+   "noise": {
+    "early": [
+     230,
+     231
+    ],
+    "late": [
+     129,
+     129
+    ]
+   }
+  },
+  "all": {
+   "clean": {
+    "early": [
+     231,
+     231
+    ],
+    "late": [
+     129,
+     129
+    ]
+   },
+   "room": {
+    "early": [
+     215,
+     231
+    ],
+    "late": [
+     118,
+     129
+    ]
+   },
+   "noise": {
+    "early": [
+     231,
+     231
+    ],
+    "late": [
+     129,
+     129
+    ]
+   }
+  }
+ }
+}
