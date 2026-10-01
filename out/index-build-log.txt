@@ -1,6 +1,6 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36607060351 (3 part(s))
--rw-r--r-- 1 runner runner 8355819520 Oct  1 14:43 fingerprints.db
+-rw-r--r-- 1 runner runner 8355819520 Oct  1 14:59 fingerprints.db
 records in store: 67949
 stem files fetched: 8500
 store holds 67949 fingerprinted records
@@ -291,6 +291,12 @@ merged 0 records from fp-canon-v2-20261001-1426-s4.jsonl
 merged 0 records from fp-canon-v2-20261001-1426-s5.jsonl
 merged 0 records from fp-canon-v2-20261001-1427-s1.jsonl
 merged 0 records from fp-canon-v2-20261001-1433-s2.jsonl
+merged 0 records from fp-canon-v2-20261001-1440-s3.jsonl
+merged 0 records from fp-canon-v2-20261001-1440-s5.jsonl
+merged 0 records from fp-canon-v2-20261001-1441-s0.jsonl
+merged 0 records from fp-canon-v2-20261001-1441-s1.jsonl
+merged 0 records from fp-canon-v2-20261001-1444-s4.jsonl
+merged 0 records from fp-canon-v2-20261001-1454-s2.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46110 records, 82,941,344 postings
@@ -316,5 +322,5 @@ detail for 45592 records written alongside the index, in 64 files
 }
 VERIFY: 46110 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.5 MB in 64 files, eight-neighbour 43347, walks 43347
--rw-r--r-- 1 runner runner 29829164 Oct  1 14:51 out/index.bin
--rw-r--r-- 1 runner runner  5641327 Oct  1 14:51 out/index.json
+-rw-r--r-- 1 runner runner 29829164 Oct  1 15:06 out/index.bin
+-rw-r--r-- 1 runner runner  5641327 Oct  1 15:06 out/index.json
