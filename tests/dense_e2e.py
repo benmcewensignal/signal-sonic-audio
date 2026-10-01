@@ -28,10 +28,11 @@ for f in glob.glob("out/fp-canon*.jsonl"):
             canon_titles.add(_re.sub(r"[^a-z0-9]+", " ", str(d_.get("name") or "").lower()).split(" (")[0].strip())
         except Exception: pass
 def _get(path): return json.load(urllib.request.urlopen(urllib.request.Request(SITE + path, headers={"User-Agent": "sonic-dense-e2e"}), timeout=120))
-PV = _get("/data/previews.json").get("u", {}); DI = _get("/data/dj-index.json"); DN = _get("/data/dj-names.json"); names_ = DN.get("n") or []
+PV = _get("/data/previews.json").get("u", {}); DI = _get("/data/dj-index.json"); DN = _get("/data/dj-names.json"); names_ = DN.get("t") or DN.get("n") or []
 pool = [(t, (names_[k] if k < len(names_) else "")) for k, t in enumerate(DI["ids"]) if t in PV and t not in canon_ids]
 pick.shuffle(pool)
-recent = [{"track_id": t, "preview": PV[t]} for t, nm in pool if _re.sub(r"[^a-z0-9]+", " ", str(nm or "").lower()).strip() not in canon_titles][:20]
+canon_titles.discard("")
+recent = [{"track_id": t, "preview": PV[t]} for t, nm in pool if not nm or _re.sub(r"[^a-z0-9]+", " ", str(nm).lower()).strip() not in canon_titles][:20]
 print(f"outside records: {len(recent)}", flush=True)
 cq = {}
 for f in glob.glob("out/fp-canon*.jsonl"):
