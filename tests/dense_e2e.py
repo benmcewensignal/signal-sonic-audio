@@ -54,8 +54,13 @@ for kind, L_ in (("classics", classics), ("recent", recent)):
     for d in L_:
         try: r = ask(d)
         except Exception as e: res[kind].append({"id": d["track_id"], "error": type(e).__name__}); continue
-        tid = (r.get("track") or {}).get("track_id"); same = tid == d["track_id"] or (cq.get(tid) and cq.get(tid) == cq.get(d["track_id"]))
-        res[kind].append({"id": d["track_id"], "found": bool(r.get("found")), "right": bool(r.get("found") and same), "wrong": bool(r.get("found") and not same), "via": r.get("via"), "dense": r.get("dense"), "local_hits": r.get("hashes_in_index"), "sent": r.get("hashes_sent")})
+        tr_ = r.get("track") or {}; tid = tr_.get("track_id")
+        def _g(name, arts):   # the service's grouping: first artist's first word and the title before any bracket or feat.
+            import re as _r
+            n_ = lambda x: _r.sub(r"\bu\b", "you", _r.sub(r"[^a-z0-9]+", " ", str(x or "").replace("'", "").lower())).strip()
+            return (n_((arts or [""])[0]).split(" ")[0] if arts else "") + "|" + n_(_r.split(r"\s*[\(\[]|\s+feat\.?\s+|\s+ft\.?\s+", str(name or ""), 1)[0])
+        same = tid == d["track_id"] or (cq.get(tid) and cq.get(tid) == cq.get(d["track_id"])) or (tid and _g(tr_.get("name"), tr_.get("artists")) == _g(d.get("name"), d.get("artists")))
+        res[kind].append({"id": d["track_id"], "found": bool(r.get("found")), "right": bool(r.get("found") and same), "wrong": bool(r.get("found") and not same), "via": r.get("via"), "dense": r.get("dense"), "local_hits": r.get("hashes_in_index"), "sent": r.get("hashes_sent"), "answer": [tid, tr_.get("name"), (tr_.get("artists") or [None])[0]] if r.get("found") else None, "asked": [d.get("name"), (d.get("artists") or [None])[0]]})
 def rate(L_, k): return f"{sum(1 for x in L_ if x.get(k))} of {len(L_)}"
 summ = {"classics_right": rate(res["classics"], "right"), "classics_via_dense": f"{sum(1 for x in res['classics'] if x.get('via') == 'classics')} of {len(res['classics'])}",
         "classics_wrong": rate(res["classics"], "wrong"), "recent_right": rate(res["recent"], "right"), "recent_wrong": rate(res["recent"], "wrong"),
