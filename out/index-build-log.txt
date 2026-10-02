@@ -1,6 +1,6 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36607060351 (3 part(s))
--rw-r--r-- 1 runner runner 8355819520 Oct  2 13:35 fingerprints.db
+-rw-r--r-- 1 runner runner 8355819520 Oct  2 14:03 fingerprints.db
 records in store: 67949
 stem files fetched: 8575
 store holds 67949 fingerprinted records
@@ -722,6 +722,24 @@ merged 0 records from fp-canon-v2-20261002-1327-s2.jsonl
 merged 0 records from fp-canon-v2-20261002-1327-s3.jsonl
 merged 0 records from fp-canon-v2-20261002-1327-s4.jsonl
 merged 0 records from fp-canon-v2-20261002-1327-s5.jsonl
+merged 0 records from fp-canon-v2-20261002-1347-s0.jsonl
+merged 0 records from fp-canon-v2-20261002-1347-s1.jsonl
+merged 0 records from fp-canon-v2-20261002-1347-s2.jsonl
+merged 0 records from fp-canon-v2-20261002-1347-s3.jsonl
+merged 0 records from fp-canon-v2-20261002-1347-s4.jsonl
+merged 0 records from fp-canon-v2-20261002-1347-s5.jsonl
+merged 0 records from fp-canon-v2-20261002-1350-s0.jsonl
+merged 0 records from fp-canon-v2-20261002-1350-s1.jsonl
+merged 0 records from fp-canon-v2-20261002-1350-s2.jsonl
+merged 0 records from fp-canon-v2-20261002-1350-s4.jsonl
+merged 0 records from fp-canon-v2-20261002-1350-s5.jsonl
+merged 0 records from fp-canon-v2-20261002-1351-s3.jsonl
+merged 0 records from fp-canon-v2-20261002-1354-s0.jsonl
+merged 0 records from fp-canon-v2-20261002-1354-s1.jsonl
+merged 0 records from fp-canon-v2-20261002-1354-s2.jsonl
+merged 0 records from fp-canon-v2-20261002-1354-s3.jsonl
+merged 0 records from fp-canon-v2-20261002-1354-s5.jsonl
+merged 0 records from fp-canon-v2-20261002-1355-s4.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
@@ -747,5 +765,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.5 MB in 64 files, eight-neighbour 43350, walks 43350
--rw-r--r-- 1 runner runner 29828092 Oct  2 13:43 out/index.bin
--rw-r--r-- 1 runner runner  5642203 Oct  2 13:43 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  2 14:11 out/index.bin
+-rw-r--r-- 1 runner runner  5642203 Oct  2 14:11 out/index.json
