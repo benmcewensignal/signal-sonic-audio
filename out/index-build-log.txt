@@ -1,6 +1,4 @@
-d 0 records from fp-canon-v2-20261001-1908-s0.jsonl
-merged 0 records from fp-canon-v2-20261001-1909-s1.jsonl
-merged 0 records from fp-canon-v2-20261001-1909-s2.jsonl
+d 0 records from fp-canon-v2-20261001-1909-s2.jsonl
 merged 0 records from fp-canon-v2-20261001-1909-s3.jsonl
 merged 0 records from fp-canon-v2-20261001-1915-s5.jsonl
 merged 0 records from fp-canon-v2-20261001-1926-s4.jsonl
@@ -1031,6 +1029,8 @@ merged 0 records from fp-canon-v2-20261003-1007-s2.jsonl
 merged 0 records from fp-canon-v2-20261003-1007-s3.jsonl
 merged 0 records from fp-canon-v2-20261003-1007-s4.jsonl
 merged 0 records from fp-canon-v2-20261003-1007-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-1038-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-1057-s1.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
@@ -1042,7 +1042,7 @@ stem neighbours for bass: 43462 records
 stem neighbours for other: 43462 records
 stem neighbours for vocals: 43462 records
 keys written for 43460 records
-in-key steps written for 34244 records
+in-key steps written for 34243 records
 walks by part written for 43462 records
 per-stem neighbours written for 173848 record-stems
 nearest neighbours for 43870 records, 41341 of them with edges between their neighbours
@@ -1056,5 +1056,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.6 MB in 64 files, eight-neighbour 43353, walks 43353
--rw-r--r-- 1 runner runner 29828092 Oct  3 10:30 out/index.bin
--rw-r--r-- 1 runner runner  5642151 Oct  3 10:30 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  3 11:30 out/index.bin
+-rw-r--r-- 1 runner runner  5642151 Oct  3 11:30 out/index.json
