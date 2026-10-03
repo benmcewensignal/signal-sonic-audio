@@ -1,14 +1,4 @@
-d 0 records from fp-canon-v2-20261002-0026-s2.jsonl
-merged 0 records from fp-canon-v2-20261002-0026-s3.jsonl
-merged 0 records from fp-canon-v2-20261002-0026-s4.jsonl
-merged 0 records from fp-canon-v2-20261002-0026-s5.jsonl
-merged 0 records from fp-canon-v2-20261002-0032-s0.jsonl
-merged 0 records from fp-canon-v2-20261002-0032-s1.jsonl
-merged 0 records from fp-canon-v2-20261002-0032-s2.jsonl
-merged 0 records from fp-canon-v2-20261002-0032-s3.jsonl
-merged 0 records from fp-canon-v2-20261002-0032-s4.jsonl
-merged 0 records from fp-canon-v2-20261002-0032-s5.jsonl
-merged 0 records from fp-canon-v2-20261002-0049-s0.jsonl
+d 0 records from fp-canon-v2-20261002-0049-s0.jsonl
 merged 0 records from fp-canon-v2-20261002-0049-s1.jsonl
 merged 0 records from fp-canon-v2-20261002-0049-s2.jsonl
 merged 0 records from fp-canon-v2-20261002-0049-s4.jsonl
@@ -1031,6 +1021,16 @@ merged 0 records from fp-canon-v2-20261003-1408-s4.jsonl
 merged 0 records from fp-canon-v2-20261003-1408-s5.jsonl
 merged 0 records from fp-canon-v2-20261003-1409-s2.jsonl
 merged 0 records from fp-canon-v2-20261003-1409-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-1428-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-1428-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-1428-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-1428-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-1436-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-1436-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-1436-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-1436-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-1436-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-1436-s5.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
@@ -1056,5 +1056,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.6 MB in 64 files, eight-neighbour 43353, walks 43353
--rw-r--r-- 1 runner runner 29828092 Oct  3 14:27 out/index.bin
--rw-r--r-- 1 runner runner  5642151 Oct  3 14:27 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  3 14:56 out/index.bin
+-rw-r--r-- 1 runner runner  5642151 Oct  3 14:56 out/index.json
