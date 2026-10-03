@@ -1,22 +1,4 @@
-ds, 49,474,723 postings
-  28000 records, 50,374,411 postings
-  28500 records, 51,273,803 postings
-  29000 records, 52,173,604 postings
-  29500 records, 53,072,937 postings
-  30000 records, 53,972,937 postings
-  30500 records, 54,872,155 postings
-  31000 records, 55,771,476 postings
-  31500 records, 56,669,063 postings
-  32000 records, 57,567,915 postings
-  32500 records, 58,462,615 postings
-  33000 records, 59,362,062 postings
-  33500 records, 60,261,165 postings
-  34000 records, 61,160,954 postings
-  34500 records, 62,060,424 postings
-  35000 records, 62,957,702 postings
-  35500 records, 63,857,326 postings
-  36000 records, 64,757,326 postings
-  36500 records, 65,657,326 postings
+tings
   37000 records, 66,557,326 postings
   37500 records, 67,457,326 postings
   38000 records, 68,357,326 postings
@@ -1041,6 +1023,18 @@ merged 0 records from fp-canon-v2-20261003-0533-s3.jsonl
 merged 0 records from fp-canon-v2-20261003-0533-s4.jsonl
 merged 0 records from fp-canon-v2-20261003-0533-s5.jsonl
 merged 0 records from fp-canon-v2-20261003-0534-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0552-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0552-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0552-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0552-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0552-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0552-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0601-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0601-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0601-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0601-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0601-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0601-s5.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
@@ -1052,7 +1046,7 @@ stem neighbours for bass: 43462 records
 stem neighbours for other: 43462 records
 stem neighbours for vocals: 43462 records
 keys written for 43460 records
-in-key steps written for 34237 records
+in-key steps written for 34243 records
 walks by part written for 43462 records
 per-stem neighbours written for 173848 record-stems
 nearest neighbours for 43867 records, 41333 of them with edges between their neighbours
@@ -1066,5 +1060,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.5 MB in 64 files, eight-neighbour 43350, walks 43350
--rw-r--r-- 1 runner runner 29828092 Oct  3 05:49 out/index.bin
--rw-r--r-- 1 runner runner  5642203 Oct  3 05:49 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  3 06:17 out/index.bin
+-rw-r--r-- 1 runner runner  5642203 Oct  3 06:17 out/index.json
