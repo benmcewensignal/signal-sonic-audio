@@ -1,8 +1,8 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36607060351 (3 part(s))
--rw-r--r-- 1 runner runner 8355819520 Oct  3 01:55 fingerprints.db
+-rw-r--r-- 1 runner runner 8355819520 Oct  3 02:21 fingerprints.db
 records in store: 67949
-stem files fetched: 8575
+stem files fetched: 8605
 store holds 67949 fingerprinted records
 measures for 134767 records, scene centres for 36 scenes
   500 records, 897,448 postings
@@ -994,6 +994,18 @@ merged 0 records from fp-canon-v2-20261003-0146-s2.jsonl
 merged 0 records from fp-canon-v2-20261003-0146-s3.jsonl
 merged 0 records from fp-canon-v2-20261003-0146-s4.jsonl
 merged 0 records from fp-canon-v2-20261003-0146-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0204-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0204-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0204-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0204-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0204-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0204-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0211-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0211-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0211-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0212-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0212-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0212-s5.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
@@ -1005,7 +1017,7 @@ stem neighbours for bass: 43459 records
 stem neighbours for other: 43459 records
 stem neighbours for vocals: 43459 records
 keys written for 43457 records
-in-key steps written for 34231 records
+in-key steps written for 34233 records
 walks by part written for 43459 records
 per-stem neighbours written for 173836 record-stems
 nearest neighbours for 43867 records, 41333 of them with edges between their neighbours
@@ -1019,5 +1031,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.5 MB in 64 files, eight-neighbour 43350, walks 43350
--rw-r--r-- 1 runner runner 29828092 Oct  3 02:03 out/index.bin
--rw-r--r-- 1 runner runner  5642203 Oct  3 02:03 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  3 02:26 out/index.bin
+-rw-r--r-- 1 runner runner  5642203 Oct  3 02:26 out/index.json
