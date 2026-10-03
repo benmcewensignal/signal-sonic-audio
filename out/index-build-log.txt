@@ -1,28 +1,4 @@
-d 0 records from fp-canon-v2-20261001-1028-s4.jsonl
-merged 0 records from fp-canon-v2-20261001-1028-s5.jsonl
-merged 0 records from fp-canon-v2-20261001-1031-s3.jsonl
-merged 0 records from fp-canon-v2-20261001-1032-s0.jsonl
-merged 0 records from fp-canon-v2-20261001-1032-s1.jsonl
-merged 0 records from fp-canon-v2-20261001-1032-s2.jsonl
-merged 0 records from fp-canon-v2-20261001-1032-s4.jsonl
-merged 0 records from fp-canon-v2-20261001-1032-s5.jsonl
-merged 0 records from fp-canon-v2-20261001-1037-s0.jsonl
-merged 0 records from fp-canon-v2-20261001-1037-s1.jsonl
-merged 0 records from fp-canon-v2-20261001-1037-s2.jsonl
-merged 0 records from fp-canon-v2-20261001-1037-s3.jsonl
-merged 0 records from fp-canon-v2-20261001-1037-s4.jsonl
-merged 0 records from fp-canon-v2-20261001-1037-s5.jsonl
-merged 0 records from fp-canon-v2-20261001-1102-s0.jsonl
-merged 0 records from fp-canon-v2-20261001-1102-s1.jsonl
-merged 0 records from fp-canon-v2-20261001-1102-s2.jsonl
-merged 0 records from fp-canon-v2-20261001-1102-s4.jsonl
-merged 0 records from fp-canon-v2-20261001-1102-s5.jsonl
-merged 0 records from fp-canon-v2-20261001-1103-s3.jsonl
-merged 0 records from fp-canon-v2-20261001-1124-s0.jsonl
-merged 0 records from fp-canon-v2-20261001-1124-s1.jsonl
-merged 0 records from fp-canon-v2-20261001-1124-s2.jsonl
-merged 0 records from fp-canon-v2-20261001-1124-s4.jsonl
-merged 0 records from fp-canon-v2-20261001-1124-s5.jsonl
+d 0 records from fp-canon-v2-20261001-1124-s5.jsonl
 merged 0 records from fp-canon-v2-20261001-1125-s3.jsonl
 merged 0 records from fp-canon-v2-20261001-1133-s1.jsonl
 merged 0 records from fp-canon-v2-20261001-1133-s2.jsonl
@@ -1031,6 +1007,30 @@ merged 0 records from fp-canon-v2-20261003-0711-s2.jsonl
 merged 0 records from fp-canon-v2-20261003-0711-s3.jsonl
 merged 0 records from fp-canon-v2-20261003-0711-s4.jsonl
 merged 0 records from fp-canon-v2-20261003-0711-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0725-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0725-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0725-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0725-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0725-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0725-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0729-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0729-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0729-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0729-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0730-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0730-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0732-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0732-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0732-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0732-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0732-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0732-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0734-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0734-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0734-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0734-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0734-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0735-s4.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
@@ -1056,5 +1056,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.5 MB in 64 files, eight-neighbour 43350, walks 43350
--rw-r--r-- 1 runner runner 29828092 Oct  3 07:23 out/index.bin
--rw-r--r-- 1 runner runner  5642203 Oct  3 07:23 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  3 07:46 out/index.bin
+-rw-r--r-- 1 runner runner  5642203 Oct  3 07:46 out/index.json
