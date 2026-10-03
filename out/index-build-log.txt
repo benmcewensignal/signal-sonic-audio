@@ -1,16 +1,4 @@
-d 0 records from fp-canon-v2-20261002-1115-s3.jsonl
-merged 0 records from fp-canon-v2-20261002-1115-s4.jsonl
-merged 0 records from fp-canon-v2-20261002-1121-s1.jsonl
-merged 0 records from fp-canon-v2-20261002-1121-s4.jsonl
-merged 0 records from fp-canon-v2-20261002-1121-s5.jsonl
-merged 0 records from fp-canon-v2-20261002-1154-s1.jsonl
-merged 0 records from fp-canon-v2-20261002-1154-s2.jsonl
-merged 0 records from fp-canon-v2-20261002-1154-s3.jsonl
-merged 0 records from fp-canon-v2-20261002-1154-s4.jsonl
-merged 0 records from fp-canon-v2-20261002-1154-s5.jsonl
-merged 0 records from fp-canon-v2-20261002-1155-s0.jsonl
-merged 0 records from fp-canon-v2-20261002-1200-s0.jsonl
-merged 0 records from fp-canon-v2-20261002-1200-s1.jsonl
+d 0 records from fp-canon-v2-20261002-1200-s1.jsonl
 merged 0 records from fp-canon-v2-20261002-1200-s2.jsonl
 merged 0 records from fp-canon-v2-20261002-1200-s3.jsonl
 merged 0 records from fp-canon-v2-20261002-1200-s5.jsonl
@@ -1031,6 +1019,18 @@ merged 0 records from fp-canon-v2-20261003-2249-s2.jsonl
 merged 0 records from fp-canon-v2-20261003-2249-s3.jsonl
 merged 0 records from fp-canon-v2-20261003-2249-s4.jsonl
 merged 0 records from fp-canon-v2-20261003-2249-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-2305-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-2305-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-2305-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-2305-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-2306-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-2306-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-2312-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-2313-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-2313-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-2313-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-2313-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-2313-s5.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
@@ -1056,5 +1056,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.6 MB in 64 files, eight-neighbour 43353, walks 43353
--rw-r--r-- 1 runner runner 29828092 Oct  3 23:03 out/index.bin
--rw-r--r-- 1 runner runner  5642151 Oct  3 23:03 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  3 23:30 out/index.bin
+-rw-r--r-- 1 runner runner  5642151 Oct  3 23:30 out/index.json
