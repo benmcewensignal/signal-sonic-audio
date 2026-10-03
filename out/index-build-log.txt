@@ -1,8 +1,8 @@
 fetching the fingerprint store (about 1 GB)
 fpstore: fetched set 36607060351 (3 part(s))
--rw-r--r-- 1 runner runner 8355819520 Oct  3 02:32 fingerprints.db
+-rw-r--r-- 1 runner runner 8355819520 Oct  3 02:53 fingerprints.db
 records in store: 67949
-stem files fetched: 8605
+stem files fetched: 8635
 store holds 67949 fingerprinted records
 measures for 134767 records, scene centres for 36 scenes
   500 records, 897,448 postings
@@ -1006,20 +1006,36 @@ merged 0 records from fp-canon-v2-20261003-0211-s4.jsonl
 merged 0 records from fp-canon-v2-20261003-0212-s0.jsonl
 merged 0 records from fp-canon-v2-20261003-0212-s2.jsonl
 merged 0 records from fp-canon-v2-20261003-0212-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0240-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0240-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0240-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0240-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0243-s3.jsonl
+merged 0 records from fp-canon-v2-20261003-0244-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0244-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0244-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0244-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0244-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0246-s0.jsonl
+merged 0 records from fp-canon-v2-20261003-0246-s1.jsonl
+merged 0 records from fp-canon-v2-20261003-0246-s2.jsonl
+merged 0 records from fp-canon-v2-20261003-0246-s4.jsonl
+merged 0 records from fp-canon-v2-20261003-0246-s5.jsonl
+merged 0 records from fp-canon-v2-20261003-0247-s3.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
 after pruning 2,275,243 over-common hashes: 3,728,510 postings
 ranked 40922 records against their own scene
 positions for 43867 records
-stem neighbours for drums: 43459 records
-stem neighbours for bass: 43459 records
-stem neighbours for other: 43459 records
-stem neighbours for vocals: 43459 records
-keys written for 43457 records
-in-key steps written for 34233 records
-walks by part written for 43459 records
-per-stem neighbours written for 173836 record-stems
+stem neighbours for drums: 43462 records
+stem neighbours for bass: 43462 records
+stem neighbours for other: 43462 records
+stem neighbours for vocals: 43462 records
+keys written for 43460 records
+in-key steps written for 34237 records
+walks by part written for 43462 records
+per-stem neighbours written for 173848 record-stems
 nearest neighbours for 43867 records, 41333 of them with edges between their neighbours
 walks for 43867 records
 detail for 45596 records written alongside the index, in 64 files
@@ -1031,5 +1047,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.5 MB in 64 files, eight-neighbour 43350, walks 43350
--rw-r--r-- 1 runner runner 29828092 Oct  3 02:41 out/index.bin
--rw-r--r-- 1 runner runner  5642203 Oct  3 02:41 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  3 03:01 out/index.bin
+-rw-r--r-- 1 runner runner  5642203 Oct  3 03:01 out/index.json
