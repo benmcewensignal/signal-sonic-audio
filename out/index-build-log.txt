@@ -1,12 +1,4 @@
-d 0 records from fp-canon-v2-20261002-1417-s1.jsonl
-merged 0 records from fp-canon-v2-20261002-1417-s2.jsonl
-merged 0 records from fp-canon-v2-20261002-1417-s3.jsonl
-merged 0 records from fp-canon-v2-20261002-1417-s4.jsonl
-merged 0 records from fp-canon-v2-20261002-1418-s5.jsonl
-merged 0 records from fp-canon-v2-20261002-1441-s1.jsonl
-merged 0 records from fp-canon-v2-20261002-1442-s2.jsonl
-merged 0 records from fp-canon-v2-20261002-1449-s0.jsonl
-merged 0 records from fp-canon-v2-20261002-1449-s1.jsonl
+d 0 records from fp-canon-v2-20261002-1449-s1.jsonl
 merged 0 records from fp-canon-v2-20261002-1449-s3.jsonl
 merged 0 records from fp-canon-v2-20261002-1449-s4.jsonl
 merged 0 records from fp-canon-v2-20261002-1449-s5.jsonl
@@ -1031,6 +1023,14 @@ merged 0 records from fp-canon-v2-20261004-0150-s4.jsonl
 merged 0 records from fp-canon-v2-20261004-0150-s5.jsonl
 merged 0 records from fp-canon-v2-20261004-0151-s0.jsonl
 merged 0 records from fp-canon-v2-20261004-0151-s3.jsonl
+merged 0 records from fp-canon-v2-20261004-0209-s4.jsonl
+merged 0 records from fp-canon-v2-20261004-0209-s5.jsonl
+merged 0 records from fp-canon-v2-20261004-0215-s1.jsonl
+merged 0 records from fp-canon-v2-20261004-0215-s3.jsonl
+merged 0 records from fp-canon-v2-20261004-0216-s0.jsonl
+merged 0 records from fp-canon-v2-20261004-0216-s4.jsonl
+merged 0 records from fp-canon-v2-20261004-0216-s5.jsonl
+merged 0 records from fp-canon-v2-20261004-0217-s2.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46117 records, 82,953,944 postings
@@ -1056,5 +1056,5 @@ detail for 45596 records written alongside the index, in 64 files
 }
 VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.6 MB in 64 files, eight-neighbour 43353, walks 43353
--rw-r--r-- 1 runner runner 29828092 Oct  4 02:08 out/index.bin
--rw-r--r-- 1 runner runner  5642151 Oct  4 02:08 out/index.json
+-rw-r--r-- 1 runner runner 29828092 Oct  4 02:35 out/index.bin
+-rw-r--r-- 1 runner runner  5642151 Oct  4 02:35 out/index.json
