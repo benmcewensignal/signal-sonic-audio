@@ -1,10 +1,4 @@
-d 0 records from fp-canon-v2-20261003-0000-s4.jsonl
-merged 0 records from fp-canon-v2-20261003-0000-s5.jsonl
-merged 0 records from fp-canon-v2-20261003-0023-s0.jsonl
-merged 0 records from fp-canon-v2-20261003-0023-s1.jsonl
-merged 0 records from fp-canon-v2-20261003-0023-s2.jsonl
-merged 0 records from fp-canon-v2-20261003-0023-s3.jsonl
-merged 0 records from fp-canon-v2-20261003-0023-s4.jsonl
+d 0 records from fp-canon-v2-20261003-0023-s4.jsonl
 merged 0 records from fp-canon-v2-20261003-0023-s5.jsonl
 merged 0 records from fp-canon-v2-20261003-0030-s0.jsonl
 merged 0 records from fp-canon-v2-20261003-0030-s1.jsonl
@@ -1031,30 +1025,36 @@ merged 0 records from fp-canon-v2-20261004-0839-s2.jsonl
 merged 0 records from fp-canon-v2-20261004-0839-s3.jsonl
 merged 0 records from fp-canon-v2-20261004-0839-s5.jsonl
 merged 0 records from fp-canon-v2-20261004-0840-s4.jsonl
+merged 0 records from fp-canon-v2-20261004-0856-s5.jsonl
+merged 0 records from fp-canon-v2-20261004-0926-s0.jsonl
+merged 0 records from fp-canon-v2-20261004-0926-s1.jsonl
+merged 0 records from fp-canon-v2-20261004-0926-s3.jsonl
+merged 0 records from fp-canon-v2-20261004-0926-s4.jsonl
+merged 0 records from fp-canon-v2-20261004-0927-s2.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
-before pruning: 46117 records, 82,953,944 postings
-after pruning 2,275,243 over-common hashes: 3,728,510 postings
-ranked 40922 records against their own scene
-positions for 43870 records
-stem neighbours for drums: 43464 records
-stem neighbours for bass: 43464 records
-stem neighbours for other: 43464 records
-stem neighbours for vocals: 43464 records
-keys written for 43462 records
-in-key steps written for 34246 records
-walks by part written for 43464 records
-per-stem neighbours written for 173856 record-stems
-nearest neighbours for 43870 records, 41341 of them with edges between their neighbours
-walks for 43870 records
-detail for 45596 records written alongside the index, in 64 files
+before pruning: 46124 records, 82,966,544 postings
+after pruning 2,275,290 over-common hashes: 3,728,470 postings
+ranked 40929 records against their own scene
+positions for 43880 records
+stem neighbours for drums: 43471 records
+stem neighbours for bass: 43471 records
+stem neighbours for other: 43471 records
+stem neighbours for vocals: 43471 records
+keys written for 43469 records
+in-key steps written for 34247 records
+walks by part written for 43471 records
+per-stem neighbours written for 173884 record-stems
+nearest neighbours for 43880 records, 41350 of them with edges between their neighbours
+walks for 43880 records
+detail for 45603 records written alongside the index, in 64 files
 {
- "records": 46117,
- "postings": 3728510,
+ "records": 46124,
+ "postings": 3728470,
  "bin_mb": 29.8,
  "meta_mb": 5.6
 }
-VERIFY: 46117 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 5.6 MB, detail 282.6 MB in 64 files, eight-neighbour 43353, walks 43353
--rw-r--r-- 1 runner runner 29828092 Oct  4 08:57 out/index.bin
--rw-r--r-- 1 runner runner  5642151 Oct  4 08:57 out/index.json
+VERIFY: 46124 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 5.6 MB, detail 282.6 MB in 64 files, eight-neighbour 43363, walks 43363
+-rw-r--r-- 1 runner runner 29827772 Oct  4 10:02 out/index.bin
+-rw-r--r-- 1 runner runner  5643216 Oct  4 10:02 out/index.json
