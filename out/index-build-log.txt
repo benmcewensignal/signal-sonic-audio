@@ -1,13 +1,4 @@
-d 0 records from fp-canon-v2-20261004-0820-s3.jsonl
-merged 0 records from fp-canon-v2-20261004-0820-s4.jsonl
-merged 0 records from fp-canon-v2-20261004-0820-s5.jsonl
-merged 0 records from fp-canon-v2-20261004-0821-s0.jsonl
-merged 0 records from fp-canon-v2-20261004-0825-s0.jsonl
-merged 0 records from fp-canon-v2-20261004-0825-s1.jsonl
-merged 0 records from fp-canon-v2-20261004-0825-s2.jsonl
-merged 0 records from fp-canon-v2-20261004-0825-s3.jsonl
-merged 0 records from fp-canon-v2-20261004-0825-s4.jsonl
-merged 0 records from fp-canon-v2-20261004-0825-s5.jsonl
+d 0 records from fp-canon-v2-20261004-0825-s5.jsonl
 merged 0 records from fp-canon-v2-20261004-0839-s0.jsonl
 merged 0 records from fp-canon-v2-20261004-0839-s1.jsonl
 merged 0 records from fp-canon-v2-20261004-0839-s2.jsonl
@@ -1031,22 +1022,31 @@ merged 0 records from fp-canon-v2-20261005-1628-s3.jsonl
 merged 0 records from fp-canon-v2-20261005-1629-s1.jsonl
 merged 0 records from fp-canon-v2-20261005-1629-s4.jsonl
 merged 0 records from fp-canon-v2-20261005-1629-s5.jsonl
+merged 0 records from fp-canon-v2-20261005-1645-s2.jsonl
+merged 0 records from fp-canon-v2-20261005-1645-s4.jsonl
+merged 0 records from fp-canon-v2-20261005-1646-s0.jsonl
+merged 0 records from fp-canon-v2-20261005-1655-s0.jsonl
+merged 0 records from fp-canon-v2-20261005-1655-s1.jsonl
+merged 0 records from fp-canon-v2-20261005-1655-s2.jsonl
+merged 0 records from fp-canon-v2-20261005-1655-s3.jsonl
+merged 0 records from fp-canon-v2-20261005-1655-s4.jsonl
+merged 0 records from fp-canon-v2-20261005-1655-s5.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46154 records, 83,020,544 postings
 after pruning 2,275,669 over-common hashes: 3,727,847 postings
 ranked 40976 records against their own scene
-positions for 43930 records
+positions for 43936 records
 stem neighbours for drums: 43512 records
 stem neighbours for bass: 43512 records
 stem neighbours for other: 43512 records
 stem neighbours for vocals: 43512 records
 keys written for 43510 records
-in-key steps written for 34256 records
+in-key steps written for 34253 records
 walks by part written for 43512 records
 per-stem neighbours written for 174048 record-stems
-nearest neighbours for 43930 records, 41398 of them with edges between their neighbours
-walks for 43930 records
+nearest neighbours for 43936 records, 41404 of them with edges between their neighbours
+walks for 43936 records
 detail for 45630 records written alongside the index, in 64 files
 {
  "records": 46154,
@@ -1055,6 +1055,6 @@ detail for 45630 records written alongside the index, in 64 files
  "meta_mb": 5.6
 }
 VERIFY: 46154 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 5.6 MB, detail 282.9 MB in 64 files, eight-neighbour 43410, walks 43410
--rw-r--r-- 1 runner runner 29822788 Oct  5 16:45 out/index.bin
--rw-r--r-- 1 runner runner  5648595 Oct  5 16:45 out/index.json
+VERIFY: index 5.6 MB, detail 282.9 MB in 64 files, eight-neighbour 43416, walks 43416
+-rw-r--r-- 1 runner runner 29822788 Oct  5 17:16 out/index.bin
+-rw-r--r-- 1 runner runner  5648661 Oct  5 17:16 out/index.json
