@@ -1,16 +1,4 @@
-d 0 records from fp-canon-v2-20261003-2009-s5.jsonl
-merged 0 records from fp-canon-v2-20261003-2010-s0.jsonl
-merged 0 records from fp-canon-v2-20261003-2010-s1.jsonl
-merged 0 records from fp-canon-v2-20261003-2010-s2.jsonl
-merged 0 records from fp-canon-v2-20261003-2010-s4.jsonl
-merged 0 records from fp-canon-v2-20261003-2031-s0.jsonl
-merged 0 records from fp-canon-v2-20261003-2031-s2.jsonl
-merged 0 records from fp-canon-v2-20261003-2031-s5.jsonl
-merged 0 records from fp-canon-v2-20261003-2032-s1.jsonl
-merged 0 records from fp-canon-v2-20261003-2037-s2.jsonl
-merged 0 records from fp-canon-v2-20261003-2037-s4.jsonl
-merged 0 records from fp-canon-v2-20261003-2038-s0.jsonl
-merged 0 records from fp-canon-v2-20261003-2038-s1.jsonl
+d 0 records from fp-canon-v2-20261003-2038-s1.jsonl
 merged 0 records from fp-canon-v2-20261003-2038-s3.jsonl
 merged 0 records from fp-canon-v2-20261003-2038-s5.jsonl
 merged 0 records from fp-canon-v2-20261003-2042-s1.jsonl
@@ -1031,6 +1019,18 @@ merged 0 records from fp-canon-v2-20261005-0402-s2.jsonl
 merged 0 records from fp-canon-v2-20261005-0402-s3.jsonl
 merged 0 records from fp-canon-v2-20261005-0402-s4.jsonl
 merged 0 records from fp-canon-v2-20261005-0402-s5.jsonl
+merged 0 records from fp-canon-v2-20261005-0422-s0.jsonl
+merged 0 records from fp-canon-v2-20261005-0422-s1.jsonl
+merged 0 records from fp-canon-v2-20261005-0422-s2.jsonl
+merged 0 records from fp-canon-v2-20261005-0422-s3.jsonl
+merged 0 records from fp-canon-v2-20261005-0422-s4.jsonl
+merged 0 records from fp-canon-v2-20261005-0422-s5.jsonl
+merged 0 records from fp-canon-v2-20261005-0429-s0.jsonl
+merged 0 records from fp-canon-v2-20261005-0429-s1.jsonl
+merged 0 records from fp-canon-v2-20261005-0429-s2.jsonl
+merged 0 records from fp-canon-v2-20261005-0429-s3.jsonl
+merged 0 records from fp-canon-v2-20261005-0429-s4.jsonl
+merged 0 records from fp-canon-v2-20261005-0429-s5.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46124 records, 82,966,544 postings
@@ -1042,7 +1042,7 @@ stem neighbours for bass: 43482 records
 stem neighbours for other: 43482 records
 stem neighbours for vocals: 43482 records
 keys written for 43480 records
-in-key steps written for 34249 records
+in-key steps written for 34248 records
 walks by part written for 43482 records
 per-stem neighbours written for 173928 record-stems
 nearest neighbours for 43885 records, 41352 of them with edges between their neighbours
@@ -1056,5 +1056,5 @@ detail for 45603 records written alongside the index, in 64 files
 }
 VERIFY: 46124 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.7 MB in 64 files, eight-neighbour 43368, walks 43368
--rw-r--r-- 1 runner runner 29827772 Oct  5 04:18 out/index.bin
--rw-r--r-- 1 runner runner  5644721 Oct  5 04:18 out/index.json
+-rw-r--r-- 1 runner runner 29827772 Oct  5 04:47 out/index.bin
+-rw-r--r-- 1 runner runner  5644721 Oct  5 04:47 out/index.json
