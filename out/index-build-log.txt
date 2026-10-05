@@ -1,5 +1,4 @@
-d 0 records from fp-canon-v2-20261004-0636-s4.jsonl
-merged 0 records from fp-canon-v2-20261004-0636-s5.jsonl
+d 0 records from fp-canon-v2-20261004-0636-s5.jsonl
 merged 0 records from fp-canon-v2-20261004-0637-s0.jsonl
 merged 0 records from fp-canon-v2-20261004-0637-s1.jsonl
 merged 0 records from fp-canon-v2-20261004-0643-s0.jsonl
@@ -1031,6 +1030,7 @@ merged 0 records from fp-canon-v2-20261005-1415-s3.jsonl
 merged 0 records from fp-canon-v2-20261005-1415-s4.jsonl
 merged 0 records from fp-canon-v2-20261005-1415-s5.jsonl
 merged 0 records from fp-canon-v2-20261005-1416-s0.jsonl
+merged 0 records from fp-canon-v2-20261005-1440-s5.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
 before pruning: 46128 records, 82,973,744 postings
@@ -1056,5 +1056,5 @@ detail for 45606 records written alongside the index, in 64 files
 }
 VERIFY: 46128 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 5.6 MB, detail 282.7 MB in 64 files, eight-neighbour 43371, walks 43371
--rw-r--r-- 1 runner runner 29826292 Oct  5 14:36 out/index.bin
--rw-r--r-- 1 runner runner  5645300 Oct  5 14:36 out/index.json
+-rw-r--r-- 1 runner runner 29826292 Oct  5 14:56 out/index.bin
+-rw-r--r-- 1 runner runner  5645300 Oct  5 14:56 out/index.json
