@@ -1,5 +1,4 @@
-d 0 records from fp-canon-v2-20261004-0724-s3.jsonl
-merged 0 records from fp-canon-v2-20261004-0724-s4.jsonl
+d 0 records from fp-canon-v2-20261004-0724-s4.jsonl
 merged 0 records from fp-canon-v2-20261004-0724-s5.jsonl
 merged 0 records from fp-canon-v2-20261004-0745-s1.jsonl
 merged 0 records from fp-canon-v2-20261004-0745-s2.jsonl
@@ -1031,30 +1030,31 @@ merged 0 records from fp-canon-v2-20261005-1458-s2.jsonl
 merged 0 records from fp-canon-v2-20261005-1458-s3.jsonl
 merged 0 records from fp-canon-v2-20261005-1458-s4.jsonl
 merged 0 records from fp-canon-v2-20261005-1504-s5.jsonl
+merged 0 records from fp-canon-v2-20261005-1525-s3.jsonl
 merged 529 records from fp-canon.jsonl
 merged 319 records from fp-history.jsonl
-before pruning: 46128 records, 82,973,744 postings
-after pruning 2,275,373 over-common hashes: 3,728,285 postings
-ranked 40951 records against their own scene
-positions for 43889 records
-stem neighbours for drums: 43486 records
-stem neighbours for bass: 43486 records
-stem neighbours for other: 43486 records
-stem neighbours for vocals: 43486 records
-keys written for 43484 records
-in-key steps written for 34249 records
-walks by part written for 43486 records
-per-stem neighbours written for 173944 record-stems
-nearest neighbours for 43889 records, 41355 of them with edges between their neighbours
-walks for 43889 records
-detail for 45606 records written alongside the index, in 64 files
+before pruning: 46154 records, 83,020,544 postings
+after pruning 2,275,669 over-common hashes: 3,727,847 postings
+ranked 40976 records against their own scene
+positions for 43917 records
+stem neighbours for drums: 43512 records
+stem neighbours for bass: 43512 records
+stem neighbours for other: 43512 records
+stem neighbours for vocals: 43512 records
+keys written for 43510 records
+in-key steps written for 34267 records
+walks by part written for 43512 records
+per-stem neighbours written for 174048 record-stems
+nearest neighbours for 43917 records, 41387 of them with edges between their neighbours
+walks for 43917 records
+detail for 45630 records written alongside the index, in 64 files
 {
- "records": 46128,
- "postings": 3728285,
+ "records": 46154,
+ "postings": 3727847,
  "bin_mb": 29.8,
  "meta_mb": 5.6
 }
-VERIFY: 46128 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 5.6 MB, detail 282.7 MB in 64 files, eight-neighbour 43371, walks 43371
--rw-r--r-- 1 runner runner 29826292 Oct  5 15:20 out/index.bin
--rw-r--r-- 1 runner runner  5645300 Oct  5 15:20 out/index.json
+VERIFY: 46154 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 5.6 MB, detail 282.9 MB in 64 files, eight-neighbour 43397, walks 43397
+-rw-r--r-- 1 runner runner 29822788 Oct  5 15:36 out/index.bin
+-rw-r--r-- 1 runner runner  5648452 Oct  5 15:36 out/index.json
