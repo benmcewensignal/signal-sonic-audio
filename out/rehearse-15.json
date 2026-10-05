@@ -18,9 +18,9 @@
    "rate": 1.0
   },
   "dull": {
-   "ok": 59,
+   "ok": 60,
    "of": 60,
-   "rate": 0.983
+   "rate": 1.0
   },
   "noise": {
    "ok": 60,
@@ -33,18 +33,18 @@
    "rate": 1.0
   },
   "room": {
-   "ok": 45,
+   "ok": 49,
    "of": 60,
-   "rate": 0.75
+   "rate": 0.817
   }
  },
  "median_votes": {
-  "clean": 1156,
-  "quiet": 1156,
-  "very quiet": 1156,
-  "dull": 116,
-  "noise": 981,
-  "loud noise": 510,
+  "clean": 1214,
+  "quiet": 1214,
+  "very quiet": 1214,
+  "dull": 98,
+  "noise": 1041,
+  "loud noise": 589,
   "room": 16
  }
 }
