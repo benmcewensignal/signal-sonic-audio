@@ -1,6 +1,4 @@
- 0 records from fp-canon-v2-20261004-1139-s2.jsonl
-merged 0 records from fp-canon-v2-20261004-1139-s3.jsonl
-merged 0 records from fp-canon-v2-20261004-1139-s4.jsonl
+04-1139-s4.jsonl
 merged 0 records from fp-canon-v2-20261004-1139-s5.jsonl
 merged 0 records from fp-canon-v2-20261004-1142-s0.jsonl
 merged 0 records from fp-canon-v2-20261004-1142-s1.jsonl
@@ -1031,30 +1029,31 @@ merged 0 records from fp-canon-v2-20261005-1907-s5.jsonl
 merged 0 records from fp-canon-v2-20261005-1933-s1.jsonl
 merged 0 records from fp-canon-v2-20261005-1937-s3.jsonl
 merged 0 records from fp-canon-v2-20261005-1938-s5.jsonl
-merged 529 records from fp-canon.jsonl
-merged 319 records from fp-history.jsonl
-before pruning: 73338 records, 131,941,166 postings
-after pruning 2,537,664 over-common hashes: 3,588,704 postings
-ranked 41441 records against their own scene
-positions for 71505 records
-stem neighbours for drums: 69809 records
-stem neighbours for bass: 69809 records
-stem neighbours for other: 69809 records
-stem neighbours for vocals: 69809 records
-keys written for 69807 records
-in-key steps written for 54494 records
-walks by part written for 69809 records
-per-stem neighbours written for 279236 record-stems
-nearest neighbours for 71505 records, 65884 of them with edges between their neighbours
-walks for 71505 records
-detail for 72641 records written alongside the index, in 64 files
+merged 379 records from fp-canon.jsonl
+merged 238 records from fp-history.jsonl
+72,645 fingerprinted records, 65,536 fit: left out 7,109, by tier 3: 7,109 (0 canon, 1 two or more DJs or top 10, 2 one DJ or charted, 3 catalogue)
+before pruning: 65536 records, 117,902,288 postings
+after pruning 2,461,331 over-common hashes: 3,569,100 postings
+ranked 33783 records against their own scene
+positions for 63703 records
+stem neighbours for drums: 62022 records
+stem neighbours for bass: 62022 records
+stem neighbours for other: 62022 records
+stem neighbours for vocals: 62022 records
+keys written for 62020 records
+in-key steps written for 48237 records
+walks by part written for 62022 records
+per-stem neighbours written for 248088 record-stems
+nearest neighbours for 63703 records, 58199 of them with edges between their neighbours
+walks for 63703 records
+detail for 65532 records written alongside the index, in 64 files
 {
- "records": 73338,
- "postings": 3588704,
- "bin_mb": 28.7,
- "meta_mb": 8.1
+ "records": 65536,
+ "postings": 3569100,
+ "bin_mb": 28.6,
+ "meta_mb": 7.1
 }
-VERIFY: 73338 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 8.1 MB, detail 446.9 MB in 64 files, eight-neighbour 70812, walks 70812
--rw-r--r-- 1 runner runner 28709644 Oct 11 11:59 out/index.bin
--rw-r--r-- 1 runner runner  8073924 Oct 11 11:59 out/index.json
+VERIFY: 65536 records, eight-neighbour 0, with ids 0, walks 0
+VERIFY: index 7.1 MB, detail 401.5 MB in 64 files, eight-neighbour 63703, walks 63703
+-rw-r--r-- 1 runner runner 28552812 Oct 11 12:39 out/index.bin
+-rw-r--r-- 1 runner runner  7124111 Oct 11 12:39 out/index.json
