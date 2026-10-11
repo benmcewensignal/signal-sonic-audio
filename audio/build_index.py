@@ -217,6 +217,54 @@ def detail_shard(tid):
     return h % 64
 
 
+CAP = 65_536   # records the postings can address: the record's place takes the upper 16 bits (api/listen.js: P >>> 16)
+
+
+def importance(meta):
+    """How much a record matters to recognition, as a sort key (smaller first): records people name and test with (the
+    canon and classics), then records with evidence of use, then the catalogue sample. Use is DJ sets (how many DJs
+    play the record, from MixesDB tracklists and scanned mixes) and Beatport's charts (the best position reached).
+      tier 0  canon or classic
+      tier 1  played by two or more DJs, or a top-10 chart position
+      tier 2  played by one DJ, or charted at all
+      tier 3  the rest: records sampled from the catalogue by genre and month
+    Within a tier: more DJs, then a higher chart position, then the newer record."""
+    djs = collections.defaultdict(set)
+    for dj, tid in meta.execute("select dj, track_id from tracklist_plays where track_id is not null and track_id != ''"):
+        djs[tid].add(dj)
+    for url, tid in meta.execute("select mix_url, track_id from mix_plays where track_id is not null"):
+        djs[tid].add("mix:" + str(url))
+    best = {r[0]: r[1] for r in meta.execute("select track_id, min(chart_rank) from track_scenes where chart_rank is not null group by track_id")}
+    src, seen = {}, {}
+    for tid, s_, fs in meta.execute("select track_id, source, first_seen from tracks"):
+        src[tid] = s_ or ""; seen[tid] = str(fs or "")
+    def key(t):
+        tid = t["track_id"]; n = len(djs.get(tid, ())); rk = best.get(tid)
+        if t.get("canon") or src.get(tid) in ("canon", "classic"): tier = 0
+        elif n >= 2 or (rk is not None and rk <= 10): tier = 1
+        elif n == 1 or rk is not None: tier = 2
+        else: tier = 3
+        newer = -int("".join(ch for ch in seen.get(tid, "")[:10] if ch.isdigit()) or 0)
+        return (tier, -n, rk if rk is not None else 999, newer, tid)
+    return key
+
+
+def pick_within_cap(tracks, H, FR, meta, cap=CAP):
+    """All the records if they fit; otherwise the most important that do. The ones left out are the catalogue sample
+    first, so a full index is full of the records people play."""
+    if len(tracks) <= cap:
+        print(f"{len(tracks)} records, within the {cap:,} the index can address", flush=True)
+        return tracks, H, FR
+    key = importance(meta)
+    order = sorted(range(len(tracks)), key=lambda i: key(tracks[i]))
+    keep = sorted(order[:cap])            # the store's own order, so neighbours and walks are built as before
+    tiers = collections.Counter(key(tracks[i])[0] for i in order[cap:])
+    msg = (f"{len(tracks):,} fingerprinted records, {cap:,} fit: left out {len(tracks) - cap:,}, by tier "
+           + ", ".join(f"{k}: {v:,}" for k, v in sorted(tiers.items())) + " (0 canon, 1 two or more DJs or top 10, 2 one DJ or charted, 3 catalogue)")
+    print(msg, flush=True)
+    return [tracks[i] for i in keep], [H[i] for i in keep], [FR[i] for i in keep]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--db", default="fingerprints.db"); ap.add_argument("--meta", default="sonic.db")
@@ -294,11 +342,17 @@ def main():
             out["dist_from_scene_2024"] = round(1 - float(v @ cen / ((np.linalg.norm(v) * np.linalg.norm(cen)) or 1)), 4)
         return out
 
-    tracks, H, P = [], [], []
+    # postings are packed with the record's place in the upper 16 bits (the API reads P >>> 16), so the index holds at
+    # most 65,536 records. It passed that on 10 Oct and the records beyond it were read as the records 65,536 places
+    # earlier: 7,802 records answered as someone else. Frames are kept per record and packed only once the records
+    # that fit are chosen, most important first (pick_within_cap below).
+    tracks, H, FR = [], [], []
+    at_ = {}
     kept = 0
     for i, row in enumerate(fp.execute("select track_id, n_hashes, hashes, frames from fp_tracks")):
         tid = row[0]
         if tid not in info: continue                      # a record we cannot name is no use in a result
+        if tid in at_: continue
         h = np.frombuffer(row[2], dtype="<u4")
         f = np.frombuffer(row[3], dtype="<u2")
         n = min(len(h), len(f), MAX_HASHES_PER_TRACK)
@@ -307,9 +361,9 @@ def main():
         sc_info = scene.get(tid, {})
         d = {"track_id": tid, **info[tid], **sc_info, "played_in_sets": tid in played,
              **measured(tid, sc_info.get("scene"))}
-        tracks.append(d)
+        tracks.append(d); at_[tid] = ti
         H.append(h[:n].astype("<u4"))
-        P.append((np.full(n, ti, dtype="<u4") << 16) | np.minimum(f[:n], 0xFFFF).astype("<u4"))
+        FR.append(np.minimum(f[:n], 0xFFFF).astype("<u4"))
         kept += n
         if len(tracks) % 500 == 0: print(f"  {len(tracks)} records, {kept:,} postings", flush=True)
     # additions: the targeted pass and the canon, both published as base64 blobs so the
@@ -332,7 +386,9 @@ def main():
             row = info.get(tid) or ({"name": d.get("name"), "artists": d.get("artists", []), "label": None}
                                     if d.get("canon") else None)
             if row is None: continue
-            if any(t["track_id"] == tid for t in tracks[-3000:]): continue
+            if tid in at_:                                # once only (the old check looked back 3,000 records: 693 twice)
+                if d.get("canon"): tracks[at_[tid]]["canon"] = True
+                continue
             h = np.frombuffer(base64.b64decode(d["hashes"]), dtype="<u4")
             f = np.frombuffer(base64.b64decode(d["frames"]), dtype="<u2")
             n = min(len(h), len(f), MAX_HASHES_PER_TRACK)
@@ -357,10 +413,13 @@ def main():
                            **measured(tid, (scene.get(tid) or {}).get("scene")), **own,
                            "played_in_sets": tid in played, "canon": bool(d.get("canon")),
                            **({"preview": d["preview"]} if d.get("preview") else {})})
+            at_[tid] = ti
             H.append(h[:n].astype("<u4"))
-            P.append((np.full(n, ti, dtype="<u4") << 16) | np.minimum(f[:n], 0xFFFF).astype("<u4"))
+            FR.append(np.minimum(f[:n], 0xFFFF).astype("<u4"))
             n_extra += 1
         print(f"merged {n_extra} records from {extra}", flush=True)
+    tracks, H, FR = pick_within_cap(tracks, H, FR, meta)
+    P = [(np.full(len(f_), ti, dtype="<u4") << 16) | f_ for ti, f_ in enumerate(FR)]
     H = np.concatenate(H); P = np.concatenate(P)
     print(f"before pruning: {len(tracks)} records, {len(H):,} postings", flush=True)
 
