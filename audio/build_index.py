@@ -289,7 +289,9 @@ def main():
     meta = sqlite3.connect(a.meta); meta.row_factory = sqlite3.Row
     info = {r["track_id"]: {"name": r["name"], "artists": json.loads(r["artists"]) if r["artists"] else [],
                             "label": r["label"]}
-            for r in meta.execute("select track_id, name, artists, label from track_meta where name is not null")}
+            # sonic.metadata stored "ERROR: HTTP Error 403: Forbidden" as the name of a record it could not fetch, and five
+            # records went out under that name on 13 Oct
+            for r in meta.execute("select track_id, name, artists, label from track_meta where name is not null and name not like 'ERROR:%'")}
     scene = {}
     for r in meta.execute("select track_id, scene, min(chart_rank) rk from track_scenes group by track_id"):
         scene.setdefault(r["track_id"], {"scene": r["scene"], "chart_best": r["rk"]})
@@ -502,7 +504,10 @@ def main():
             sim = E[start:start + B] @ E.T
             for row, gi in enumerate(range(start, min(start + B, len(idx)))):
                 sim[row, gi] = -2.0                       # not itself
-                near = np.argsort(-sim[row])[:8]
+                # the eight closest, without sorting all the others: a full sort per record is n log n, and with every
+                # fingerprinted record in the index (84,456 on 13 Oct) it made this loop the slowest part of the build
+                near = np.argpartition(-sim[row], 8)[:8]
+                near = near[np.argsort(-sim[row][near])]
                 tracks[idx[gi]]["near"] = [
                     {"id": tracks[idx[j]]["track_id"],
                      "name": tracks[idx[j]]["name"],
@@ -585,6 +590,10 @@ def main():
             v = np.array([tracks[i]["measures"].get(ax) if isinstance(tracks[i]["measures"].get(ax), (int, float))
                           else np.nan for i in idx], dtype=float)
             vals[ax] = v
+        # each measure's spread and which records carry it, once: worked out again for every record and every measure,
+        # they cost more than the step itself
+        sds = {ax: (np.nanstd(vals[ax]) or 1.0) for ax in AXES}
+        fin = {ax: np.isfinite(vals[ax]) for ax in AXES}
         B = 256
         for start in range(0, len(idx), B):
             sim = E[start:start + B] @ E.T
@@ -595,10 +604,10 @@ def main():
                     here = v[gi]
                     if not np.isfinite(here):
                         continue
-                    sd = np.nanstd(v) or 1.0
+                    sd = sds[ax]
                     step = {}
                     for name, mask in (("up", v > here + 0.25 * sd), ("down", v < here - 0.25 * sd)):
-                        cand = np.where(mask & np.isfinite(v))[0]
+                        cand = np.where(mask & fin[ax])[0]
                         if cand.size == 0:
                             continue
                         j = cand[np.argmax(sim[row, cand])]       # most alike, in that direction
