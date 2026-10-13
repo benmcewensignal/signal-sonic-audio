@@ -217,7 +217,13 @@ def detail_shard(tid):
     return h % 64
 
 
-CAP = 65_536   # records the postings can address: the record's place takes the upper 16 bits (api/listen.js: P >>> 16)
+# Postings are written as SFP2: the record's place in the upper 19 bits and the frame in the lower 13 (api/listen.js reads
+# both this and the old SFP1, 16 and 16, which could address only 65,536 records). A frame is 23 ms and the index keeps
+# about the first minute of each record (MAX_HASHES_PER_TRACK), so 8,192 frames is plenty. The limit that binds first is
+# the size of index.json, which the API loads on every cold start and refuses above 14 MB in the workflow's guard: at
+# about 110 bytes a record that is some 127,000 records, so the build keeps at most 113,000, most important first.
+PLACE_BITS, FRAME_MASK = 19, 0x1FFF
+CAP = min(1 << PLACE_BITS, 113_000)
 
 
 def importance(meta):
@@ -342,10 +348,10 @@ def main():
             out["dist_from_scene_2024"] = round(1 - float(v @ cen / ((np.linalg.norm(v) * np.linalg.norm(cen)) or 1)), 4)
         return out
 
-    # postings are packed with the record's place in the upper 16 bits (the API reads P >>> 16), so the index holds at
-    # most 65,536 records. It passed that on 10 Oct and the records beyond it were read as the records 65,536 places
-    # earlier: 7,802 records answered as someone else. Frames are kept per record and packed only once the records
-    # that fit are chosen, most important first (pick_within_cap below).
+    # Postings were packed with the record's place in the upper 16 bits (SFP1), so the index held at most 65,536 records:
+    # it passed that on 10 Oct and the records beyond it were read as the records 65,536 places earlier (7,802 records
+    # answered as someone else). Frames are kept per record and packed (SFP2, see CAP) once the records that fit are
+    # chosen, most important first (pick_within_cap below).
     tracks, H, FR = [], [], []
     at_ = {}
     kept = 0
@@ -419,7 +425,8 @@ def main():
             n_extra += 1
         print(f"merged {n_extra} records from {extra}", flush=True)
     tracks, H, FR = pick_within_cap(tracks, H, FR, meta)
-    P = [(np.full(len(f_), ti, dtype="<u4") << 16) | f_ for ti, f_ in enumerate(FR)]
+    shift = np.uint32(32 - PLACE_BITS)                    # SFP2: the place above the 13 frame bits (api/listen.js: P >>> 13)
+    P = [(np.full(len(f_), ti, dtype="<u4") << shift) | np.minimum(f_, FRAME_MASK).astype("<u4") for ti, f_ in enumerate(FR)]
     H = np.concatenate(H); P = np.concatenate(P)
     print(f"before pruning: {len(tracks)} records, {len(H):,} postings", flush=True)
 
@@ -652,7 +659,7 @@ def main():
     print(f"detail for {len(rich)} records written alongside the index, in 64 files", flush=True)
 
     with open(a.out + ".bin", "wb") as f:
-        f.write(struct.pack("<4sII", b"SFP1", len(H), len(tracks)))
+        f.write(struct.pack("<4sII", b"SFP2", len(H), len(tracks)))
         f.write(H.tobytes()); f.write(P.tobytes())
     # measures and ranks as lists with their names once (mkeys), ranks as whole percentages: the
     # repeated names were 71% of this file, and above about twenty megabytes the API that loads it
