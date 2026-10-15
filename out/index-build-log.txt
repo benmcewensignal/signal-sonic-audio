@@ -1054,5 +1054,5 @@ detail for 112996 records written alongside the index, in 64 files
 }
 VERIFY: 113000 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 11.8 MB, detail 696.0 MB in 64 files, eight-neighbour 111175, walks 111175
--rw-r--r-- 1 runner runner 30489252 Oct 15 10:16 out/index.bin
--rw-r--r-- 1 runner runner 11828853 Oct 15 10:16 out/index.json
+-rw-r--r-- 1 runner runner 30489252 Oct 15 11:11 out/index.bin
+-rw-r--r-- 1 runner runner 11828853 Oct 15 11:11 out/index.json
