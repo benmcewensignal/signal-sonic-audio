@@ -1030,29 +1030,29 @@ merged 0 records from fp-canon-v2-20261005-1937-s3.jsonl
 merged 0 records from fp-canon-v2-20261005-1938-s5.jsonl
 merged 37 records from fp-canon.jsonl
 merged 6 records from fp-history.jsonl
-141,807 fingerprinted records, 113,000 fit: left out 28,807, by tier 3: 28,807 (0 canon, 1 two or more DJs or top 10, 2 one DJ or charted, 3 catalogue)
-before pruning: 113000 records, 203,094,983 postings
-after pruning 2,772,686 over-common hashes: 3,814,351 postings
-ranked 41620 records against their own scene
+143,605 fingerprinted records, 113,000 fit: left out 30,605, by tier 3: 30,605 (0 canon, 1 two or more DJs or top 10, 2 one DJ or charted, 3 catalogue)
+before pruning: 113000 records, 203,093,526 postings
+after pruning 2,770,070 over-common hashes: 3,811,155 postings
+ranked 39822 records against their own scene
 positions for 111175 records
-stem neighbours for drums: 110822 records
-stem neighbours for bass: 110822 records
-stem neighbours for other: 110822 records
-stem neighbours for vocals: 110822 records
-keys written for 110821 records
-in-key steps written for 86639 records
-walks by part written for 110822 records
-per-stem neighbours written for 443288 record-stems
-nearest neighbours for 111175 records, 99615 of them with edges between their neighbours
+stem neighbours for drums: 110821 records
+stem neighbours for bass: 110821 records
+stem neighbours for other: 110821 records
+stem neighbours for vocals: 110821 records
+keys written for 110820 records
+in-key steps written for 86689 records
+walks by part written for 110821 records
+per-stem neighbours written for 443284 record-stems
+nearest neighbours for 111175 records, 99478 of them with edges between their neighbours
 walks for 111175 records
 detail for 112996 records written alongside the index, in 64 files
 {
  "records": 113000,
- "postings": 3814351,
+ "postings": 3811155,
  "bin_mb": 30.5,
- "meta_mb": 11.9
+ "meta_mb": 11.8
 }
 VERIFY: 113000 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 11.9 MB, detail 697.1 MB in 64 files, eight-neighbour 111175, walks 111175
--rw-r--r-- 1 runner runner 30514820 Oct 15 09:34 out/index.bin
--rw-r--r-- 1 runner runner 11895700 Oct 15 09:34 out/index.json
+VERIFY: index 11.8 MB, detail 696.0 MB in 64 files, eight-neighbour 111175, walks 111175
+-rw-r--r-- 1 runner runner 30489252 Oct 15 10:16 out/index.bin
+-rw-r--r-- 1 runner runner 11828853 Oct 15 10:16 out/index.json
