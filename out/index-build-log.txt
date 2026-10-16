@@ -1,4 +1,4 @@
-erged 0 records from fp-canon-v2-20261004-1139-s5.jsonl
+records from fp-canon-v2-20261004-1139-s5.jsonl
 merged 0 records from fp-canon-v2-20261004-1142-s0.jsonl
 merged 0 records from fp-canon-v2-20261004-1142-s1.jsonl
 merged 0 records from fp-canon-v2-20261004-1142-s2.jsonl
@@ -1030,29 +1030,29 @@ merged 0 records from fp-canon-v2-20261005-1937-s3.jsonl
 merged 0 records from fp-canon-v2-20261005-1938-s5.jsonl
 merged 37 records from fp-canon.jsonl
 merged 6 records from fp-history.jsonl
-154,867 fingerprinted records, 113,000 fit: left out 41,867, by tier 3: 41,867 (0 canon, 1 two or more DJs or top 10, 2 one DJ or charted, 3 catalogue)
-before pruning: 113000 records, 203,112,585 postings
-after pruning 2,753,457 over-common hashes: 3,772,865 postings
-ranked 28678 records against their own scene
+156,652 fingerprinted records, 113,000 fit: left out 43,652, by tier 2: 241, 3: 43,411 (0 canon, 1 two or more DJs or top 10, 2 one DJ or charted, 3 catalogue)
+before pruning: 113000 records, 203,120,286 postings
+after pruning 2,752,230 over-common hashes: 3,770,177 postings
+ranked 27397 records against their own scene
 positions for 111175 records
-stem neighbours for drums: 110821 records
-stem neighbours for bass: 110821 records
-stem neighbours for other: 110821 records
-stem neighbours for vocals: 110821 records
-keys written for 110820 records
-in-key steps written for 86732 records
-walks by part written for 110821 records
-per-stem neighbours written for 443284 record-stems
-nearest neighbours for 111175 records, 98819 of them with edges between their neighbours
+stem neighbours for drums: 110826 records
+stem neighbours for bass: 110826 records
+stem neighbours for other: 110826 records
+stem neighbours for vocals: 110826 records
+keys written for 110825 records
+in-key steps written for 86669 records
+walks by part written for 110826 records
+per-stem neighbours written for 443304 record-stems
+nearest neighbours for 111175 records, 98715 of them with edges between their neighbours
 walks for 111175 records
 detail for 112996 records written alongside the index, in 64 files
 {
  "records": 113000,
- "postings": 3772865,
+ "postings": 3770177,
  "bin_mb": 30.2,
  "meta_mb": 11.4
 }
 VERIFY: 113000 records, eight-neighbour 0, with ids 0, walks 0
-VERIFY: index 11.4 MB, detail 690.6 MB in 64 files, eight-neighbour 111175, walks 111175
--rw-r--r-- 1 runner runner 30182932 Oct 16 09:39 out/index.bin
--rw-r--r-- 1 runner runner 11444401 Oct 16 09:39 out/index.json
+VERIFY: index 11.4 MB, detail 689.7 MB in 64 files, eight-neighbour 111175, walks 111175
+-rw-r--r-- 1 runner runner 30161428 Oct 16 10:25 out/index.bin
+-rw-r--r-- 1 runner runner 11393114 Oct 16 10:25 out/index.json
