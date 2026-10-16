@@ -267,9 +267,32 @@ jobs:
             echo "::error::could not publish the index; the previous one is still in place"
             exit 1
           fi
+          # The 64 detail files go up as release assets named for this run, and index.json names the set (api/listen.js in
+          # signalgood reads it, as does the site data build). Committed to main, each build added about 150 MB to this
+          # repository's history, since nearly every record's neighbours shift between builds: 8.8 GB by 16 Oct. Main's
+          # copies stay as they last were, a fallback. The set before this one is kept for a server still holding the
+          # previous index.json, and older ones are deleted: sets are named by run id, and only ids below the previous
+          # set's go, so two builds at once never delete each other's.
+          SET="${{ github.run_id }}"
+          PREV=$(git show HEAD:out/index.json 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin).get('detail_set') or '')" 2>/dev/null)
+          mkdir -p "$RUNNER_TEMP/det"; for f in out/detail/*.json; do cp "$f" "$RUNNER_TEMP/det/detail-$SET-$(basename "$f")"; done
+          for i in 1 2 3; do gh release upload recognition-index "$RUNNER_TEMP"/det/detail-"$SET"-*.json --clobber && break; sleep $((i*20)); done
+          RID=$(gh api "repos/${{ github.repository }}/releases/tags/recognition-index" --jq .id)
+          gh api --paginate "repos/${{ github.repository }}/releases/$RID/assets?per_page=100" --jq '.[] | "\(.id) \(.name)"' > "$RUNNER_TEMP/assets.txt"
+          HAVE=$(grep -c " detail-$SET-[0-9][0-9]\.json$" "$RUNNER_TEMP/assets.txt")
+          if [ "$HAVE" = 64 ]; then USE="$SET"; else USE="$PREV"; echo "::warning title=details::$HAVE of the 64 detail files went up; index.json keeps the previous set (${PREV:-none})"; fi
+          if [ -n "$USE" ]; then python3 -c "import json,sys; p='out/index.json'; M=json.load(open(p)); M['detail_set']=sys.argv[1]; json.dump(M, open(p,'w'), separators=(',',':'))" "$USE"; fi
+          if [ -n "$PREV" ]; then
+            while read id name; do
+              s=${name#detail-}; s=${s%-*}
+              case "$s" in ''|*[!0-9]*) continue;; esac
+              [ "$s" -lt "$PREV" ] && gh api -X DELETE "repos/${{ github.repository }}/releases/assets/$id" >/dev/null && echo "deleted $name"
+            done < <(grep " detail-[0-9]*-[0-9][0-9]\.json$" "$RUNNER_TEMP/assets.txt")
+          fi
+          echo "::notice title=details::index.json names detail set ${USE:-none} ($HAVE of 64 files of this run's set up)"
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
           git rm -q --cached out/index-detail.json 2>/dev/null || true   # the old single file, too large to store
-          git add out/index.json out/detail && git commit -qm "recognition index metadata and details" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; CH=$(git diff --name-only HEAD~1 HEAD); mkdir -p "$RUNNER_TEMP/mine"; for f in $CH; do [ -f "$f" ] && mkdir -p "$RUNNER_TEMP/mine/$(dirname "$f")" && cp -a "$f" "$RUNNER_TEMP/mine/$f"; done; git fetch -q origin main && git reset -q --hard origin/main && for f in $CH; do [ -f "$RUNNER_TEMP/mine/$f" ] && mkdir -p "$(dirname "$f")" && cp -a "$RUNNER_TEMP/mine/$f" "$f"; done && git add $CH 2>/dev/null; git commit -qm 'this run'"'"'s outputs over the latest upstream (only the files it changed)' || true) ; git push -q origin HEAD:main
+          git add out/index.json && git commit -qm "recognition index metadata (details: release set ${USE:-none})" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; CH=$(git diff --name-only HEAD~1 HEAD); mkdir -p "$RUNNER_TEMP/mine"; for f in $CH; do [ -f "$f" ] && mkdir -p "$RUNNER_TEMP/mine/$(dirname "$f")" && cp -a "$f" "$RUNNER_TEMP/mine/$f"; done; git fetch -q origin main && git reset -q --hard origin/main && for f in $CH; do [ -f "$RUNNER_TEMP/mine/$f" ] && mkdir -p "$(dirname "$f")" && cp -a "$RUNNER_TEMP/mine/$f" "$f"; done && git add $CH 2>/dev/null; git commit -qm 'this run'"'"'s outputs over the latest upstream (only the files it changed)' || true) ; git push -q origin HEAD:main
           exit 0
 
       - name: build the recognition demo index
@@ -315,6 +338,7 @@ jobs:
           # a failed push used to fall through to "nothing to persist" and the run reported success
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
           git add -A out 2>/dev/null || true
+          git reset -q -- out/detail 2>/dev/null || true   # the detail files are release assets now (see the publish step)
           if git diff --cached --quiet; then echo "nothing to persist"; exit 0; fi
           BIG=$( (git diff --cached --name-only | while read f; do [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 95000000 ] && echo "$f"; done) || true )
           if [ -n "$BIG" ]; then echo "::error title=persist::staged files over GitHub's 100 MB limit: $BIG"; exit 1; fi
