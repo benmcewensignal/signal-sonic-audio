@@ -44,6 +44,10 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg build-essential >/dev/null
           pip install -q numpy librosa soundfile yt-dlp
       - name: fetch the pipeline database
+        env:
+          # without a token the fallback's lookup below (gh api) stopped the step at its first miss, exit 4, so the five tries
+          # never happened: three runs failed that way from 13 to 16 Oct, each when its fetch landed in a save's swap
+          GH_TOKEN: ${{ secrets.PIPELINE_PAT || github.token }}
         run: |
           # the repository copy lags the deepened release, where the re-measured records
           # live. Take whichever holds more records on the current analyser, because the
@@ -56,7 +60,7 @@ jobs:
           for i in 1 2 3 4 5; do
             gh release download deepened --repo benmcewensignal/signal-sonic --pattern sonic.db --dir rel --clobber 2>/dev/null && [ -s rel/sonic.db ] && break
             # a save that uploaded but failed to rename leaves only sonic.db.<run>: take the newest such copy
-            N=$(gh api repos/benmcewensignal/signal-sonic/releases/tags/deepened --jq '[.assets[] | select(.name|startswith("sonic.db."))] | sort_by(.updated_at) | last | .name' 2>/dev/null)
+            N=$(gh api repos/benmcewensignal/signal-sonic/releases/tags/deepened --jq '[.assets[] | select(.name|startswith("sonic.db."))] | sort_by(.updated_at) | last | .name' 2>/dev/null || true)
             if [ -n "$N" ] && [ "$N" != "null" ] && gh release download deepened --repo benmcewensignal/signal-sonic --pattern "$N" --dir rel --clobber 2>/dev/null; then mv "rel/$N" rel/sonic.db && echo "::warning title=database::used $N (the name sonic.db was missing)" && break; fi
             echo "fetch attempt $i missed; retrying"; sleep $((i*20))
           done
