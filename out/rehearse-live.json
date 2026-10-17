@@ -33,44 +33,44 @@
  },
  "through_site": {
   "start clean": {
-   "right": 0,
+   "right": 12,
    "of": 12,
-   "by site index": 0,
+   "by site index": 12,
    "by modal": 0,
-   "modal no answer": 12,
-   "median_seconds": 0.2
+   "modal no answer": 0,
+   "median_seconds": 1.4
   },
   "start room": {
-   "right": 0,
+   "right": 2,
    "of": 12,
    "by site index": 0,
-   "by modal": 0,
-   "modal no answer": 12,
-   "median_seconds": 0.2
+   "by modal": 2,
+   "modal no answer": 0,
+   "median_seconds": 2.2
   },
   "middle clean": {
-   "right": 0,
+   "right": 11,
    "of": 12,
    "by site index": 0,
-   "by modal": 0,
-   "modal no answer": 12,
-   "median_seconds": 0.2
+   "by modal": 11,
+   "modal no answer": 0,
+   "median_seconds": 1.6
   },
   "middle room": {
-   "right": 0,
+   "right": 2,
    "of": 12,
    "by site index": 0,
-   "by modal": 0,
-   "modal no answer": 12,
-   "median_seconds": 0.2
+   "by modal": 2,
+   "modal no answer": 0,
+   "median_seconds": 2.2
   }
  },
  "site_first_call": {
-  "right": false,
-  "found": false,
-  "via": null,
+  "right": true,
+  "found": true,
+  "via": "site",
   "dense": null,
-  "dense_error": "HTTPError: HTTP Error 308: Permanent Redirect",
-  "seconds": 0.4
+  "dense_error": null,
+  "seconds": 2.7
  }
 }
