@@ -1,0 +1,63 @@
+{
+ "records": 24,
+ "clip_seconds": 25,
+ "per_record": 8000,
+ "by_degradation": {
+  "clean": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 1.0,
+   "median_votes": 896
+  },
+  "band 200-6000": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.42,
+   "median_votes": 419
+  },
+  "reverb 0.6s": {
+   "recognised": 44,
+   "of": 48,
+   "rate": 0.917,
+   "fingerprints_surviving": 0.023,
+   "median_votes": 51
+  },
+  "noise 25dB": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.734,
+   "median_votes": 801
+  },
+  "noise 15dB": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.399,
+   "median_votes": 538
+  },
+  "rehearsal dull": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.083,
+   "median_votes": 104
+  },
+  "rehearsal room": {
+   "recognised": 35,
+   "of": 48,
+   "rate": 0.729,
+   "fingerprints_surviving": 0.009,
+   "median_votes": 15
+  },
+  "calibration room": {
+   "recognised": 41,
+   "of": 48,
+   "rate": 0.854,
+   "fingerprints_surviving": 0.009,
+   "median_votes": 18
+  }
+ }
+}
