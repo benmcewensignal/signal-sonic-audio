@@ -2,6 +2,86 @@
  "records": 24,
  "clip_seconds": 25,
  "per_record": 8000,
+ "by_hasher": {
+  "base": {
+   "fingerprints_a_second": 195,
+   "reference_fingerprints": 191135,
+   "by_degradation": {
+    "clean": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 1.0,
+     "within_6_frames": 1.0,
+     "hash_present_at_all": 1.0,
+     "median_votes": 804
+    },
+    "band 200-6000": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.448,
+     "within_6_frames": 0.448,
+     "hash_present_at_all": 0.467,
+     "median_votes": 457
+    },
+    "reverb 0.6s": {
+     "recognised": 46,
+     "of": 48,
+     "rate": 0.958,
+     "fingerprints_surviving": 0.023,
+     "within_6_frames": 0.035,
+     "hash_present_at_all": 0.077,
+     "median_votes": 54
+    },
+    "noise 25dB": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.717,
+     "within_6_frames": 0.717,
+     "hash_present_at_all": 0.776,
+     "median_votes": 725
+    },
+    "noise 15dB": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.353,
+     "within_6_frames": 0.353,
+     "hash_present_at_all": 0.462,
+     "median_votes": 415
+    },
+    "rehearsal dull": {
+     "recognised": 47,
+     "of": 48,
+     "rate": 0.979,
+     "fingerprints_surviving": 0.073,
+     "within_6_frames": 0.073,
+     "hash_present_at_all": 0.079,
+     "median_votes": 96
+    },
+    "rehearsal room": {
+     "recognised": 26,
+     "of": 48,
+     "rate": 0.542,
+     "fingerprints_surviving": 0.007,
+     "within_6_frames": 0.008,
+     "hash_present_at_all": 0.026,
+     "median_votes": 10
+    },
+    "calibration room": {
+     "recognised": 45,
+     "of": 48,
+     "rate": 0.938,
+     "fingerprints_surviving": 0.01,
+     "within_6_frames": 0.015,
+     "hash_present_at_all": 0.035,
+     "median_votes": 19
+    }
+   }
+  }
+ },
  "by_degradation": {
   "clean": {
    "recognised": 48,
@@ -10,70 +90,70 @@
    "fingerprints_surviving": 1.0,
    "within_6_frames": 1.0,
    "hash_present_at_all": 1.0,
-   "median_votes": 896
+   "median_votes": 804
   },
   "band 200-6000": {
    "recognised": 48,
    "of": 48,
    "rate": 1.0,
-   "fingerprints_surviving": 0.42,
-   "within_6_frames": 0.42,
-   "hash_present_at_all": 0.432,
-   "median_votes": 419
+   "fingerprints_surviving": 0.448,
+   "within_6_frames": 0.448,
+   "hash_present_at_all": 0.467,
+   "median_votes": 457
   },
   "reverb 0.6s": {
-   "recognised": 44,
+   "recognised": 46,
    "of": 48,
-   "rate": 0.917,
+   "rate": 0.958,
    "fingerprints_surviving": 0.023,
-   "within_6_frames": 0.034,
-   "hash_present_at_all": 0.075,
-   "median_votes": 51
+   "within_6_frames": 0.035,
+   "hash_present_at_all": 0.077,
+   "median_votes": 54
   },
   "noise 25dB": {
    "recognised": 48,
    "of": 48,
    "rate": 1.0,
-   "fingerprints_surviving": 0.734,
-   "within_6_frames": 0.734,
-   "hash_present_at_all": 0.786,
-   "median_votes": 801
+   "fingerprints_surviving": 0.717,
+   "within_6_frames": 0.717,
+   "hash_present_at_all": 0.776,
+   "median_votes": 725
   },
   "noise 15dB": {
    "recognised": 48,
    "of": 48,
    "rate": 1.0,
-   "fingerprints_surviving": 0.399,
-   "within_6_frames": 0.399,
-   "hash_present_at_all": 0.492,
-   "median_votes": 538
+   "fingerprints_surviving": 0.353,
+   "within_6_frames": 0.353,
+   "hash_present_at_all": 0.462,
+   "median_votes": 415
   },
   "rehearsal dull": {
-   "recognised": 48,
+   "recognised": 47,
    "of": 48,
-   "rate": 1.0,
-   "fingerprints_surviving": 0.083,
-   "within_6_frames": 0.083,
-   "hash_present_at_all": 0.09,
-   "median_votes": 104
+   "rate": 0.979,
+   "fingerprints_surviving": 0.073,
+   "within_6_frames": 0.073,
+   "hash_present_at_all": 0.079,
+   "median_votes": 96
   },
   "rehearsal room": {
-   "recognised": 35,
+   "recognised": 26,
    "of": 48,
-   "rate": 0.729,
-   "fingerprints_surviving": 0.009,
-   "within_6_frames": 0.01,
-   "hash_present_at_all": 0.029,
-   "median_votes": 15
+   "rate": 0.542,
+   "fingerprints_surviving": 0.007,
+   "within_6_frames": 0.008,
+   "hash_present_at_all": 0.026,
+   "median_votes": 10
   },
   "calibration room": {
-   "recognised": 41,
+   "recognised": 45,
    "of": 48,
-   "rate": 0.854,
-   "fingerprints_surviving": 0.009,
-   "within_6_frames": 0.014,
-   "hash_present_at_all": 0.03,
-   "median_votes": 18
+   "rate": 0.938,
+   "fingerprints_surviving": 0.01,
+   "within_6_frames": 0.015,
+   "hash_present_at_all": 0.035,
+   "median_votes": 19
   }
  }
 }
