@@ -31,7 +31,7 @@ import numpy as np
 # kept hashes shared by a median of 15 postings and at most MAX_SHARING, so the API's scan of 200,000 postings a query is
 # never near. A clip from elsewhere in a record still cannot match here: that is the catalogue-wide index on Modal
 # (signal-sonic-features, worker/recognise_build_all.py), which the API asks when this one is not confident.
-KEEP_PER_RECORD = 100
+KEEP_PER_RECORD = 60    # 100 from 17 Oct 09:00 to 10:30; 60 since, with the cap on records lifted (CAP below)
 MAX_SHARING = 500
 MAX_HASHES_PER_TRACK = 1800  # the first seven seconds or so of a record, at about 180 fingerprints a second
 
@@ -230,11 +230,15 @@ def detail_shard(tid):
 
 # Postings are written as SFP2: the record's place in the upper 19 bits and the frame in the lower 13 (api/listen.js reads
 # both this and the old SFP1, 16 and 16, which could address only 65,536 records). A frame is 23 ms and the index keeps
-# the first seconds of each record (MAX_HASHES_PER_TRACK), so 8,192 frames is plenty. The limit that binds first is
-# the size of index.json, which the API loads on every cold start and refuses above 14 MB in the workflow's guard: at
-# about 110 bytes a record that is some 127,000 records, so the build keeps at most 113,000, most important first.
+# the first seconds of each record (MAX_HASHES_PER_TRACK), so 8,192 frames is plenty.
+# The cap was 113,000 from 13 to 17 Oct, set by a 14 MB guard on index.json, which the API loads on every cold start; the
+# guard came from a 20 MB version that stopped the endpoint when each record still carried its neighbours and walks. With
+# the index filling on 15 Oct, every build swapped charted records (which carry a scene and a place on the map) for
+# records one DJ plays (which do not), and records the Modal index recognised had no page: 52,000 by 17 Oct. The cap is
+# now the format's, the guard 32 MB (about 330,000 records at 96 bytes each), and each record keeps 60 fingerprints
+# rather than 100 to hold index.bin, which the API also fetches on a cold start, near 80 MB at 165,000 records.
 PLACE_BITS, FRAME_MASK = 19, 0x1FFF
-CAP = min(1 << PLACE_BITS, 113_000)
+CAP = 1 << PLACE_BITS
 
 
 def importance(meta):
