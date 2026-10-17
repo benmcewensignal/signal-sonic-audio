@@ -1,1 +1,1 @@
-no log captured
+fetching the fingerprint store (about 1 GB)
