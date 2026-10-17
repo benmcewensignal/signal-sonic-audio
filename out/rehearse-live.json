@@ -1,0 +1,34 @@
+{
+ "records": 40,
+ "clip_seconds": 15,
+ "index_records": 113000,
+ "postings": 3713295,
+ "under_min_votes": 59578,
+ "with_50_or_more": 21732,
+ "by_position_and_condition": {
+  "start clean": {
+   "ok": 14,
+   "of": 40,
+   "rate": 0.35,
+   "median_votes": 1
+  },
+  "start room": {
+   "ok": 0,
+   "of": 40,
+   "rate": 0.0,
+   "median_votes": 1
+  },
+  "middle clean": {
+   "ok": 0,
+   "of": 40,
+   "rate": 0.0,
+   "median_votes": 1
+  },
+  "middle room": {
+   "ok": 0,
+   "of": 40,
+   "rate": 0.0,
+   "median_votes": 1
+  }
+ }
+}
