@@ -235,9 +235,11 @@ jobs:
           if n8 == 0 or wk == 0:
               raise SystemExit("the detail file was written without neighbours or walks")
           # the api fetches the whole index on a cold start, so size is latency, not failure: 9 MB was
-          # set at 12,000 records. Above twenty megabytes the endpoint stops responding, so the guard sits at 14 MB, and above it
-          # the index needs slimming, not a bigger allowance.
-          if os.path.getsize("out/index.json") > 14_000_000:
+          # set at 12,000 records. A 20 MB version stopped the endpoint when each record still carried its neighbours and
+          # walks (they live in the detail files since), and the guard sat at 14 MB until 17 Oct, when it capped the index
+          # at 113,000 records and left 52,000 recognisable records without a page. 32 MB is about 330,000 records of the
+          # lean form; the publish step below asks for the site's live check, which would show the endpoint failing.
+          if os.path.getsize("out/index.json") > 32_000_000:
               raise SystemExit("the index the api loads is too large; it must stay lean")
           PY
           ls -la out/index.bin out/index.json
@@ -294,6 +296,11 @@ jobs:
             done < <(grep " detail-[0-9]*-[0-9][0-9]\.json$" "$RUNNER_TEMP/assets.txt")
           fi
           echo "::notice title=details::index.json names detail set ${USE:-none} ($HAVE of 64 files of this run's set up)"
+          # the site's live check, against the index just published: the API loads it whole on a cold start, so a build that
+          # outgrows the function shows there first (needs PIPELINE_PAT: the default token cannot start another repository's workflow)
+          if [ -n "${{ secrets.PIPELINE_PAT }}" ]; then
+            GH_TOKEN="${{ secrets.PIPELINE_PAT }}" timeout 60 gh workflow run live-check.yml --repo benmcewensignal/signalgood --ref main && echo "live check requested" || echo "::warning title=live check::could not request the site's live check"
+          fi
           git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
           git rm -q --cached out/index-detail.json 2>/dev/null || true   # the old single file, too large to store
           git add out/index.json && git commit -qm "recognition index metadata (details: release set ${USE:-none})" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; CH=$(git diff --name-only HEAD~1 HEAD); mkdir -p "$RUNNER_TEMP/mine"; for f in $CH; do [ -f "$f" ] && mkdir -p "$RUNNER_TEMP/mine/$(dirname "$f")" && cp -a "$f" "$RUNNER_TEMP/mine/$f"; done; git fetch -q origin main && git reset -q --hard origin/main && for f in $CH; do [ -f "$RUNNER_TEMP/mine/$f" ] && mkdir -p "$(dirname "$f")" && cp -a "$RUNNER_TEMP/mine/$f" "$f"; done && git add $CH 2>/dev/null; git commit -qm 'this run'"'"'s outputs over the latest upstream (only the files it changed)' || true) ; git push -q origin HEAD:main
