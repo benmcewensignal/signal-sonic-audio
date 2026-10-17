@@ -143,7 +143,10 @@ jobs:
           BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
           BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
           BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
-        run: python -m audio.room_test --n 24 --out out/room-test.json
+        run: |
+          python -m audio.room_test --n 24 --out out/room-test.json
+          # the candidates, on the same clips (audio/fp_variants.py)
+          python -m audio.room_test --n 24 --hashers base,wide,onset,whiten,onsetwide --out out/room-test-hashers.json
 
       - name: borrow the analyser for the canon pass
         if: inputs.task == 'canon'

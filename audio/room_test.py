@@ -64,10 +64,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--index", default="out/index.json"); ap.add_argument("--n", type=int, default=24)
     ap.add_argument("--seconds", type=float, default=25); ap.add_argument("--out", default="out/room-test.json")
+    ap.add_argument("--hashers", default="", help="comma-separated candidates from audio.fp_variants to compare on the room stages (base first)")
     a = ap.parse_args()
+    from . import fp_variants as V
+    hashers = [h for h in a.hashers.split(",") if h] or ["base"]
+    kinds = KINDS if len(hashers) == 1 else ["clean", "reverb 0.6s", "rehearsal room", "calibration room"]
     T_ = json.load(open(a.index))["tracks"]; pick = random.Random(5); rng = np.random.default_rng(5)
     order = list(range(len(T_))); pick.shuffle(order)
-    token = get_token(); audio, Hs, Ts, Fs = [], [], [], []
+    token = get_token(); audio = []
     for ti in order:
         if len(audio) >= a.n: break
         t = T_[ti]
@@ -82,25 +86,33 @@ def main():
                 try: os.unlink(p)
                 except OSError: pass
             if len(y) < FP.SR * 60: continue
-            hs = FP.hashes(y)
-            if len(hs) < 500: continue
+            audio.append((t.get("name"), y))
+            print(f"  {len(audio)}/{a.n} {str(t.get('name'))[:40]}", flush=True)
+        except Exception as e:
+            print(f"  skip {t.get('track_id')}: {type(e).__name__}: {str(e)[:80]}", flush=True)
+    L = int(FP.SR * a.seconds)
+    clip_at = [[pick.randint(0, len(y) - L - 1) for _ in range(2)] for _, y in audio]   # the same clips for every hasher
+    results = {}
+    for hasher in hashers:
+        hf = lambda y_: V.hashes(y_, hasher)
+        Hs, Ts, Fs, dens = [], [], [], []
+        for ti, (nm, y) in enumerate(audio):
+            hs = hf(y); dens.append(len(hs) / (len(y) / FP.SR))
+            if len(hs) < 50: hs = [(0, 0)]
             h = np.array([x for x, _ in hs], dtype=np.uint32); fr = np.array([f for _, f in hs], dtype=np.int64)
             if len(h) > PER:
                 o = np.argsort(fr, kind="stable"); sel = o[np.unique(np.linspace(0, len(h) - 1, PER).astype(np.int64))]; h, fr = h[sel], fr[sel]
-            Hs.append(h); Fs.append(fr); Ts.append(np.full(len(h), len(audio), dtype=np.int64)); audio.append((t.get("name"), y))
-            print(f"  {len(audio)}/{a.n} {str(t.get('name'))[:40]} ({len(hs):,} fingerprints, {len(h):,} kept)", flush=True)
-        except Exception as e:
-            print(f"  skip {t.get('track_id')}: {type(e).__name__}: {str(e)[:80]}", flush=True)
-    H = np.concatenate(Hs); T = np.concatenate(Ts); F = np.concatenate(Fs); o = np.argsort(H, kind="stable"); H, T, F = H[o], T[o], F[o]
-    print(f"reference: {len(audio)} records, {len(H):,} fingerprints", flush=True)
-    score = {k: [0, 0] for k in KINDS}; surv = {k: [] for k in KINDS}; surv6 = {k: [] for k in KINDS}; survany = {k: [] for k in KINDS}; votes = {k: [] for k in KINDS}
-    L = int(FP.SR * a.seconds)
-    for ti, (nm, y) in enumerate(audio):
-        for _ in range(2):
-            st = pick.randint(0, len(y) - L - 1); clip = y[st:st + L]
-            clean = {(h, f) for h, f in FP.hashes(clip)}
-            for k in KINDS:
-                q = FP.hashes(stage(clip, k, rng).astype(np.float32))
+            Hs.append(h); Fs.append(fr); Ts.append(np.full(len(h), ti, dtype=np.int64))
+        H = np.concatenate(Hs); T = np.concatenate(Ts); F = np.concatenate(Fs); o = np.argsort(H, kind="stable"); H, T, F = H[o], T[o], F[o]
+        print(f"{hasher}: reference of {len(audio)} records, {len(H):,} fingerprints kept, {np.median(dens):.0f} a second made", flush=True)
+        score = {k: [0, 0] for k in kinds}; surv = {k: [] for k in kinds}; surv6 = {k: [] for k in kinds}; survany = {k: [] for k in kinds}; votes = {k: [] for k in kinds}
+        results[hasher] = (score, surv, surv6, survany, votes, float(np.median(dens)), int(len(H)))
+        for ti, (nm, y) in enumerate(audio):
+          for st in clip_at[ti]:
+            clip = y[st:st + L]
+            clean = {(h, f) for h, f in hf(clip)}
+            for k in kinds:
+                q = hf(stage(clip, k, rng).astype(np.float32))
                 m = match(H, T, F, q); ok = bool(m and m["ok"] and m["rec"] == ti)
                 score[k][0] += ok; score[k][1] += 1; votes[k].append(m["votes"] if m else 0)
                 # survival at three tolerances: the same frame give or take one (what the matchers' offset bins allow), six, and
@@ -109,14 +121,18 @@ def main():
                 for h, f in q: by.setdefault(h, []).append(f)
                 for tol, store in ((1, surv), (6, surv6), (10**6, survany)):
                     store[k].append(sum(1 for h, f in clean if any(abs(f - g) <= tol for g in by.get(h, ()))) / max(len(clean), 1))
-    out = {"records": len(audio), "clip_seconds": a.seconds, "per_record": PER,
-           "by_degradation": {k: {"recognised": s[0], "of": s[1], "rate": round(s[0] / max(s[1], 1), 3),
-                                  "fingerprints_surviving": round(float(np.median(surv[k])), 3), "within_6_frames": round(float(np.median(surv6[k])), 3),
-                                  "hash_present_at_all": round(float(np.median(survany[k])), 3), "median_votes": int(np.median(votes[k]))} for k, s in score.items()}}
+    out = {"records": len(audio), "clip_seconds": a.seconds, "per_record": PER, "by_hasher": {}}
+    for hasher, (score, surv, surv6, survany, votes, dens, nkept) in results.items():
+        out["by_hasher"][hasher] = {"fingerprints_a_second": round(dens), "reference_fingerprints": nkept,
+            "by_degradation": {k: {"recognised": s_[0], "of": s_[1], "rate": round(s_[0] / max(s_[1], 1), 3),
+                                   "fingerprints_surviving": round(float(np.median(surv[k])), 3), "within_6_frames": round(float(np.median(surv6[k])), 3),
+                                   "hash_present_at_all": round(float(np.median(survany[k])), 3), "median_votes": int(np.median(votes[k]))} for k, s_ in score.items()}}
+    out["by_degradation"] = out["by_hasher"][hashers[0]]["by_degradation"]
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True); json.dump(out, open(a.out, "w"), indent=1)
-    print("::notice title=room test::" + "; ".join(f"{k}: {v['recognised']}/{v['of']} recognised, {100*v['fingerprints_surviving']:.0f}% of fingerprints survive in place "
-                                                  f"({100*v['within_6_frames']:.0f}% within 6 frames, {100*v['hash_present_at_all']:.0f}% present at all), median {v['median_votes']} votes"
-                                                  for k, v in out["by_degradation"].items()), flush=True)
+    for hasher, r in out["by_hasher"].items():
+        print(f"::notice title=room test {hasher}::{r['fingerprints_a_second']} fingerprints a second; " + "; ".join(f"{k}: {v['recognised']}/{v['of']} recognised, {100*v['fingerprints_surviving']:.0f}% of fingerprints survive in place "
+              f"({100*v['within_6_frames']:.0f}% within 6 frames, {100*v['hash_present_at_all']:.0f}% present at all), median {v['median_votes']} votes"
+              for k, v in r["by_degradation"].items()), flush=True)
 
 
 if __name__ == "__main__":
