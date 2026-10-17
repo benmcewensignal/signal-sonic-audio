@@ -1,0 +1,159 @@
+{
+ "records": 24,
+ "clip_seconds": 25,
+ "per_record": 8000,
+ "by_hasher": {
+  "base": {
+   "fingerprints_a_second": 195,
+   "reference_fingerprints": 191135,
+   "by_degradation": {
+    "clean": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 1.0,
+     "within_6_frames": 1.0,
+     "hash_present_at_all": 1.0,
+     "median_votes": 804
+    },
+    "reverb DR+10dB": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.353,
+     "within_6_frames": 0.353,
+     "hash_present_at_all": 0.446,
+     "median_votes": 473
+    },
+    "reverb DR+3dB": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.128,
+     "within_6_frames": 0.128,
+     "hash_present_at_all": 0.204,
+     "median_votes": 180
+    },
+    "reverb DR0dB": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.08,
+     "within_6_frames": 0.087,
+     "hash_present_at_all": 0.152,
+     "median_votes": 126
+    },
+    "reverb DR-3dB": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.05,
+     "within_6_frames": 0.054,
+     "hash_present_at_all": 0.103,
+     "median_votes": 84
+    },
+    "reverb DR-6dB": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.033,
+     "within_6_frames": 0.037,
+     "hash_present_at_all": 0.082,
+     "median_votes": 61
+    },
+    "reverb DR-10dB": {
+     "recognised": 48,
+     "of": 48,
+     "rate": 1.0,
+     "fingerprints_surviving": 0.027,
+     "within_6_frames": 0.036,
+     "hash_present_at_all": 0.081,
+     "median_votes": 53
+    },
+    "reverb DR-20dB": {
+     "recognised": 46,
+     "of": 48,
+     "rate": 0.958,
+     "fingerprints_surviving": 0.024,
+     "within_6_frames": 0.036,
+     "hash_present_at_all": 0.08,
+     "median_votes": 56
+    }
+   }
+  }
+ },
+ "by_degradation": {
+  "clean": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 1.0,
+   "within_6_frames": 1.0,
+   "hash_present_at_all": 1.0,
+   "median_votes": 804
+  },
+  "reverb DR+10dB": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.353,
+   "within_6_frames": 0.353,
+   "hash_present_at_all": 0.446,
+   "median_votes": 473
+  },
+  "reverb DR+3dB": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.128,
+   "within_6_frames": 0.128,
+   "hash_present_at_all": 0.204,
+   "median_votes": 180
+  },
+  "reverb DR0dB": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.08,
+   "within_6_frames": 0.087,
+   "hash_present_at_all": 0.152,
+   "median_votes": 126
+  },
+  "reverb DR-3dB": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.05,
+   "within_6_frames": 0.054,
+   "hash_present_at_all": 0.103,
+   "median_votes": 84
+  },
+  "reverb DR-6dB": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.033,
+   "within_6_frames": 0.037,
+   "hash_present_at_all": 0.082,
+   "median_votes": 61
+  },
+  "reverb DR-10dB": {
+   "recognised": 48,
+   "of": 48,
+   "rate": 1.0,
+   "fingerprints_surviving": 0.027,
+   "within_6_frames": 0.036,
+   "hash_present_at_all": 0.081,
+   "median_votes": 53
+  },
+  "reverb DR-20dB": {
+   "recognised": 46,
+   "of": 48,
+   "rate": 0.958,
+   "fingerprints_surviving": 0.024,
+   "within_6_frames": 0.036,
+   "hash_present_at_all": 0.08,
+   "median_votes": 56
+  }
+ }
+}
