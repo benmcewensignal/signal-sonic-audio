@@ -113,6 +113,7 @@ def stem_neighbours(tracks, idx, glob_pat, k=8):
         X = _np.asarray(rows, dtype=float)
         X = (X - X.mean(0)) / (X.std(0) + 1e-9)
         X /= (_np.linalg.norm(X, axis=1, keepdims=True) + 1e-9)
+        X = X.astype(_np.float32)
         B = 1024
         for start in range(0, len(X), B):
             sim = X[start:start + B] @ X.T
@@ -194,7 +195,7 @@ def part_walks(tracks, idx, glob_pat, pool=40):
     if len(keep) < 200: return 0
     Z = {}
     for p in PARTS:
-        X = _np.asarray(rows[p], dtype=float); X = (X - X.mean(0)) / (X.std(0) + 1e-9); Z[p] = X / (_np.linalg.norm(X, axis=1, keepdims=True) + 1e-9)
+        X = _np.asarray(rows[p], dtype=float); X = (X - X.mean(0)) / (X.std(0) + 1e-9); Z[p] = (X / (_np.linalg.norm(X, axis=1, keepdims=True) + 1e-9)).astype(_np.float32)
     # Mixable first: a DJ can only walk to a record at a tempo they can mix (within 6 per cent, or double or half).
     # Without this, 15 of 17 steps from a drum & bass record landed at 129 to 197 BPM. Fall back to the closest
     # regardless of tempo only when fewer than ten mixable records share the part closely, so no record loses its walks.
@@ -532,9 +533,10 @@ def main():
         E = E - E.mean(axis=0, keepdims=True)
         E = E / (E.std(axis=0, keepdims=True) + 1e-9)
         E = E / (np.linalg.norm(E, axis=1, keepdims=True) + 1e-9)
+        E32 = E.astype(np.float32)                        # single precision: the products are the cost, and 3 decimals are kept
         B = 512
         for start in range(0, len(idx), B):
-            sim = E[start:start + B] @ E.T
+            sim = E32[start:start + B] @ E32.T
             for row, gi in enumerate(range(start, min(start + B, len(idx)))):
                 sim[row, gi] = -2.0                       # not itself
                 # the eight closest, without sorting all the others: a full sort per record is n log n, and with every
@@ -627,10 +629,19 @@ def main():
         # they cost more than the step itself
         sds = {ax: (np.nanstd(vals[ax]) or 1.0) for ax in AXES}
         fin = {ax: np.isfinite(vals[ax]) for ax in AXES}
+        # The step is the most alike record in a direction, and the most alike overall are where to look: among a record's
+        # K most alike, any that lies in the direction is at least as alike as every record outside the K, so the best of
+        # those is the best there is. Only when none of the K lies that way is the whole index scanned. Sixteen scans of
+        # every record for each of 165,000 records made this the slowest part of the build on 17 Oct (77 minutes in all,
+        # with a two-hour limit and 12,000 records a day arriving).
+        K = 256
+        E32 = E.astype(np.float32)
         B = 256
         for start in range(0, len(idx), B):
-            sim = E[start:start + B] @ E.T
+            sim = E32[start:start + B] @ E32.T
             for row, gi in enumerate(range(start, min(start + B, len(idx)))):
+                s_ = sim[row]
+                top = np.argpartition(-s_, K)[:K] if len(s_) > K else np.arange(len(s_))
                 walk = {}
                 for ax in AXES:
                     v = vals[ax]
@@ -639,11 +650,14 @@ def main():
                         continue
                     sd = sds[ax]
                     step = {}
-                    for name, mask in (("up", v > here + 0.25 * sd), ("down", v < here - 0.25 * sd)):
-                        cand = np.where(mask & fin[ax])[0]
+                    for name, sign in (("up", 1), ("down", -1)):
+                        thr = here + sign * 0.25 * sd
+                        cand = top[(v[top] > thr) if sign > 0 else (v[top] < thr)]     # a nan compares false, as before
                         if cand.size == 0:
-                            continue
-                        j = cand[np.argmax(sim[row, cand])]       # most alike, in that direction
+                            cand = np.where(((v > thr) if sign > 0 else (v < thr)) & fin[ax])[0]
+                            if cand.size == 0:
+                                continue
+                        j = cand[np.argmax(s_[cand])]            # most alike, in that direction
                         step[name] = {"id": tracks[idx[j]]["track_id"],
                                       "name": tracks[idx[j]]["name"],
                                       "artists": (tracks[idx[j]].get("artists") or [])[:2],

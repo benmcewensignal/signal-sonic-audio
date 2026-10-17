@@ -13,7 +13,7 @@ on:
       task:
         description: what to run
         type: choice
-        options: [rehearse, rhythm, history, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
+        options: [rehearse, room-test, rhythm, history, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
         default: rhythm
       budget:
         description: minutes the canon pass may spend (a short one is a diagnostic)
@@ -34,7 +34,7 @@ jobs:
       contents: write
       actions: write
     runs-on: ubuntu-24.04   # pinned: ubuntu-latest becomes Ubuntu 26 from 19 Oct 2026, under the audio decoding
-    timeout-minutes: 120
+    timeout-minutes: ${{ (inputs.task == 'full-index' || github.event.schedule == '45 5 * * *') && 180 || 120 }}   # the full build grows with the records: 77 minutes at 165,000 on 17 Oct, before the walk step was made cheaper
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -42,7 +42,7 @@ jobs:
       - name: deps
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg build-essential >/dev/null
-          pip install -q numpy librosa soundfile yt-dlp
+          pip install -q numpy scipy librosa soundfile yt-dlp
       - name: fetch the pipeline database
         env:
           # without a token the fallback's lookup below (gh api) stopped the step at its first miss, exit 4, so the five tries
@@ -135,6 +135,15 @@ jobs:
           mkdir -p "$RUNNER_TEMP/live" && cp out/index.json "$RUNNER_TEMP/live/index.json"
           GH_TOKEN="${{ github.token }}" gh release download recognition-index --pattern index.bin --dir "$RUNNER_TEMP/live" --clobber
           python -m audio.rehearse_live --index "$RUNNER_TEMP/live/index" --n 40 --site https://earlysignal.live --out out/rehearse-live.json || echo "::warning title=live rehearsal::did not complete"
+
+      - name: which part of a room defeats recognition
+        if: inputs.task == 'room-test'
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.room_test --n 24 --out out/room-test.json
 
       - name: borrow the analyser for the canon pass
         if: inputs.task == 'canon'
@@ -253,9 +262,7 @@ jobs:
           tail -c 60000 /tmp/indexlog.txt > out/index-build-log.txt 2>/dev/null || echo 'no log captured' > out/index-build-log.txt
           git config user.name 'sonic-audio-bot'; git config user.email 'sonic@earlysignal.live'
           git add out/index-build-log.txt
-          git commit -qm 'index build log' || true
-          git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; git fetch -q origin main && git merge -q -s ours origin/main -m 'keep the outputs of this run over a conflicting upstream') || true
-          git push -q origin HEAD:main || true
+          git commit -qm 'index build log' && bash scripts/push_own.sh 'index build log' || true
           exit 0
       - name: publish the index as a release asset
         if: inputs.task == 'full-index' || github.event.schedule == '45 5 * * *'
@@ -269,10 +276,6 @@ jobs:
           # asset in place, which swaps it atomically.
           gh release view recognition-index >/dev/null 2>&1 \
             || gh release create recognition-index --title "recognition index" --notes "sorted hash postings for the whole corpus"
-          if ! gh release upload recognition-index out/index.bin --clobber; then
-            echo "::error::could not publish the index; the previous one is still in place"
-            exit 1
-          fi
           # The 64 detail files go up as release assets named for this run, and index.json names the set (api/listen.js in
           # signalgood reads it, as does the site data build). Committed to main, each build added about 150 MB to this
           # repository's history, since nearly every record's neighbours shift between builds: 8.8 GB by 16 Oct. Main's
@@ -296,14 +299,24 @@ jobs:
             done < <(grep " detail-[0-9]*-[0-9][0-9]\.json$" "$RUNNER_TEMP/assets.txt")
           fi
           echo "::notice title=details::index.json names detail set ${USE:-none} ($HAVE of 64 files of this run's set up)"
+          # index.json first, then index.bin: a posting names a record by its place in index.json, so the api needs both from
+          # one build (it checks their record counts agree and sits out the gap between the two). If index.json cannot be
+          # pushed, index.bin stays as it was, and the previous pair is still a pair.
+          git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
+          git rm -q --cached out/index-detail.json 2>/dev/null || true   # the old single file, too large to store
+          cp out/index.bin "$RUNNER_TEMP/index.bin"
+          git add out/index.json && git commit -qm "recognition index metadata (details: release set ${USE:-none})" \
+            && bash scripts/push_own.sh "recognition index metadata (details: release set ${USE:-none})" \
+            || { echo "::error::index.json could not be pushed; index.bin not published, the previous index stays whole"; exit 1; }
+          if ! gh release upload recognition-index "$RUNNER_TEMP/index.bin" --clobber; then
+            echo "::error::could not publish index.bin; index.json is ahead of it until the next build"
+            exit 1
+          fi
           # the site's live check, against the index just published: the API loads it whole on a cold start, so a build that
           # outgrows the function shows there first (needs PIPELINE_PAT: the default token cannot start another repository's workflow)
           if [ -n "${{ secrets.PIPELINE_PAT }}" ]; then
             GH_TOKEN="${{ secrets.PIPELINE_PAT }}" timeout 60 gh workflow run live-check.yml --repo benmcewensignal/signalgood --ref main && echo "live check requested" || echo "::warning title=live check::could not request the site's live check"
           fi
-          git config user.name "sonic-audio-bot"; git config user.email "sonic@earlysignal.live"
-          git rm -q --cached out/index-detail.json 2>/dev/null || true   # the old single file, too large to store
-          git add out/index.json && git commit -qm "recognition index metadata (details: release set ${USE:-none})" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; CH=$(git diff --name-only HEAD~1 HEAD); mkdir -p "$RUNNER_TEMP/mine"; for f in $CH; do [ -f "$f" ] && mkdir -p "$RUNNER_TEMP/mine/$(dirname "$f")" && cp -a "$f" "$RUNNER_TEMP/mine/$f"; done; git fetch -q origin main && git reset -q --hard origin/main && for f in $CH; do [ -f "$RUNNER_TEMP/mine/$f" ] && mkdir -p "$(dirname "$f")" && cp -a "$RUNNER_TEMP/mine/$f" "$f"; done && git add $CH 2>/dev/null; git commit -qm 'this run'"'"'s outputs over the latest upstream (only the files it changed)' || true) ; git push -q origin HEAD:main
           exit 0
 
       - name: rehearse against the index just published
@@ -366,14 +379,10 @@ jobs:
           BIG=$( (git diff --cached --name-only | while read f; do [ -f "$f" ] && [ "$(stat -c %s "$f")" -gt 95000000 ] && echo "$f"; done) || true )
           if [ -n "$BIG" ]; then echo "::error title=persist::staged files over GitHub's 100 MB limit: $BIG"; exit 1; fi
           git commit -qm "audio: $(date -u +%FT%TZ)"
-          # on a conflict, keep only the files this run changed over the latest upstream: the "ours" merge strategy that stood
-          # here kept this run's whole tree and deleted everything added upstream meanwhile (a test, its workflow, its result)
-          if ! git pull -q --no-rebase -X ours origin main; then git merge --abort 2>/dev/null || true; CH=$(git diff --name-only HEAD~1 HEAD); mkdir -p "$RUNNER_TEMP/mine"; for f in $CH; do [ -f "$f" ] && mkdir -p "$RUNNER_TEMP/mine/$(dirname "$f")" && cp -a "$f" "$RUNNER_TEMP/mine/$f"; done; git fetch -q origin main && git reset -q --hard origin/main && for f in $CH; do [ -f "$RUNNER_TEMP/mine/$f" ] && mkdir -p "$(dirname "$f")" && cp -a "$RUNNER_TEMP/mine/$f" "$f"; done && git add $CH 2>/dev/null; git commit -qm 'this run'"'"'s outputs over the latest upstream (only the files it changed)' || true; fi
-          for i in 1 2 3; do
-            if OUT=$(git push -q origin HEAD:main 2>&1); then echo "pushed=1" >> "$GITHUB_OUTPUT"; echo "::notice title=persist::pushed"; exit 0; fi
-            echo "push attempt $i failed: $OUT"; git pull -q --no-rebase -X ours origin main || true; sleep $((i*10))
-          done
-          echo "::error title=persist::push failed: $(echo "$OUT" | tail -2 | tr '\n' ' ' | cut -c1-300)"; exit 1
+          # only the files this run changed, as one commit on the newest main (scripts/push_own.sh): never a merge, which
+          # carried a workflow change upstream into this push on 17 Oct and was refused
+          if bash scripts/push_own.sh "audio: $(date -u +%FT%TZ)"; then echo "pushed=1" >> "$GITHUB_OUTPUT"; echo "::notice title=persist::pushed"; exit 0; fi
+          exit 1
       - name: chain the classics pass while the list has records left
         # only after a run that added lines and got them onto main: a pass that records nothing, or a push
         # that fails, used to dispatch the same work again, every seventy minutes, from 28 September
