@@ -1,15 +1,15 @@
 {
  "records": 40,
  "clip_seconds": 15,
- "index_records": 169574,
- "postings": 10174395,
+ "index_records": 171462,
+ "postings": 10287675,
  "under_min_votes": 0,
- "with_50_or_more": 169572,
+ "with_50_or_more": 171460,
  "by_position_and_condition": {
   "start clean": {
-   "ok": 40,
+   "ok": 37,
    "of": 40,
-   "rate": 1.0,
+   "rate": 0.925,
    "median_votes": 60
   },
   "start room": {
@@ -19,9 +19,9 @@
    "median_votes": 2
   },
   "middle clean": {
-   "ok": 1,
+   "ok": 0,
    "of": 40,
-   "rate": 0.025,
+   "rate": 0.0,
    "median_votes": 3
   },
   "middle room": {
@@ -33,10 +33,10 @@
  },
  "through_site": {
   "start clean": {
-   "right": 12,
+   "right": 11,
    "of": 12,
-   "by site index": 12,
-   "by modal": 0,
+   "by site index": 10,
+   "by modal": 1,
    "modal no answer": 0,
    "median_seconds": 1.4
   },
@@ -46,7 +46,7 @@
    "by site index": 0,
    "by modal": 2,
    "modal no answer": 0,
-   "median_seconds": 2.2
+   "median_seconds": 1.8
   },
   "middle clean": {
    "right": 11,
@@ -54,7 +54,7 @@
    "by site index": 0,
    "by modal": 11,
    "modal no answer": 0,
-   "median_seconds": 1.6
+   "median_seconds": 2.2
   },
   "middle room": {
    "right": 2,
@@ -62,7 +62,7 @@
    "by site index": 0,
    "by modal": 2,
    "modal no answer": 0,
-   "median_seconds": 2.2
+   "median_seconds": 1.9
   }
  },
  "site_first_call": {
@@ -71,6 +71,6 @@
   "via": "site",
   "dense": null,
   "dense_error": null,
-  "seconds": 2.7
+  "seconds": 4.2
  }
 }
