@@ -10,6 +10,10 @@ the index covers, and from the middle, which it does not and the Modal index mus
 from audio.rehearse.
 
     python -m audio.rehearse_live --index out/index --n 40 --out out/rehearse-live.json
+
+With --site, a share of the clips also go through the live site's /api/listen as a phone's would, which answers from this
+index and, when it is not confident, from the catalogue-wide index on Modal; the first call wakes Modal, and the time it
+takes is the time a first listen after idle takes. That measures the whole path rather than its pieces.
 """
 import argparse, json, os, random, struct, sys, time
 import numpy as np
@@ -55,6 +59,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--index", default="out/index"); ap.add_argument("--n", type=int, default=40)
     ap.add_argument("--seconds", type=float, default=15); ap.add_argument("--out", default="out/rehearse-live.json")
+    ap.add_argument("--site", default="", help="also send clips through this site's /api/listen (e.g. https://earlysignal.live)")
+    ap.add_argument("--site-n", type=int, default=12, help="records whose clips go through the site")
     a = ap.parse_args()
     H, P, T = load_index(a.index)
     per = np.bincount(P >> 13, minlength=len(T))
@@ -67,6 +73,22 @@ def main():
     score = {(p, k): [0, 0] for p in POS for k in KINDS}
     votes = {(p, k): [] for p in POS for k in KINDS}
     tried = kept = 0
+    site = {(p, k): [] for p in POS for k in KINDS}; site_first = None
+    def through_site(tid, q):
+        """One clip through the live site: whether it named the record, by which index, and how long it took."""
+        import urllib.request, urllib.error
+        body = json.dumps({"hashes": [[int(h), int(f)] for h, f in q][:20000]}).encode()
+        t0_ = time.time()
+        try:
+            r = urllib.request.urlopen(urllib.request.Request(a.site.rstrip("/") + "/api/listen", data=body,
+                                       headers={"Content-Type": "application/json", "User-Agent": "sonic-rehearse"}), timeout=40)
+            d = json.loads(r.read()); took = round(time.time() - t0_, 1)
+            got = (d.get("track") or {}).get("track_id") if d.get("found") else None
+            dz = d.get("dense") if isinstance(d.get("dense"), dict) else {}
+            return {"right": got == tid, "found": bool(d.get("found")), "via": d.get("via") or ("site" if d.get("found") else None),
+                    "dense": dz.get("found"), "dense_error": dz.get("error") or dz.get("why"), "seconds": took}
+        except Exception as e:
+            return {"right": False, "found": False, "via": None, "dense": None, "dense_error": f"{type(e).__name__}: {str(e)[:60]}", "seconds": round(time.time() - t0_, 1)}
     for ti in order:
         if kept >= a.n or tried >= 3 * a.n: break
         t = T[ti]; tried += 1
@@ -86,9 +108,13 @@ def main():
             clips = {"start": y[:L], "middle": y[(s := pick.randint(2 * L, len(y) - L)):s + L]}
             for p_, clip in clips.items():
                 for k in KINDS:
-                    m = match(H, P, FP.hashes(degrade(clip, k, rng).astype(np.float32)))
+                    q = FP.hashes(degrade(clip, k, rng).astype(np.float32))
+                    m = match(H, P, q)
                     ok = bool(m and m["ok"] and m["rec"] == ti)
                     score[(p_, k)][0] += ok; score[(p_, k)][1] += 1; votes[(p_, k)].append(m["votes"] if m else 0)
+                    if a.site and kept < a.site_n:
+                        r_ = through_site(t["track_id"], q); site[(p_, k)].append(r_)
+                        if site_first is None: site_first = r_
             kept += 1
             print(f"  {kept}/{a.n} {str(t.get('name'))[:36]:36s} start clean {score[('start','clean')][0]}/{score[('start','clean')][1]}", flush=True)
         except Exception as e:
@@ -98,11 +124,24 @@ def main():
            "by_position_and_condition": {f"{p} {k}": {"ok": s[0], "of": s[1], "rate": round(s[0] / max(s[1], 1), 3),
                                                       "median_votes": int(np.median(votes[(p, k)] or [0]))}
                                          for (p, k), s in score.items()}}
+    if a.site:
+        out["through_site"] = {f"{p} {k}": {"right": sum(1 for r_ in rs if r_["right"]), "of": len(rs),
+                                            "by site index": sum(1 for r_ in rs if r_["right"] and r_["via"] == "site"),
+                                            "by modal": sum(1 for r_ in rs if r_["right"] and r_["via"] == "classics"),
+                                            "modal no answer": sum(1 for r_ in rs if r_["dense"] is None and not r_["found"]),
+                                            "median_seconds": round(float(np.median([r_["seconds"] for r_ in rs])), 1) if rs else None}
+                               for (p, k), rs in site.items()}
+        out["site_first_call"] = site_first
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
     json.dump(out, open(a.out, "w"), indent=1)
     line = ", ".join(f"{p} {k} {s[0]}/{s[1]}" for (p, k), s in score.items())
     print(f"::notice title=live rehearsal::{kept} records from the published index, {a.seconds:.0f}s clips: {line}; "
           f"{out['under_min_votes']:,} of {len(T):,} records under {MIN_VOTES} fingerprints", flush=True)
+    if a.site:
+        ts = out["through_site"]
+        print("::notice title=through the site::" + "; ".join(f"{k}: {v['right']}/{v['of']} named ({v['by site index']} by the site's index, {v['by modal']} by Modal"
+              f"{', ' + str(v['modal no answer']) + ' with no answer from Modal' if v['modal no answer'] else ''}), median {v['median_seconds']}s" for k, v in ts.items())
+              + (f"; first call {site_first['seconds']}s" + (f", Modal: {site_first['dense_error']}" if site_first.get('dense_error') else "") if site_first else ""), flush=True)
 
 
 if __name__ == "__main__":
