@@ -93,7 +93,7 @@ def main():
             print(f"  skip {t.get('track_id')}: {type(e).__name__}: {str(e)[:80]}", flush=True)
     H = np.concatenate(Hs); T = np.concatenate(Ts); F = np.concatenate(Fs); o = np.argsort(H, kind="stable"); H, T, F = H[o], T[o], F[o]
     print(f"reference: {len(audio)} records, {len(H):,} fingerprints", flush=True)
-    score = {k: [0, 0] for k in KINDS}; surv = {k: [] for k in KINDS}; votes = {k: [] for k in KINDS}
+    score = {k: [0, 0] for k in KINDS}; surv = {k: [] for k in KINDS}; surv6 = {k: [] for k in KINDS}; survany = {k: [] for k in KINDS}; votes = {k: [] for k in KINDS}
     L = int(FP.SR * a.seconds)
     for ti, (nm, y) in enumerate(audio):
         for _ in range(2):
@@ -103,12 +103,19 @@ def main():
                 q = FP.hashes(stage(clip, k, rng).astype(np.float32))
                 m = match(H, T, F, q); ok = bool(m and m["ok"] and m["rec"] == ti)
                 score[k][0] += ok; score[k][1] += 1; votes[k].append(m["votes"] if m else 0)
-                qs = set(q); surv[k].append(sum(1 for h, f in clean if (h, f) in qs or (h, f - 1) in qs or (h, f + 1) in qs) / max(len(clean), 1))
+                # survival at three tolerances: the same frame give or take one (what the matchers' offset bins allow), six, and
+                # the hash present at all; the gap between them says whether reverb moves fingerprints or removes them
+                by = {}
+                for h, f in q: by.setdefault(h, []).append(f)
+                for tol, store in ((1, surv), (6, surv6), (10**6, survany)):
+                    store[k].append(sum(1 for h, f in clean if any(abs(f - g) <= tol for g in by.get(h, ()))) / max(len(clean), 1))
     out = {"records": len(audio), "clip_seconds": a.seconds, "per_record": PER,
            "by_degradation": {k: {"recognised": s[0], "of": s[1], "rate": round(s[0] / max(s[1], 1), 3),
-                                  "fingerprints_surviving": round(float(np.median(surv[k])), 3), "median_votes": int(np.median(votes[k]))} for k, s in score.items()}}
+                                  "fingerprints_surviving": round(float(np.median(surv[k])), 3), "within_6_frames": round(float(np.median(surv6[k])), 3),
+                                  "hash_present_at_all": round(float(np.median(survany[k])), 3), "median_votes": int(np.median(votes[k]))} for k, s in score.items()}}
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True); json.dump(out, open(a.out, "w"), indent=1)
-    print("::notice title=room test::" + "; ".join(f"{k}: {v['recognised']}/{v['of']} recognised, {100*v['fingerprints_surviving']:.0f}% of fingerprints survive, median {v['median_votes']} votes"
+    print("::notice title=room test::" + "; ".join(f"{k}: {v['recognised']}/{v['of']} recognised, {100*v['fingerprints_surviving']:.0f}% of fingerprints survive in place "
+                                                  f"({100*v['within_6_frames']:.0f}% within 6 frames, {100*v['hash_present_at_all']:.0f}% present at all), median {v['median_votes']} votes"
                                                   for k, v in out["by_degradation"].items()), flush=True)
 
 
