@@ -131,6 +131,10 @@ jobs:
         run: |
           python -m audio.rehearse --n 20 --clips 3 --seconds 15 --out out/rehearse-15.json
           python -m audio.rehearse --n 20 --clips 3 --seconds 25 --out out/rehearse-25.json
+          # and the published index itself, which the above cannot see (audio/rehearse_live.py)
+          mkdir -p "$RUNNER_TEMP/live" && cp out/index.json "$RUNNER_TEMP/live/index.json"
+          GH_TOKEN="${{ github.token }}" gh release download recognition-index --pattern index.bin --dir "$RUNNER_TEMP/live" --clobber
+          python -m audio.rehearse_live --index "$RUNNER_TEMP/live/index" --n 40 --out out/rehearse-live.json || echo "::warning title=live rehearsal::did not complete"
 
       - name: borrow the analyser for the canon pass
         if: inputs.task == 'canon'
@@ -294,6 +298,18 @@ jobs:
           git rm -q --cached out/index-detail.json 2>/dev/null || true   # the old single file, too large to store
           git add out/index.json && git commit -qm "recognition index metadata (details: release set ${USE:-none})" && git pull -q --no-rebase -X ours origin main || (git merge --abort 2>/dev/null; CH=$(git diff --name-only HEAD~1 HEAD); mkdir -p "$RUNNER_TEMP/mine"; for f in $CH; do [ -f "$f" ] && mkdir -p "$RUNNER_TEMP/mine/$(dirname "$f")" && cp -a "$f" "$RUNNER_TEMP/mine/$f"; done; git fetch -q origin main && git reset -q --hard origin/main && for f in $CH; do [ -f "$RUNNER_TEMP/mine/$f" ] && mkdir -p "$(dirname "$f")" && cp -a "$RUNNER_TEMP/mine/$f" "$f"; done && git add $CH 2>/dev/null; git commit -qm 'this run'"'"'s outputs over the latest upstream (only the files it changed)' || true) ; git push -q origin HEAD:main
           exit 0
+
+      - name: rehearse against the index just published
+        # the daily rehearsal's measurement of the published index, run on each full build too, so a change to the build
+        # shows its effect in the same run (out/rehearse-live.json goes out with the persist step)
+        if: inputs.task == 'full-index' || github.event.schedule == '45 5 * * *'
+        continue-on-error: true
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.rehearse_live --index out/index --n 40 --out out/rehearse-live.json
 
       - name: build the recognition demo index
         if: inputs.task == 'demo-index'
