@@ -147,6 +147,8 @@ jobs:
           python -m audio.room_test --n 24 --out out/room-test.json
           # the candidates, on the same clips (audio/fp_variants.py)
           python -m audio.room_test --n 24 --hashers base,wide,onset,whiten,onsetwide --out out/room-test-hashers.json
+          # how reverberant a room can be: a tail at eight direct-to-reverb ratios, the fingerprinter in use
+          python -m audio.room_test --n 24 --sweep --out out/room-test-sweep.json
 
       - name: borrow the analyser for the canon pass
         if: inputs.task == 'canon'

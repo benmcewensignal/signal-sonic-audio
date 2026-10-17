@@ -36,6 +36,15 @@ def stage(y, kind, rng):
         w = fftconvolve(y, ir)[: len(y)]; return (w / (np.max(np.abs(w)) + 1e-9)).astype(np.float32)
     if kind.startswith("noise "):
         snr = float(kind.split()[1].rstrip("dB")); return (y + rng.normal(0, 10 ** (-snr / 20) * np.sqrt(np.mean(y ** 2)), len(y))).astype(np.float32)
+    if kind.startswith("reverb DR"):
+        # a reverb tail of RT60 0.8 s whose energy sits the stated dB below (or above) the direct sound: the calibration
+        # room's tail carries about 1,300 times the direct sound's energy (-31 dB), harsher than any dance floor; near the
+        # speakers the direct sound wins, at the back of a hall the tail does
+        dr = float(kind.split("DR")[1].replace("dB", ""))
+        n = int(0.8 * sr); tail = rng.normal(0, 1, n) * np.exp(-np.arange(n) / (0.116 * sr)); tail[0] = 0
+        tail *= 10 ** (-dr / 20) / (np.sqrt(np.sum(tail ** 2)) + 1e-9)
+        ir = tail.copy(); ir[0] = 1.0
+        w = fftconvolve(y, ir)[: len(y)]; return (w / (np.max(np.abs(w)) + 1e-9)).astype(np.float32)
     if kind == "calibration room": return cal_room(y, rng)
     if kind == "rehearsal dull": return degrade(y, "dull", rng)
     if kind == "rehearsal room": return degrade(y, "room", rng)
@@ -43,6 +52,7 @@ def stage(y, kind, rng):
 
 
 KINDS = ["clean", "band 200-6000", "reverb 0.6s", "noise 25dB", "noise 15dB", "rehearsal dull", "rehearsal room", "calibration room"]
+DR_KINDS = ["clean", "reverb DR+10dB", "reverb DR+3dB", "reverb DR0dB", "reverb DR-3dB", "reverb DR-6dB", "reverb DR-10dB", "reverb DR-20dB"]
 
 
 def match(H, T, F, query):
@@ -65,10 +75,11 @@ def main():
     ap.add_argument("--index", default="out/index.json"); ap.add_argument("--n", type=int, default=24)
     ap.add_argument("--seconds", type=float, default=25); ap.add_argument("--out", default="out/room-test.json")
     ap.add_argument("--hashers", default="", help="comma-separated candidates from audio.fp_variants to compare on the room stages (base first)")
+    ap.add_argument("--sweep", action="store_true", help="instead of the stages, a reverb tail at eight direct-to-reverb ratios")
     a = ap.parse_args()
     from . import fp_variants as V
     hashers = [h for h in a.hashers.split(",") if h] or ["base"]
-    kinds = KINDS if len(hashers) == 1 else ["clean", "reverb 0.6s", "rehearsal room", "calibration room"]
+    kinds = DR_KINDS if a.sweep else (KINDS if len(hashers) == 1 else ["clean", "reverb 0.6s", "rehearsal room", "calibration room"])
     T_ = json.load(open(a.index))["tracks"]; pick = random.Random(5); rng = np.random.default_rng(5)
     order = list(range(len(T_))); pick.shuffle(order)
     token = get_token(); audio = []
