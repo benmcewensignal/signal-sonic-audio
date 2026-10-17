@@ -13,7 +13,7 @@ on:
       task:
         description: what to run
         type: choice
-        options: [rehearse, rhythm, history, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
+        options: [rehearse, room-test, rhythm, history, canon, fp-top, full-index, demo-index, olaf-bench, olaf-bench-small]
         default: rhythm
       budget:
         description: minutes the canon pass may spend (a short one is a diagnostic)
@@ -42,7 +42,7 @@ jobs:
       - name: deps
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg build-essential >/dev/null
-          pip install -q numpy librosa soundfile yt-dlp
+          pip install -q numpy scipy librosa soundfile yt-dlp
       - name: fetch the pipeline database
         env:
           # without a token the fallback's lookup below (gh api) stopped the step at its first miss, exit 4, so the five tries
@@ -135,6 +135,15 @@ jobs:
           mkdir -p "$RUNNER_TEMP/live" && cp out/index.json "$RUNNER_TEMP/live/index.json"
           GH_TOKEN="${{ github.token }}" gh release download recognition-index --pattern index.bin --dir "$RUNNER_TEMP/live" --clobber
           python -m audio.rehearse_live --index "$RUNNER_TEMP/live/index" --n 40 --site https://earlysignal.live --out out/rehearse-live.json || echo "::warning title=live rehearsal::did not complete"
+
+      - name: which part of a room defeats recognition
+        if: inputs.task == 'room-test'
+        env:
+          BEATPORT_USERNAME: ${{ secrets.BEATPORT_USERNAME }}
+          BEATPORT_PASSWORD: ${{ secrets.BEATPORT_PASSWORD }}
+          BEATPORT_TOKEN: ${{ secrets.BEATPORT_TOKEN }}
+          BEATPORT_CLIENT_ID: ${{ secrets.BEATPORT_CLIENT_ID }}
+        run: python -m audio.room_test --n 24 --out out/room-test.json
 
       - name: borrow the analyser for the canon pass
         if: inputs.task == 'canon'
