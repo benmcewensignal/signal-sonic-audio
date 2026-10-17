@@ -21,8 +21,19 @@ published as a release asset because it is too large for a repository file.
 import argparse, collections, json, os, sqlite3, struct, time
 import numpy as np
 
-MAX_TRACKS_PER_HASH = 6      # above this a hash names nothing
-MAX_HASHES_PER_TRACK = 1800  # about the first minute of a record
+# Which fingerprints each record keeps in the published index. The store holds every fingerprint of each record's two-minute
+# preview, about 180 a second; the index takes the first 1,800, the first seven seconds or so (this used to say "about the
+# first minute", which was wrong by the density), and of those keeps the KEEP_PER_RECORD rarest across the index, never one
+# shared by more than MAX_SHARING postings. Until 17 Oct it instead dropped every hash shared by more than six records, a
+# fixed number that pruned harder as the index grew: at 113,000 records it left a median of six fingerprints a record and
+# 53% of records under the eight a match needs. Measured on those 113,000: the old rule kept 3.7M postings (30 MB) and
+# 21,603 records with fifty or more fingerprints; this one keeps 11.1M (88 MB) and gives every record a hundred, with the
+# kept hashes shared by a median of 15 postings and at most MAX_SHARING, so the API's scan of 200,000 postings a query is
+# never near. A clip from elsewhere in a record still cannot match here: that is the catalogue-wide index on Modal
+# (signal-sonic-features, worker/recognise_build_all.py), which the API asks when this one is not confident.
+KEEP_PER_RECORD = 100
+MAX_SHARING = 500
+MAX_HASHES_PER_TRACK = 1800  # the first seven seconds or so of a record, at about 180 fingerprints a second
 
 
 # The similarity is a dot product, so each dimension's contribution to it is the product of the
@@ -219,7 +230,7 @@ def detail_shard(tid):
 
 # Postings are written as SFP2: the record's place in the upper 19 bits and the frame in the lower 13 (api/listen.js reads
 # both this and the old SFP1, 16 and 16, which could address only 65,536 records). A frame is 23 ms and the index keeps
-# about the first minute of each record (MAX_HASHES_PER_TRACK), so 8,192 frames is plenty. The limit that binds first is
+# the first seconds of each record (MAX_HASHES_PER_TRACK), so 8,192 frames is plenty. The limit that binds first is
 # the size of index.json, which the API loads on every cold start and refuses above 14 MB in the workflow's guard: at
 # about 110 bytes a record that is some 127,000 records, so the build keeps at most 113,000, most important first.
 PLACE_BITS, FRAME_MASK = 19, 0x1FFF
@@ -269,6 +280,29 @@ def pick_within_cap(tracks, H, FR, meta, cap=CAP):
            + ", ".join(f"{k}: {v:,}" for k, v in sorted(tiers.items())) + " (0 canon, 1 two or more DJs or top 10, 2 one DJ or charted, 3 catalogue)")
     print(msg, flush=True)
     return [tracks[i] for i in keep], [H[i] for i in keep], [FR[i] for i in keep]
+
+
+def keep_rarest(H, P, shift, k=KEEP_PER_RECORD, cap=MAX_SHARING):
+    """Each record's k rarest fingerprints (see KEEP_PER_RECORD above), with H left sorted by hash, as the API's binary
+    search needs. Sharing is counted as postings per hash across the index, as the old rule counted it."""
+    order = np.argsort(H, kind="stable")
+    H, P = H[order], P[order]; del order
+    starts = np.flatnonzero(np.concatenate(([True], H[1:] != H[:-1])))
+    runlen = np.diff(np.append(starts, len(H))); del starts
+    sharing = np.repeat(np.minimum(runlen, 2**31 - 1).astype(np.int32), runlen); del runlen
+    rec = (P >> shift).astype(np.uint32)
+    by_rec = np.argsort(rec, kind="stable")                    # positions grouped by record, hash order within each
+    rs = rec[by_rec]
+    b = np.flatnonzero(np.concatenate(([True], rs[1:] != rs[:-1]))); e = np.append(b[1:], len(rs)); del rs
+    keep = np.zeros(len(H), dtype=bool)
+    for s, t in zip(b, e):
+        pos = by_rec[s:t]; sh = sharing[pos]
+        ok = np.flatnonzero(sh <= cap)
+        if len(ok) <= k:
+            keep[pos[ok]] = True
+        else:
+            keep[pos[ok[np.argsort(sh[ok], kind="stable")[:k]]]] = True
+    return H[keep], P[keep]
 
 
 def main():
@@ -432,15 +466,10 @@ def main():
     H = np.concatenate(H); P = np.concatenate(P)
     print(f"before pruning: {len(tracks)} records, {len(H):,} postings", flush=True)
 
-    order = np.argsort(H, kind="stable")
-    H, P = H[order], P[order]
-    # drop hashes carried by too many records
-    uniq, start, count = np.unique(H, return_index=True, return_counts=True)
-    common = uniq[count > MAX_TRACKS_PER_HASH]
-    if len(common):
-        keep = ~np.isin(H, common)
-        H, P = H[keep], P[keep]
-    print(f"after pruning {len(common):,} over-common hashes: {len(H):,} postings", flush=True)
+    H, P = keep_rarest(H, P, shift)
+    kept = np.bincount(P >> shift, minlength=len(tracks))
+    print(f"after keeping each record's {KEEP_PER_RECORD} rarest fingerprints: {len(H):,} postings; records with fewer than 8: "
+          f"{int((kept < 8).sum()):,}, with {KEEP_PER_RECORD}: {int((kept >= KEEP_PER_RECORD).sum()):,}", flush=True)
 
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
     # A distance of 0.014 tells a reader nothing. Rank each record against its own scene, so
