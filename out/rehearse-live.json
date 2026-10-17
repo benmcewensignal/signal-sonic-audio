@@ -1,16 +1,16 @@
 {
  "records": 40,
  "clip_seconds": 15,
- "index_records": 113000,
- "postings": 11299923,
+ "index_records": 167633,
+ "postings": 10057935,
  "under_min_votes": 0,
- "with_50_or_more": 112999,
+ "with_50_or_more": 167631,
  "by_position_and_condition": {
   "start clean": {
-   "ok": 40,
+   "ok": 38,
    "of": 40,
-   "rate": 1.0,
-   "median_votes": 100
+   "rate": 0.95,
+   "median_votes": 60
   },
   "start room": {
    "ok": 0,
@@ -19,9 +19,9 @@
    "median_votes": 2
   },
   "middle clean": {
-   "ok": 1,
+   "ok": 0,
    "of": 40,
-   "rate": 0.025,
+   "rate": 0.0,
    "median_votes": 3
   },
   "middle room": {
@@ -30,5 +30,47 @@
    "rate": 0.0,
    "median_votes": 2
   }
+ },
+ "through_site": {
+  "start clean": {
+   "right": 0,
+   "of": 12,
+   "by site index": 0,
+   "by modal": 0,
+   "modal no answer": 12,
+   "median_seconds": 0.1
+  },
+  "start room": {
+   "right": 0,
+   "of": 12,
+   "by site index": 0,
+   "by modal": 0,
+   "modal no answer": 12,
+   "median_seconds": 0.1
+  },
+  "middle clean": {
+   "right": 0,
+   "of": 12,
+   "by site index": 0,
+   "by modal": 0,
+   "modal no answer": 12,
+   "median_seconds": 0.1
+  },
+  "middle room": {
+   "right": 0,
+   "of": 12,
+   "by site index": 0,
+   "by modal": 0,
+   "modal no answer": 12,
+   "median_seconds": 0.1
+  }
+ },
+ "site_first_call": {
+  "right": false,
+  "found": false,
+  "via": null,
+  "dense": null,
+  "dense_error": "HTTPError: HTTP Error 308: Permanent Redirect",
+  "seconds": 0.4
  }
 }
