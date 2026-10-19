@@ -38,7 +38,7 @@
    "by site index": 11,
    "by modal": 1,
    "modal no answer": 0,
-   "median_seconds": 1.7
+   "median_seconds": 1.4
   },
   "start room": {
    "right": 1,
@@ -46,7 +46,7 @@
    "by site index": 0,
    "by modal": 1,
    "modal no answer": 0,
-   "median_seconds": 1.9
+   "median_seconds": 2.2
   },
   "middle clean": {
    "right": 9,
@@ -54,7 +54,7 @@
    "by site index": 0,
    "by modal": 9,
    "modal no answer": 0,
-   "median_seconds": 1.9
+   "median_seconds": 2.4
   },
   "middle room": {
    "right": 3,
@@ -62,7 +62,7 @@
    "by site index": 0,
    "by modal": 3,
    "modal no answer": 0,
-   "median_seconds": 1.9
+   "median_seconds": 2.1
   }
  },
  "site_first_call": {
@@ -71,6 +71,6 @@
   "via": "site",
   "dense": null,
   "dense_error": null,
-  "seconds": 6.3
+  "seconds": 4.3
  }
 }
