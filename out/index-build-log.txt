@@ -1042,7 +1042,7 @@ keys written for 176110 records
 in-key steps written for 138219 records
 walks by part written for 176109 records
 per-stem neighbours written for 704436 record-stems
-nearest neighbours for 176466 records, 156832 of them with edges between their neighbours
+nearest neighbours for 176466 records, 156833 of them with edges between their neighbours
 walks for 176466 records
 detail for 178282 records written alongside the index, in 64 files
 {
@@ -1053,5 +1053,5 @@ detail for 178282 records written alongside the index, in 64 files
 }
 VERIFY: 178286 records, eight-neighbour 0, with ids 0, walks 0
 VERIFY: index 18.8 MB, detail 1107.6 MB in 64 files, eight-neighbour 176466, walks 176466
--rw-r--r-- 1 runner runner 85576812 Oct 19 12:31 out/index.bin
--rw-r--r-- 1 runner runner 18760953 Oct 19 12:31 out/index.json
+-rw-r--r-- 1 runner runner 85576812 Oct 19 13:29 out/index.bin
+-rw-r--r-- 1 runner runner 18760953 Oct 19 13:29 out/index.json
