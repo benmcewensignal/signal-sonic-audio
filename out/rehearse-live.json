@@ -7,10 +7,10 @@
  "with_50_or_more": 178283,
  "by_position_and_condition": {
   "start clean": {
-   "ok": 38,
+   "ok": 39,
    "of": 40,
-   "rate": 0.95,
-   "median_votes": 60
+   "rate": 0.975,
+   "median_votes": 59
   },
   "start room": {
    "ok": 0,
@@ -38,7 +38,7 @@
    "by site index": 11,
    "by modal": 1,
    "modal no answer": 0,
-   "median_seconds": 1.8
+   "median_seconds": 1.4
   },
   "start room": {
    "right": 1,
@@ -46,15 +46,15 @@
    "by site index": 0,
    "by modal": 1,
    "modal no answer": 0,
-   "median_seconds": 2.1
+   "median_seconds": 2.6
   },
   "middle clean": {
-   "right": 8,
+   "right": 9,
    "of": 12,
    "by site index": 0,
-   "by modal": 8,
+   "by modal": 9,
    "modal no answer": 0,
-   "median_seconds": 1.9
+   "median_seconds": 2.5
   },
   "middle room": {
    "right": 1,
@@ -62,15 +62,15 @@
    "by site index": 0,
    "by modal": 1,
    "modal no answer": 0,
-   "median_seconds": 2.0
+   "median_seconds": 2.5
   }
  },
  "site_first_call": {
   "right": true,
   "found": true,
-  "via": "classics",
+  "via": "site",
   "dense": null,
   "dense_error": null,
-  "seconds": 14.7
+  "seconds": 3.8
  }
 }
