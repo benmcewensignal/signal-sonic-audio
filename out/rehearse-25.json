@@ -39,12 +39,12 @@
   }
  },
  "median_votes": {
-  "clean": 2039,
-  "quiet": 2039,
-  "very quiet": 2039,
-  "dull": 193,
-  "noise": 1744,
-  "loud noise": 938,
-  "room": 31
+  "clean": 2055,
+  "quiet": 2055,
+  "very quiet": 2055,
+  "dull": 220,
+  "noise": 1820,
+  "loud noise": 989,
+  "room": 32
  }
 }
