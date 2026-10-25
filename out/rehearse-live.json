@@ -19,9 +19,9 @@
    "median_votes": 2
   },
   "middle clean": {
-   "ok": 0,
+   "ok": 1,
    "of": 40,
-   "rate": 0.0,
+   "rate": 0.025,
    "median_votes": 3
   },
   "middle room": {
@@ -35,34 +35,34 @@
   "start clean": {
    "right": 12,
    "of": 12,
-   "by site index": 12,
-   "by modal": 0,
+   "by site index": 11,
+   "by modal": 1,
    "modal no answer": 0,
    "median_seconds": 1.6
   },
   "start room": {
-   "right": 1,
-   "of": 12,
-   "by site index": 0,
-   "by modal": 1,
-   "modal no answer": 0,
-   "median_seconds": 2.9
-  },
-  "middle clean": {
-   "right": 10,
-   "of": 12,
-   "by site index": 0,
-   "by modal": 10,
-   "modal no answer": 0,
-   "median_seconds": 2.6
-  },
-  "middle room": {
    "right": 0,
    "of": 12,
    "by site index": 0,
    "by modal": 0,
    "modal no answer": 0,
    "median_seconds": 2.7
+  },
+  "middle clean": {
+   "right": 6,
+   "of": 12,
+   "by site index": 0,
+   "by modal": 6,
+   "modal no answer": 0,
+   "median_seconds": 1.5
+  },
+  "middle room": {
+   "right": 1,
+   "of": 12,
+   "by site index": 0,
+   "by modal": 1,
+   "modal no answer": 0,
+   "median_seconds": 2.6
   }
  },
  "site_first_call": {
@@ -71,6 +71,6 @@
   "via": "site",
   "dense": null,
   "dense_error": null,
-  "seconds": 4.8
+  "seconds": 3.9
  }
 }
