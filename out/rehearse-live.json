@@ -7,9 +7,9 @@
  "with_50_or_more": 178283,
  "by_position_and_condition": {
   "start clean": {
-   "ok": 39,
+   "ok": 38,
    "of": 40,
-   "rate": 0.975,
+   "rate": 0.95,
    "median_votes": 60
   },
   "start room": {
@@ -38,23 +38,23 @@
    "by site index": 12,
    "by modal": 0,
    "modal no answer": 0,
-   "median_seconds": 1.8
+   "median_seconds": 1.6
   },
   "start room": {
-   "right": 1,
+   "right": 0,
    "of": 12,
    "by site index": 0,
-   "by modal": 1,
+   "by modal": 0,
    "modal no answer": 0,
-   "median_seconds": 2.6
+   "median_seconds": 2.5
   },
   "middle clean": {
-   "right": 8,
+   "right": 5,
    "of": 12,
    "by site index": 0,
-   "by modal": 8,
+   "by modal": 5,
    "modal no answer": 0,
-   "median_seconds": 1.9
+   "median_seconds": 1.2
   },
   "middle room": {
    "right": 0,
@@ -62,7 +62,7 @@
    "by site index": 0,
    "by modal": 0,
    "modal no answer": 0,
-   "median_seconds": 2.5
+   "median_seconds": 2.3
   }
  },
  "site_first_call": {
@@ -71,6 +71,6 @@
   "via": "site",
   "dense": null,
   "dense_error": null,
-  "seconds": 4.4
+  "seconds": 3.8
  }
 }
