@@ -33,12 +33,12 @@
  },
  "through_site": {
   "start clean": {
-   "right": 12,
+   "right": 11,
    "of": 12,
-   "by site index": 12,
+   "by site index": 11,
    "by modal": 0,
-   "modal no answer": 0,
-   "median_seconds": 1.6
+   "modal no answer": 1,
+   "median_seconds": 1.4
   },
   "start room": {
    "right": 0,
@@ -46,7 +46,7 @@
    "by site index": 0,
    "by modal": 0,
    "modal no answer": 0,
-   "median_seconds": 2.5
+   "median_seconds": 2.8
   },
   "middle clean": {
    "right": 5,
@@ -54,7 +54,7 @@
    "by site index": 0,
    "by modal": 5,
    "modal no answer": 0,
-   "median_seconds": 1.2
+   "median_seconds": 1.1
   },
   "middle room": {
    "right": 0,
@@ -62,15 +62,15 @@
    "by site index": 0,
    "by modal": 0,
    "modal no answer": 0,
-   "median_seconds": 2.3
+   "median_seconds": 2.8
   }
  },
  "site_first_call": {
-  "right": true,
-  "found": true,
-  "via": "site",
+  "right": false,
+  "found": false,
+  "via": null,
   "dense": null,
-  "dense_error": null,
-  "seconds": 3.8
+  "dense_error": "HTTPError: HTTP Error 500: Internal Server Error",
+  "seconds": 2.3
  }
 }
