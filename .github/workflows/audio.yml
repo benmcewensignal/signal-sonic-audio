@@ -39,6 +39,21 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
+      - name: choose the token for reading the pipeline
+        # The pipeline's database and fingerprint store are release assets of benmcewensignal/signal-sonic, read with
+        # PIPELINE_PAT. The PAT stopped being accepted at 11:32 UTC on 27 Oct, and every run since failed at its first
+        # fetch. Those repositories are public now, so a refused PAT falls back to this workflow's own token for reading,
+        # and the run says so; starting another repository's workflow still needs the PAT.
+        env:
+          PAT: ${{ secrets.PIPELINE_PAT }}
+          OWN: ${{ github.token }}
+        run: |
+          if [ -n "$PAT" ] && GH_TOKEN="$PAT" timeout 30 gh api rate_limit --silent 2>/dev/null; then
+            echo "READ_TOKEN=$PAT" >> "$GITHUB_ENV"; echo "reading with PIPELINE_PAT"
+          else
+            echo "READ_TOKEN=$OWN" >> "$GITHUB_ENV"
+            echo "::warning title=PIPELINE_PAT::not accepted (expired or revoked?); reading with the workflow's own token, and other repositories' workflows cannot be started until it is replaced"
+          fi
       - name: deps
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg build-essential >/dev/null
@@ -47,7 +62,7 @@ jobs:
         env:
           # without a token the fallback's lookup below (gh api) stopped the step at its first miss, exit 4, so the five tries
           # never happened: three runs failed that way from 13 to 16 Oct, each when its fetch landed in a save's swap
-          GH_TOKEN: ${{ secrets.PIPELINE_PAT || github.token }}
+          GH_TOKEN: ${{ env.READ_TOKEN }}
         run: |
           # the repository copy lags the deepened release, where the re-measured records
           # live. Take whichever holds more records on the current analyser, because the
@@ -199,7 +214,7 @@ jobs:
       - name: build the full recognition index
         if: inputs.task == 'full-index' || github.event.schedule == '45 5 * * *'
         env:
-          GH_TOKEN: ${{ secrets.PIPELINE_PAT || github.token }}   # the deepened release lives in another repository, and the default token cannot read it: the guard that refuses to index from the lagging copy was firing on a permissions failure, not a stale release
+          GH_TOKEN: ${{ env.READ_TOKEN }}   # the deepened release lives in another repository, and the default token cannot read it: the guard that refuses to index from the lagging copy was firing on a permissions failure, not a stale release
         run: |
           # I cannot read CI logs from where I work, so five failures in a row were diagnosed
           # by guessing. Everything this step says goes to a file that is committed, the way
@@ -209,7 +224,7 @@ jobs:
           set -e
           echo "fetching the fingerprint store (about 1 GB)"
           # the store is kept as compressed parts under GitHub's 2 GiB cap (scripts/fpstore.sh)
-          GH_TOKEN="${{ secrets.PIPELINE_PAT || github.token }}" bash scripts/fpstore.sh fetch benmcewensignal/signal-sonic fingerprints.db
+          GH_TOKEN="$READ_TOKEN" bash scripts/fpstore.sh fetch benmcewensignal/signal-sonic fingerprints.db
           ls -la fingerprints.db
           python -c "import sqlite3;print('records in store:', sqlite3.connect('fingerprints.db').execute('select count(*) from fp_tracks').fetchone()[0])"
           # The stem measures come from the features repository. Every part of this is wrapped so it
@@ -217,7 +232,7 @@ jobs:
           # the per-stem neighbours, and the build has failed three times since I added this.
           set +e
           curl -sL -o stems.tar "https://api.github.com/repos/benmcewensignal/signal-sonic-features/tarball/main" \
-            -H "Authorization: Bearer ${{ secrets.PIPELINE_PAT || github.token }}" --max-time 120
+            -H "Authorization: Bearer $READ_TOKEN" --max-time 120
           mkdir -p stemsrc && tar -xf stems.tar -C stemsrc --strip-components=1 2>/dev/null
           STEMN=$(ls stemsrc/out/stems-*.jsonl 2>/dev/null | wc -l)
           echo "stem files fetched: ${STEMN}"
