@@ -7,10 +7,10 @@
  "with_50_or_more": 189600,
  "by_position_and_condition": {
   "start clean": {
-   "ok": 37,
+   "ok": 39,
    "of": 40,
-   "rate": 0.925,
-   "median_votes": 57
+   "rate": 0.975,
+   "median_votes": 60
   },
   "start room": {
    "ok": 0,
@@ -35,26 +35,26 @@
   "start clean": {
    "right": 12,
    "of": 12,
-   "by site index": 12,
-   "by modal": 0,
-   "modal no answer": 0,
-   "median_seconds": 1.6
-  },
-  "start room": {
-   "right": 1,
-   "of": 12,
-   "by site index": 0,
+   "by site index": 11,
    "by modal": 1,
    "modal no answer": 0,
-   "median_seconds": 2.2
+   "median_seconds": 2.1
   },
-  "middle clean": {
-   "right": 7,
+  "start room": {
+   "right": 2,
    "of": 12,
    "by site index": 0,
-   "by modal": 7,
+   "by modal": 2,
    "modal no answer": 0,
-   "median_seconds": 2.2
+   "median_seconds": 2.4
+  },
+  "middle clean": {
+   "right": 8,
+   "of": 12,
+   "by site index": 0,
+   "by modal": 8,
+   "modal no answer": 0,
+   "median_seconds": 2.3
   },
   "middle room": {
    "right": 1,
@@ -62,7 +62,7 @@
    "by site index": 0,
    "by modal": 1,
    "modal no answer": 0,
-   "median_seconds": 2.1
+   "median_seconds": 2.4
   }
  },
  "site_first_call": {
@@ -71,6 +71,6 @@
   "via": "site",
   "dense": null,
   "dense_error": null,
-  "seconds": 4.4
+  "seconds": 5.1
  }
 }
