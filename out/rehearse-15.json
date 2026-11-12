@@ -33,18 +33,18 @@
    "rate": 1.0
   },
   "room": {
-   "ok": 52,
+   "ok": 53,
    "of": 60,
-   "rate": 0.867
+   "rate": 0.883
   }
  },
  "median_votes": {
-  "clean": 1084,
-  "quiet": 1084,
-  "very quiet": 1084,
-  "dull": 116,
-  "noise": 926,
-  "loud noise": 443,
-  "room": 15
+  "clean": 1100,
+  "quiet": 1100,
+  "very quiet": 1100,
+  "dull": 117,
+  "noise": 927,
+  "loud noise": 463,
+  "room": 16
  }
 }
